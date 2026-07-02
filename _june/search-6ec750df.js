@@ -590,6 +590,48 @@ function splitByHeadings(body) {
 		text: body.trim()
 	}];
 }
+/** Rendered HTML → readable plaintext (for indexing + matching): drop script/style, strip tags,
+*  decode the few common entities, collapse whitespace. A regex, not a parser — cheap, no deps,
+*  safe to run in the browser when the static client derives its index from the shipped HTML. */
+function htmlToText(html) {
+	return html.replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi, " ").replace(/<[^>]+>/g, " ").replace(/&nbsp;/gi, " ").replace(/&amp;/gi, "&").replace(/&lt;/gi, "<").replace(/&gt;/gi, ">").replace(/&quot;/gi, "\"").replace(/&#0?39;|&#x27;/gi, "'").replace(/\s+/g, " ").trim();
+}
+/** Split rendered HTML into heading-anchored sections (h2–h4), mirroring {@link splitByHeadings} on
+*  markdown. Ids come from the SAME slugger (createSlugger, top-to-bottom) that processHtml + the
+*  markdown split use, so a section's `headingId` matches the live page's anchor (deep-links land).
+*  Each section keeps its HTML (for a rich preview) and a derived plaintext (index + snippet). */
+function splitHtmlByHeadings(html) {
+	const slugId = createSlugger();
+	const out = [];
+	for (const part of html.split(/(?=<h[2-4]\b)/i)) {
+		const m = /^<(h[2-4])\b[^>]*>([\s\S]*?)<\/\1>/i.exec(part);
+		if (m) {
+			const raw = m[2].replace(/<[^>]+>/g, "").trim();
+			const rest = part.slice(m[0].length).trim();
+			out.push({
+				headingId: slugId(raw),
+				heading: htmlToText(m[2]),
+				html: rest,
+				text: htmlToText(rest)
+			});
+		} else {
+			const rest = part.replace(/^\s*<h1\b[^>]*>[\s\S]*?<\/h1>/i, "").trim();
+			const text = htmlToText(rest);
+			if (text) out.push({
+				headingId: "",
+				heading: "",
+				html: rest,
+				text
+			});
+		}
+	}
+	return out.length ? out : [{
+		headingId: "",
+		heading: "",
+		html: html.trim(),
+		text: htmlToText(html)
+	}];
+}
 /** Keep at most `max` hits per page (slug), preserving order — so one page can't crowd out the
 *  rest of the results, while still surfacing its few most relevant headings (Mintlify-style). */
 function capPerPage(hits, max) {
@@ -640,25 +682,28 @@ function buildKeywordIndex(entries, tokenizer) {
 	const records = entries.flatMap((e) => {
 		const title = String(e.data.title ?? e.slug);
 		const section = String(e.data.section ?? "");
-		return splitByHeadings(e.body ?? "").map((sec) => {
-			const body = stripMdx(sec.text);
-			return {
-				id: `${e.locale ?? "_"}:${e.slug}#${sec.headingId}`,
-				text: `${title}\n${sec.heading}\n${body}`,
-				lang: e.locale,
-				data: {
-					slug: e.slug,
-					title,
-					section,
-					body,
-					...sec.headingId ? {
-						headingId: sec.headingId,
-						heading: sec.heading
-					} : {},
-					...e.locale ? { locale: e.locale } : {}
-				}
-			};
-		});
+		return (e.html ? splitHtmlByHeadings(e.html) : splitByHeadings(e.body ?? "").map((s) => ({
+			headingId: s.headingId,
+			heading: s.heading,
+			html: "",
+			text: stripMdx(s.text)
+		}))).map((sec) => ({
+			id: `${e.locale ?? "_"}:${e.slug}#${sec.headingId}`,
+			text: `${title}\n${sec.heading}\n${sec.text}`,
+			lang: e.locale,
+			data: {
+				slug: e.slug,
+				title,
+				section,
+				body: sec.text,
+				...sec.html ? { html: sec.html } : {},
+				...sec.headingId ? {
+					headingId: sec.headingId,
+					heading: sec.heading
+				} : {},
+				...e.locale ? { locale: e.locale } : {}
+			}
+		}));
 	});
 	return Bm25.from(records, { resolveTokenizer: tokenizer });
 }
@@ -702,6 +747,7 @@ function keywordSearch(index, query, limit, fetchK = limit * 4, locale, prefixLa
 			section: h.data.section,
 			text: snippetAround(h.data.body, queryTokens),
 			score: Number(h.score.toFixed(3)),
+			...h.data.html ? { html: h.data.html } : {},
 			...h.data.locale ? { locale: h.data.locale } : {},
 			...h.data.headingId ? {
 				headingId: h.data.headingId,
@@ -806,4 +852,4 @@ function createSearch(opts) {
 	};
 }
 //#endregion
-export { buildIndex, chunk, createSearch, defaultTokenizer, splitByHeadings };
+export { buildIndex, chunk, createSearch, defaultTokenizer, htmlToText, splitByHeadings };

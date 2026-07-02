@@ -10156,7 +10156,7 @@ function startJuneClient(options) {
 	const routerRoot = document.querySelector("[data-june-root]");
 	if (!routerRoot) return;
 	if (routerRoot.getAttribute("data-june-router") === "flight") {
-		import("./client-router-flight-35964cda.js").then(({ startFlightRouter }) => startFlightRouter());
+		import("./client-router-flight-fcc84af1.js").then(({ startFlightRouter }) => startFlightRouter());
 		return;
 	}
 	startClientRouter(rehydrate);
@@ -10527,6 +10527,18 @@ const CSS = `
 .ctrlk-option-title { font-size: .92rem; font-weight: 500; color: var(--ctrlk-fg); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .ctrlk-option-path { font-size: .76rem; color: var(--ctrlk-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .ctrlk-option-excerpt { font-size: .8rem; color: var(--ctrlk-muted); margin-top: 2px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+/* Rich HTML preview (rendered section): clamp height + fade, and render tables/code/lists compactly
+   so a formatted snippet stays inside the row instead of the raw markdown syntax. */
+.ctrlk-option-html { display: block; -webkit-line-clamp: none; max-height: 5.5em; overflow: hidden; -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); }
+.ctrlk-option-html > :first-child { margin-top: 0; } .ctrlk-option-html > :last-child { margin-bottom: 0; }
+.ctrlk-option-html p, .ctrlk-option-html ul, .ctrlk-option-html ol, .ctrlk-option-html pre { margin: .15em 0; }
+.ctrlk-option-html ul, .ctrlk-option-html ol { padding-left: 1.1em; }
+.ctrlk-option-html code { font-size: .92em; background: var(--ctrlk-code-bg, rgba(127,127,127,.16)); border-radius: 3px; padding: 0 .25em; }
+.ctrlk-option-html pre { background: var(--ctrlk-code-bg, rgba(127,127,127,.12)); border-radius: 5px; padding: .3em .5em; overflow: hidden; white-space: pre-wrap; }
+.ctrlk-option-html pre code { background: none; padding: 0; }
+.ctrlk-option-html table { border-collapse: collapse; font-size: .92em; display: block; overflow: hidden; }
+.ctrlk-option-html :is(td, th) { border: 1px solid var(--ctrlk-border, rgba(127,127,127,.3)); padding: 1px .4em; text-align: left; white-space: nowrap; }
+.ctrlk-option-html a { color: inherit; text-decoration: underline; } .ctrlk-option-html img { display: none; }
 .ctrlk-option mark { background: var(--ctrlk-mark); color: var(--ctrlk-mark-fg); border-radius: 2px; padding: 0 1px; }
 
 .ctrlk-state { padding: 36px 16px; text-align: center; color: var(--ctrlk-muted); font-size: .9rem; }
@@ -10556,6 +10568,25 @@ function injectStyles(doc = document) {
 }
 //#endregion
 //#region node_modules/@kurajs/ctrlk/dist/dom.js
+const UNSAFE_EL = /^(script|style|iframe|object|embed|form|input|button|link|meta|base|svg)$/i;
+/** Clean TRUSTED, build-generated HTML before innerHTML (defense in depth — never a general XSS
+*  sanitizer). Parse inert in a <template> (no scripts run, no resources load), then drop dangerous
+*  elements, every `on*` handler, and `javascript:` URLs. */
+function sanitizeHtml(html, doc) {
+	const tpl = doc.createElement("template");
+	tpl.innerHTML = html;
+	for (const el of Array.from(tpl.content.querySelectorAll("*"))) {
+		if (UNSAFE_EL.test(el.tagName)) {
+			el.remove();
+			continue;
+		}
+		for (const attr of Array.from(el.attributes)) {
+			const n = attr.name.toLowerCase();
+			if (n.startsWith("on") || (n === "href" || n === "src" || n === "xlink:href") && /^\s*javascript:/i.test(attr.value)) el.removeAttribute(attr.name);
+		}
+	}
+	return tpl.innerHTML;
+}
 const DEFAULT_LABELS = {
 	placeholder: "Search…",
 	empty: "No results",
@@ -10682,7 +10713,12 @@ function mountCtrlk(ctrl, opts = {}) {
 			fillHighlighted(path, item.description, tokens);
 			body.append(path);
 		}
-		if (item.excerpt) {
+		if (item.excerptHtml) {
+			const ex = doc.createElement("div");
+			ex.className = "ctrlk-option-excerpt ctrlk-option-html";
+			ex.innerHTML = sanitizeHtml(item.excerptHtml, doc);
+			body.append(ex);
+		} else if (item.excerpt) {
 			const ex = doc.createElement("div");
 			ex.className = "ctrlk-option-excerpt";
 			fillHighlighted(ex, item.excerpt, tokens);
@@ -10882,7 +10918,7 @@ function setup(opts) {
 	const locale = trigger?.dataset.locale || void 0;
 	let loadingHandle = null;
 	const getHandle = () => loadingHandle ??= (async () => {
-		const [{ createSearch }, res] = await Promise.all([import("./search-cbfd3c21.js"), fetch(endpoint, { headers: { accept: "application/json" } })]);
+		const [{ createSearch }, res] = await Promise.all([import("./search-6ec750df.js"), fetch(endpoint, { headers: { accept: "application/json" } })]);
 		if (!res.ok) throw new Error(`search index ${res.status}`);
 		return createSearch({ entries: (await res.json()).index ?? [] });
 	})();
@@ -10935,6 +10971,7 @@ function toItem(docBase) {
 		title: h.heading || h.title,
 		description: [h.section, h.title].filter(Boolean).join(" › "),
 		excerpt: h.text,
+		...h.html ? { excerptHtml: h.html } : {},
 		group: h.section || "",
 		icon: h.headingId ? "hash" : "page",
 		href: `${docBase}${h.slug}${h.headingId ? `#${h.headingId}` : ""}`,
