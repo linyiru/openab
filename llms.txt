@@ -17,7 +17,7 @@ Built with Kura, the agent-native docs framework — https://kura.build
 - [/search](/search)
 
 ## Docs
-- [Introduction](/docs/.md)
+- [OpenAB](/docs/.md)
 - [adr/agentcore-runtime-backend](/docs/adr/agentcore-runtime-backend.md)
 - [adr/ambient](/docs/adr/ambient.md)
 - [adr/basic-cronjob](/docs/adr/basic-cronjob.md)
