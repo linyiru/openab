@@ -1,0 +1,391 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="icon" href="/openab/favicon.svg" type="image/svg+xml"/><title>adr/basic-cronjob · OpenAB Docs</title><meta name="description" content="A lightweight, cloud-native ACP harness connecting chat platforms to AI coding agents."/><meta property="og:title" content="adr/basic-cronjob"/><meta property="og:description" content="A lightweight, cloud-native ACP harness connecting chat platforms to AI coding agents."/><meta property="og:type" content="article"/><script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.md"}},{"not":{"href_matches":"/*.json"}},{"not":{"href_matches":"/*.txt"}},{"not":{"href_matches":"/*.xml"}},{"not":{"href_matches":"/mcp"}}]},"eagerness":"moderate"}],"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.md"}},{"not":{"href_matches":"/*.json"}},{"not":{"href_matches":"/*.txt"}},{"not":{"href_matches":"/*.xml"}},{"not":{"href_matches":"/mcp"}}]},"eagerness":"moderate"}]}</script><script>(function(){if(HTMLScriptElement.supports&&HTMLScriptElement.supports('speculationrules'))return;var seen=new Set();document.addEventListener('pointerover',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var u=new URL(a.href,location.href);if(u.origin!==location.origin||seen.has(u.pathname)||u.pathname===location.pathname)return;if(/.(md|json)$/.test(u.pathname)||u.pathname==='/mcp')return;seen.add(u.pathname);var l=document.createElement('link');l.rel='prefetch';l.href=u.pathname+u.search;document.head.appendChild(l);},{passive:true});})();</script><style>
+          @view-transition { navigation: auto; }
+          ::view-transition-group(root),
+          ::view-transition-old(root),
+          ::view-transition-new(root) { animation-duration: 120ms; }
+          @media (prefers-reduced-motion: reduce) {
+            ::view-transition-group(*),
+            ::view-transition-old(*),
+            ::view-transition-new(*) { animation: none !important; }
+          }
+</style><link rel="stylesheet" href="/openab/_june/global.1a9cb889.css"/></head><body><script>(function(){try{var p=localStorage.getItem('kura-theme')||'system';var d=document.documentElement;d.setAttribute('data-theme-pref',p);d.setAttribute('data-theme',(p==='dark'||(p==='system'&&matchMedia('(prefers-color-scheme:dark)').matches))?'dark':'light');}catch(e){}})();</script><header class="sticky top-0 z-20 flex items-center gap-4 h-14 px-5 bg-topbar-bg backdrop-blur-sm border-b border-border max-md:px-4 max-md:gap-2.5"><a class="flex items-center gap-1.5 font-bold text-[1.05rem]" href="/openab/">OpenAB<!-- --> <span class="font-normal text-muted text-[.85rem]">Docs</span></a><form class="ml-auto max-md:ml-2 max-md:flex-1 max-md:min-w-0" action="/openab/search" method="get"><input class="w-[280px] max-w-[40vw] px-3 py-2 text-[.9rem] border border-border rounded-lg bg-surface-2 text-fg max-md:w-full max-md:max-w-none search-box" placeholder="Search docs…  (press /)" aria-label="Search" data-search-endpoint="/openab/search.json" data-doc-base="/openab/" name="q"/></form><nav class="flex items-center gap-4 text-muted text-[.9rem]"></nav></header><button class="hidden max-md:flex items-center gap-2.5 w-full px-4 py-2.5 bg-bg border-0 border-b border-border text-fg-soft text-[.9rem] text-left cursor-pointer focus-visible:outline-none focus-visible:bg-hover" data-drawer-open="true" aria-controls="docs-nav" aria-expanded="false"><span class="text-[1.05rem] leading-none" aria-hidden="true">☰</span><span class="font-semibold text-fg flex-none">Navigation</span><span class="nav-bar-context text-muted flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap" data-nav-context="true"></span></button><div class="drawer-backdrop" data-drawer-close="true" aria-hidden="true"></div><div class="grid grid-cols-[248px_minmax(0,1fr)_220px] max-lg:grid-cols-[248px_minmax(0,1fr)] max-md:grid-cols-1 items-start max-w-[1280px] mx-auto"><aside class="sidebar sticky top-14 h-[calc(100vh-56px)] overflow-y-auto px-4 py-6 border-r border-border" id="docs-nav"><div data-tab="_"><div class="mb-5"><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/">Introduction</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agent-installable-tools">agent-installable-tools</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agentcore">agentcore</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/ai-install-upgrade">ai-install-upgrade</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/ambient">ambient</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/antigravity">antigravity</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/claude-code">claude-code</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/codex">codex</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/config-reference">config-reference</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/control-directives">control-directives</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/copilot">copilot</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/cronjob">cronjob</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/cursor">cursor</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/devin">devin</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/discord">discord</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/feishu">feishu</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/gemini">gemini</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/gh-auth-device-flow">gh-auth-device-flow</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/github-token-setup">github-token-setup</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/github-webhook-integration">github-webhook-integration</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/google-chat">google-chat</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/grok">grok</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/helm-publishing">helm-publishing</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/hermes">hermes</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/hooks">hooks</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/image-tags">image-tags</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/inbound-attachments">inbound-attachments</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/kiro">kiro</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/line">line</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/local-dev">local-dev</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/local-vision-models">local-vision-models</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/message-dispatch-modes">message-dispatch-modes</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/messaging">messaging</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/mimocode">mimocode</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/msteams-enterprise">msteams-enterprise</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/msteams-selfhosted">msteams-selfhosted</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/multi-agent">multi-agent</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/native-agent">native-agent</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/opencode">opencode</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/openshell">openshell</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/output-directives">output-directives</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/pi">pi</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/python">python</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/reactions">reactions</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/secrets-management">secrets-management</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/sendfiles">sendfiles</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/sendimages">sendimages</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/sidecar">sidecar</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/slack">slack</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/slash-commands">slash-commands</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering-design-guide">steering-design-guide</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/stt">stt</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/telegram">telegram</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/tool-display">tool-display</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/wecom">wecom</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/workspaces">workspaces</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/xai-proxy">xai-proxy</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Adr</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/agentcore-runtime-backend">adr/agentcore-runtime-backend</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/ambient">adr/ambient</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/basic-cronjob">adr/basic-cronjob</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/context-aware-token">adr/context-aware-token</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/control-directives">adr/control-directives</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/custom-gateway">adr/custom-gateway</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/ecs-control-plane">adr/ecs-control-plane</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/hooks">adr/hooks</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/imessage-integration">adr/imessage-integration</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/line-adapter">adr/line-adapter</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/multi-platform-adapters">adr/multi-platform-adapters</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/openab-agent">adr/openab-agent</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/openab-agent-mcp">adr/openab-agent-mcp</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/openab-agent-oauth">adr/openab-agent-oauth</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/pr-contribution-guidelines">adr/pr-contribution-guidelines</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/pr-review-loop">adr/pr-review-loop</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/secrets-management">adr/secrets-management</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/telegram-rich-messages">adr/telegram-rich-messages</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/turn-boundary-batching">adr/turn-boundary-batching</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/unified-binary">adr/unified-binary</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Refarch</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/aws-ecs-fargate-spot">refarch/aws-ecs-fargate-spot</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/ci-observability-discord">refarch/ci-observability-discord</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/cronjob_k8s_refarch">refarch/cronjob_k8s_refarch</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/gbrain">refarch/gbrain</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/remote-ssh-debugging">refarch/remote-ssh-debugging</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/sidecar-proxy">refarch/sidecar-proxy</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/telegram-cloudflare-tunnel">refarch/telegram-cloudflare-tunnel</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Steering</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering/feature-request">steering/feature-request</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering/pr-review">steering/pr-review</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering/triage">steering/triage</a></li></ul></div></div></aside><div data-june-outlet=""><main class="w-auto max-w-none m-0 min-w-0 px-10 pt-8 pb-20 max-md:px-4 max-md:pt-5 max-md:pb-12"><details class="hidden max-lg:block mb-5 border border-border rounded-xl overflow-hidden"><summary class="chevron flex justify-between items-center cursor-pointer px-3.5 py-2.5 text-[.85rem] font-semibold text-fg-soft">On this page</summary><div class="flex flex-col px-3.5 pt-1 pb-2.5 border-t border-border"><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#1-user-story-amp-requirements">1. User Story &amp;amp; Requirements</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#2-context-amp-decision-drivers">2. Context &amp;amp; Decision Drivers</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#lessons-from-in-app-cronjob-openclaw-pattern">Lessons from In-App CronJob (OpenClaw Pattern)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#design-principle-decouple-scheduler-from-core">Design Principle: Decouple Scheduler from Core</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#why-config-driven-first">Why Config-Driven First</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#3-high-level-design">3. High-Level Design</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#configuration">Configuration</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#sender-identity">Sender Identity</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#execution-flow">Execution Flow</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#key-behaviors">Key Behaviors</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#4-failure-handling">4. Failure Handling</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#5-helm-values-mapping">5. Helm Values Mapping</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#6-scope-boundaries">6. Scope Boundaries</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#in-scope-phase-1">In Scope (Phase 1)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#cron-expression-format">Cron Expression Format</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#explicitly-out-of-scope">Explicitly Out of Scope</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#7-comparison-with-external-scheduler-approaches">7. Comparison with External Scheduler Approaches</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#8-rollout-plan">8. Rollout Plan</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#consequences">Consequences</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#positive">Positive</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#negative">Negative</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#compliance">Compliance</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#notes">Notes</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#references">References</a></div></details><div class="flex items-center justify-between gap-4 mb-6"><div class="prose"><h1 class="!m-0">ADR: Basic CronJob Support (Config-Driven Scheduled Messages)</h1></div><div class="relative inline-flex items-stretch flex-none"><button class="inline-flex items-center gap-1.5 px-3 py-1.5 text-[.85rem] border border-border border-r-0 rounded-l-lg bg-surface text-fg-soft cursor-pointer hover:bg-hover hover:text-fg" data-copy-md="/openab/adr/basic-cronjob.md"><svg class="" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>Copy Markdown</button><details class="relative inline-flex items-stretch" data-menu="true"><summary class="chevron inline-flex items-center justify-center w-[30px] border border-border rounded-r-lg bg-surface text-muted cursor-pointer hover:bg-hover hover:text-fg" aria-label="More actions"></summary><div class="absolute right-0 top-[calc(100%+.4rem)] z-30 min-w-[17rem] flex flex-col gap-px p-1.5 bg-surface border border-border rounded-xl shadow-xl"><button class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" data-copy-md="/openab/adr/basic-cronjob.md"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg><span class="flex flex-col min-w-0"><span class="font-semibold text-[.9rem] text-fg">Copy Markdown</span><span class="text-[.8rem] text-muted">Copy this page as Markdown for LLMs</span></span></button><a class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" href="/openab/adr/basic-cronjob.md"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M16 21H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6l4 4v12a2 2 0 0 1-2 2z"></path><path d="M9 13h6M9 17h4"></path></svg><span class="flex flex-col min-w-0"><span class="inline-flex items-center gap-1 font-semibold text-[.9rem] text-fg">View as Markdown<!-- --> <svg class="text-muted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span><span class="text-[.8rem] text-muted">View this page as plain text</span></span></a><a class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" href="https://chatgpt.com/?q=Please%20read%20this%20doc%20and%20answer%20my%20questions%3A%20adr%2Fbasic-cronjob" target="_blank" rel="noreferrer"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"></path></svg><span class="flex flex-col min-w-0"><span class="inline-flex items-center gap-1 font-semibold text-[.9rem] text-fg">Open in ChatGPT<!-- --> <svg class="text-muted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span><span class="text-[.8rem] text-muted">Ask ChatGPT about this page</span></span></a><a class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" href="https://claude.ai/new?q=Please%20read%20this%20doc%20and%20answer%20my%20questions%3A%20adr%2Fbasic-cronjob" target="_blank" rel="noreferrer"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"></path></svg><span class="flex flex-col min-w-0"><span class="inline-flex items-center gap-1 font-semibold text-[.9rem] text-fg">Open in Claude<!-- --> <svg class="text-muted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span><span class="text-[.8rem] text-muted">Ask Claude about this page</span></span></a></div></details></div></div><article class="prose"><ul>
+<li><strong>Status:</strong> Proposed</li>
+<li><strong>Date:</strong> 2026-04-26</li>
+<li><strong>Author:</strong> @chaodu-agent</li>
+<li><strong>Related:</strong> <a href="../cronjob_k8s_refarch.md">K8s CronJob Reference Architecture</a></li>
+</ul>
+<hr />
+<h2 id="1-user-story-amp-requirements">1. User Story &amp; Requirements</h2>
+<p>As an OpenAB operator, I want to define scheduled messages in <code>config.toml</code> that are sent to the agent at specified times, so that I can automate recurring tasks (daily summaries, weekly reports, periodic scans) without external infrastructure.</p>
+<p>As a small-team user, I don't want to set up Kubernetes CronJobs or GitHub Actions just to send a daily prompt to my bot.</p>
+<p>Requirements:</p>
+<ul>
+<li>Cron expressions defined declaratively in <code>config.toml</code></li>
+<li>Each cron entry specifies a target channel and a message payload</li>
+<li>OAB sends the message to the agent via the existing ACP session, as if a user typed it</li>
+<li>The scheduler is internal to OAB but <strong>does not</strong> allow the agent to configure or modify cron entries at runtime</li>
+<li>No coupling between scheduler failures and gateway stability — failed cron executions must not block or degrade normal chat traffic</li>
+<li>This is Phase 1 only — complex scheduling (conditional logic, retries, fan-out) remains the domain of external schedulers (K8s CronJob, GitHub Actions)</li>
+</ul>
+<hr />
+<h2 id="2-context-amp-decision-drivers">2. Context &amp; Decision Drivers</h2>
+<h3 id="lessons-from-in-app-cronjob-openclaw-pattern">Lessons from In-App CronJob (OpenClaw Pattern)</h3>
+<p>The &quot;in-app cronjob&quot; pattern — where the agent configures its own cron via natural language — has known issues:</p>
+<ol>
+<li><strong>Opacity</strong> — users cannot easily inspect what the agent configured</li>
+<li><strong>Reliability</strong> — continuous cron failures or too many in-flight jobs affect gateway stability</li>
+<li><strong>Unpredictability</strong> — agent-generated payloads may not match user intent</li>
+</ol>
+<h3 id="design-principle-decouple-scheduler-from-core">Design Principle: Decouple Scheduler from Core</h3>
+<blockquote>
+<p>&quot;If you already have a good landlord doing scheduling, you don't need your own alarm clock in the room.&quot;</p>
+</blockquote>
+<p>OAB's position: the scheduler should be <strong>external to the agent runtime</strong>. For Phase 1, &quot;external&quot; means config-driven (operator-controlled, not agent-controlled). For advanced use cases, truly external schedulers (K8s, GHA) are recommended.</p>
+<h3 id="why-config-driven-first">Why Config-Driven First</h3>
+<ul>
+<li>Covers the 80% use case: &quot;send this message at this time&quot;</li>
+<li>Zero additional infrastructure for simple deployments</li>
+<li>Operator has full visibility and control over what runs and when</li>
+<li>Aligns with OAB's &quot;keep it simple&quot; philosophy</li>
+</ul>
+<hr />
+<h2 id="3-high-level-design">3. High-Level Design</h2>
+<h3 id="configuration">Configuration</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">cronjobs</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">schedule = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"0 9 * * 1-5"</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">                    # cron expression (UTC)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">channel = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"123456789"</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">                        # target channel ID</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">message = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"summarize yesterday's merged PRs"</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"> # message sent to agent</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">platform = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"discord"</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">                         # optional, defaults to first configured</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">sender_name = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"CronScheduler"</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">               # optional, defaults to "openab-cron"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">thread_id = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"1234567890"</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">                     # optional, post to existing thread</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">cronjobs</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">schedule = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"0 0 * * 0"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">channel = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"123456789"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">message = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"generate weekly status report and post it here"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">platform = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"discord"</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">cronjobs</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">schedule = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"0 18 * * 1-5"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">channel = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"C0123456789"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">message = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"check for any critical alerts in the last 8 hours"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">platform = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"slack"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">sender_name = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"OpsBot"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">thread_id = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"1714000000.000000"</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">              # Slack thread_ts</span></span></code></pre>
+<h3 id="sender-identity">Sender Identity</h3>
+<p>When a cron job fires, the message injected into the agent session includes a sender header so the agent knows who/what triggered it:</p>
+<ul>
+<li><strong>Default:</strong> <code>openab-cron</code> (if <code>sender_name</code> is not specified)</li>
+<li><strong>Customizable:</strong> operators can set <code>sender_name</code> per cron entry</li>
+</ul>
+<p>The agent sees this in the prompt context the same way it sees a Discord/Slack username, e.g.:</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>[openab-cron]: summarize yesterday's merged PRs</span></span></code></pre>
+<p>This helps the agent distinguish scheduled prompts from interactive users, and operators can use meaningful names like <code>&quot;DailyOps&quot;</code> or <code>&quot;WeeklyReport&quot;</code> for clarity in logs and thread titles.</p>
+<h3 id="execution-flow">Execution Flow</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>┌──────────────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  OAB Process                                                 │</span></span>
+<span class="line"><span>│                                                              │</span></span>
+<span class="line"><span>│  ┌────────────────┐    tick    ┌──────────────────────┐      │</span></span>
+<span class="line"><span>│  │  Cron Scheduler│──────────▶│  Session Pool        │      │</span></span>
+<span class="line"><span>│  │  (internal)    │           │  (existing)          │      │</span></span>
+<span class="line"><span>│  │                │           │                      │      │</span></span>
+<span class="line"><span>│  │  Evaluates     │  create   │  Spawns ACP session  │      │</span></span>
+<span class="line"><span>│  │  expressions   │──session─▶│  for target channel  │      │</span></span>
+<span class="line"><span>│  │  every minute  │           │                      │      │</span></span>
+<span class="line"><span>│  └────────────────┘           └──────────┬───────────┘      │</span></span>
+<span class="line"><span>│                                          │                   │</span></span>
+<span class="line"><span>│                                          ▼                   │</span></span>
+<span class="line"><span>│                               ┌──────────────────────┐      │</span></span>
+<span class="line"><span>│                               │  Agent (kiro-cli)    │      │</span></span>
+<span class="line"><span>│                               │  Receives message    │      │</span></span>
+<span class="line"><span>│                               │  as if user typed it │      │</span></span>
+<span class="line"><span>│                               └──────────┬───────────┘      │</span></span>
+<span class="line"><span>│                                          │                   │</span></span>
+<span class="line"><span>│                                          ▼                   │</span></span>
+<span class="line"><span>│                               ┌──────────────────────┐      │</span></span>
+<span class="line"><span>│                               │  Platform Adapter    │      │</span></span>
+<span class="line"><span>│                               │  Posts reply to      │      │</span></span>
+<span class="line"><span>│                               │  target channel      │      │</span></span>
+<span class="line"><span>│                               └──────────────────────┘      │</span></span>
+<span class="line"><span>└──────────────────────────────────────────────────────────────┘</span></span></code></pre>
+<h3 id="key-behaviors">Key Behaviors</h3>
+<ol>
+<li><strong>Evaluation</strong> — a lightweight scheduler thread evaluates cron expressions once per minute</li>
+<li><strong>Session creation</strong> — when a cron fires, OAB creates (or reuses) a session for the target channel, identical to a user-initiated session</li>
+<li><strong>Message injection</strong> — the configured message is injected as if a user sent it in the channel</li>
+<li><strong>Reply delivery</strong> — agent response is posted to the target channel via the normal platform adapter</li>
+<li><strong>Thread creation</strong> — each cron execution creates a new thread (Discord) or thread reply (Slack), keeping cron outputs organized. If <code>thread_id</code> is specified, the reply is posted to that existing thread instead (useful for accumulating recurring results in one place).</li>
+<li><strong>Isolation</strong> — cron execution uses the same session pool with standard concurrency limits; a stuck cron job does not starve interactive sessions</li>
+<li><strong>Logging</strong> — each cron tick emits structured logs: <code>DEBUG</code> for expression evaluation, <code>INFO</code> for fired jobs (schedule, channel, message), <code>WARN</code>/<code>ERROR</code> for failures (session creation failed, channel not found, agent timeout)</li>
+</ol>
+<hr />
+<h2 id="4-failure-handling">4. Failure Handling</h2>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent session fails to start</td>
+<td>Log error, skip this tick, retry next schedule</td>
+</tr>
+<tr>
+<td>Agent times out</td>
+<td>Session TTL applies normally; cron does not retry</td>
+</tr>
+<tr>
+<td>Channel not found / bot not in channel</td>
+<td>Log error, skip; do not crash OAB</td>
+</tr>
+<tr>
+<td>Overlapping executions (previous still running)</td>
+<td>Skip if a session for the same cron entry is still active</td>
+</tr>
+<tr>
+<td>OAB restart</td>
+<td>Cron state is stateless — re-evaluated from config on startup, no persistence needed</td>
+</tr>
+</tbody>
+</table>
+<p>Cron failures are <strong>fire-and-forget</strong> — they log but never block the main event loop or degrade interactive chat performance.</p>
+<hr />
+<h2 id="5-helm-values-mapping">5. Helm Values Mapping</h2>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-yaml"><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># values.yaml</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">agents</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">:</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">  kiro</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">:</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">    cronjobs</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">      - </span><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">schedule</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"0 9 * * 1-5"</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">        channel</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"123456789"</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">        message</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"summarize yesterday's merged PRs"</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">        platform</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"discord"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">      - </span><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">schedule</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"0 0 * * 0"</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">        channel</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"123456789"</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">        message</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"generate weekly status report"</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">        platform</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"discord"</span></span></code></pre>
+<p>Rendered into <code>config.toml</code> via the existing Helm ConfigMap template.</p>
+<hr />
+<h2 id="6-scope-boundaries">6. Scope Boundaries</h2>
+<h3 id="in-scope-phase-1">In Scope (Phase 1)</h3>
+<ul>
+<li>Static cron expressions in <code>config.toml</code></li>
+<li>One-way message injection to agent</li>
+<li>Reply posted to configured channel</li>
+<li>Standard 5-field cron syntax (minute, hour, day-of-month, month, day-of-week) — same format as Linux crontab, Kubernetes CronJob, and GitHub Actions</li>
+<li>Timezone support via optional <code>timezone</code> field (defaults to UTC)</li>
+</ul>
+<h3 id="cron-expression-format">Cron Expression Format</h3>
+<p>The schedule field uses standard POSIX cron syntax, compatible with:</p>
+<ul>
+<li>Linux <code>crontab -e</code></li>
+<li>Kubernetes <code>CronJob.spec.schedule</code></li>
+<li>GitHub Actions <code>cron:</code></li>
+<li>AWS EventBridge <code>cron()</code> (slightly different wrapper but same fields)</li>
+</ul>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>┌───────────── minute (0–59)</span></span>
+<span class="line"><span>│ ┌───────────── hour (0–23)</span></span>
+<span class="line"><span>│ │ ┌───────────── day of month (1–31)</span></span>
+<span class="line"><span>│ │ │ ┌───────────── month (1–12)</span></span>
+<span class="line"><span>│ │ │ │ ┌───────────── day of week (0–7, 0 and 7 = Sunday)</span></span>
+<span class="line"><span>│ │ │ │ │</span></span>
+<span class="line"><span>* * * * *</span></span></code></pre>
+<h3 id="explicitly-out-of-scope">Explicitly Out of Scope</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Reason</th>
+<th>Alternative</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent self-configuring cron</td>
+<td>Opacity + reliability concerns (OpenClaw lesson)</td>
+<td>Operator edits config</td>
+</tr>
+<tr>
+<td>Conditional execution</td>
+<td>Complexity belongs in external schedulers</td>
+<td>K8s CronJob / GHA</td>
+</tr>
+<tr>
+<td>Retry with backoff</td>
+<td>Over-engineering for Phase 1</td>
+<td>External scheduler</td>
+</tr>
+<tr>
+<td>Cron result persistence / history</td>
+<td>Adds state management to OAB</td>
+<td>External observability</td>
+</tr>
+<tr>
+<td>Multi-step workflows / DAGs</td>
+<td>Not a scheduler's job</td>
+<td>GitHub Actions / Step Functions</td>
+</tr>
+<tr>
+<td>Dynamic cron via API / Discord command</td>
+<td>Requires runtime state, auth, validation</td>
+<td>Future ADR if needed</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-comparison-with-external-scheduler-approaches">7. Comparison with External Scheduler Approaches</h2>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Config-Driven (this ADR)</th>
+<th>K8s CronJob</th>
+<th>GitHub Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Infrastructure needed</td>
+<td>None (built into OAB)</td>
+<td>K8s cluster</td>
+<td>GitHub repo</td>
+</tr>
+<tr>
+<td>Isolation</td>
+<td>Shared OAB process</td>
+<td>Separate Pod per execution</td>
+<td>Separate runner</td>
+</tr>
+<tr>
+<td>Scalability</td>
+<td>Bounded by session pool</td>
+<td>Unlimited (Pod per job)</td>
+<td>Unlimited (runner per job)</td>
+</tr>
+<tr>
+<td>Complexity</td>
+<td>Minimal</td>
+<td>Medium (manifests, RBAC)</td>
+<td>Low-Medium (workflow YAML)</td>
+</tr>
+<tr>
+<td>Visibility</td>
+<td>Config file + logs</td>
+<td>kubectl + Pod logs</td>
+<td>Actions UI + logs</td>
+</tr>
+<tr>
+<td>Best for</td>
+<td>Simple recurring prompts</td>
+<td>Heavy/long-running jobs</td>
+<td>CI/CD-integrated tasks</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recommendation:</strong> Use config-driven cron for simple &quot;send message at time X&quot; use cases. Graduate to K8s CronJob or GitHub Actions when you need isolation, retries, conditional logic, or long-running executions.</p>
+<hr />
+<h2 id="8-rollout-plan">8. Rollout Plan</h2>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Scope</th>
+<th>Deliverable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Phase 1 (this ADR)</strong></td>
+<td>Config-driven <code>[[cronjobs]]</code> in <code>config.toml</code></td>
+<td>Scheduler module, Helm values, docs</td>
+</tr>
+<tr>
+<td><strong>Phase 2</strong></td>
+<td>Observability</td>
+<td>Cron execution metrics, structured logs, optional webhook on failure</td>
+</tr>
+<tr>
+<td><strong>Phase 3</strong></td>
+<td>Enhanced expressions</td>
+<td><code>@daily</code>, <code>@weekly</code> shortcuts, second-precision (optional), jitter</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="consequences">Consequences</h2>
+<h3 id="positive">Positive</h3>
+<ul>
+<li>Zero-infrastructure scheduled tasks for simple use cases</li>
+<li>Operator has full control and visibility — no agent-configured surprises</li>
+<li>Stateless design — no persistence, no migration, restart-safe</li>
+<li>Decoupled from gateway event loop — cron failures cannot degrade chat</li>
+<li>Natural upgrade path to external schedulers for complex needs</li>
+<li>Aligns with OAB's simplicity-first philosophy</li>
+</ul>
+<h3 id="negative">Negative</h3>
+<ul>
+<li>Cannot be configured via natural language in conversation (by design)</li>
+<li>Requires config change + restart/reload to modify schedules</li>
+<li>Limited to what a single message prompt can express</li>
+<li>No built-in retry — transient failures are silently skipped until next tick</li>
+</ul>
+<hr />
+<h2 id="compliance">Compliance</h2>
+<ol>
+<li><strong>No agent self-configuration</strong>: the agent must not be able to create, modify, or delete cron entries. All scheduling is operator-controlled via config.</li>
+<li><strong>Isolation from chat traffic</strong>: cron execution must use the standard session pool with concurrency limits. A cron job must never starve interactive sessions.</li>
+<li><strong>Stateless scheduler</strong>: no persistent cron state. Schedule evaluation is purely derived from config + current time.</li>
+<li><strong>Standard cron syntax</strong>: expressions must follow the POSIX 5-field cron format. Non-standard extensions must be explicitly documented.</li>
+</ol>
+<hr />
+<h2 id="notes">Notes</h2>
+<ul>
+<li><strong>Version:</strong> 0.1</li>
+<li><strong>Changelog:</strong>
+<ul>
+<li>0.1 (2026-04-26): Initial proposed version</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="references">References</h2>
+<ul>
+<li><a href="../cronjob_k8s_refarch.md">K8s CronJob Reference Architecture</a> — external scheduler approach for heavy workloads</li>
+<li><a href="../config-reference.md">OpenAB Configuration Reference</a> — existing config.toml structure</li>
+<li><a href="./custom-gateway.md">ADR: Custom Gateway</a> — gateway architecture context (scheduled triggers via webhook)</li>
+<li><a href="https://man7.org/linux/man-pages/man5/crontab.5.html">cron(5) man page</a> — POSIX cron expression syntax</li>
+</ul>
+</article><nav class="flex justify-between gap-4 mt-12 pt-6 border-t border-border"><a class="flex-1 px-4 py-3.5 border border-border rounded-xl hover:border-accent" href="/openab/adr/ambient"><div class="text-muted text-[.78rem]">← <!-- -->Previous</div><div class="font-semibold text-accent">adr/ambient</div></a><a class="flex-1 px-4 py-3.5 border border-border rounded-xl hover:border-accent text-right" href="/openab/adr/context-aware-token"><div class="text-muted text-[.78rem]">Next<!-- --> →</div><div class="font-semibold text-accent">adr/context-aware-token</div></a></nav><script>document.querySelectorAll('[data-copy-md]').forEach(function(b){b.addEventListener('click',async function(){try{var r=await fetch(b.getAttribute('data-copy-md'));var t=await r.text();await navigator.clipboard.writeText(t);var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o;},1500);}catch(e){alert('Copy failed: '+e);}});});document.querySelectorAll('.prose pre').forEach(function(pre){if(pre.querySelector('.copy-code'))return;var b=document.createElement('button');b.className='copy-code';b.textContent='Copy';b.addEventListener('click',async function(){var c=pre.querySelector('code');try{await navigator.clipboard.writeText(c?c.innerText:pre.innerText);var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o;},1200);}catch(e){}});pre.appendChild(b);});document.querySelectorAll('.tabs').forEach(function(t){t.querySelectorAll('.tab-btn').forEach(function(b){b.addEventListener('click',function(){var i=b.getAttribute('data-tab');t.querySelectorAll('.tab-btn').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-tab')===i);});t.querySelectorAll('.tab-panel').forEach(function(p){p.hidden=p.getAttribute('data-tab')!==i;});});});});(function(){var blocks=document.querySelectorAll('code.language-mermaid');if(!blocks.length)return;var items=[];blocks.forEach(function(c){var pre=c.closest('pre')||c;var h=document.createElement('div');h.className='mermaid-diagram';pre.replaceWith(h);items.push({src:c.textContent,holder:h});});var lib,id=0;function load(){return lib||(lib=import("https://esm.sh/mermaid@11").then(function(m){return m.default;}));}function theme(){return document.documentElement.getAttribute('data-theme')==='dark'?'dark':'default';}function run(){load().then(function(mermaid){mermaid.initialize({startOnLoad:false,securityLevel:'loose',theme:theme()});items.forEach(function(it){mermaid.render('kura-mmd-'+(id++),it.src).then(function(r){it.holder.innerHTML=r.svg;}).catch(function(e){it.holder.innerHTML='<pre class="mermaid-error">'+String((e&&e.message)||e)+'</pre>';});});}).catch(function(){});}run();var cur=document.documentElement.getAttribute('data-theme');new MutationObserver(function(){var t=document.documentElement.getAttribute('data-theme');if(t!==cur){cur=t;run();}}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});})();</script></main><aside class="sticky top-14 max-h-[calc(100vh-56px)] overflow-y-auto px-4 py-8 max-lg:hidden"><p class="text-[.72rem] font-bold tracking-wider uppercase text-muted mb-2.5">On this page</p><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#1-user-story-amp-requirements">1. User Story &amp;amp; Requirements</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#2-context-amp-decision-drivers">2. Context &amp;amp; Decision Drivers</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#lessons-from-in-app-cronjob-openclaw-pattern">Lessons from In-App CronJob (OpenClaw Pattern)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#design-principle-decouple-scheduler-from-core">Design Principle: Decouple Scheduler from Core</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#why-config-driven-first">Why Config-Driven First</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#3-high-level-design">3. High-Level Design</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#configuration">Configuration</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#sender-identity">Sender Identity</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#execution-flow">Execution Flow</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#key-behaviors">Key Behaviors</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#4-failure-handling">4. Failure Handling</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#5-helm-values-mapping">5. Helm Values Mapping</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#6-scope-boundaries">6. Scope Boundaries</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#in-scope-phase-1">In Scope (Phase 1)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#cron-expression-format">Cron Expression Format</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#explicitly-out-of-scope">Explicitly Out of Scope</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#7-comparison-with-external-scheduler-approaches">7. Comparison with External Scheduler Approaches</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#8-rollout-plan">8. Rollout Plan</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#consequences">Consequences</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#positive">Positive</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#negative">Negative</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#compliance">Compliance</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#notes">Notes</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#references">References</a></aside></div></div><footer class="border-t border-border mt-8"><div class="flex items-center justify-between flex-wrap gap-4 max-w-[1280px] mx-auto px-6 py-5 max-md:px-4"><nav class="flex items-center gap-[1.1rem] text-[.85rem]"><a class="text-muted hover:text-fg" href="/llms.txt">llms.txt</a><a class="text-muted hover:text-fg" href="/mcp">MCP</a><button type="button" class="inline-flex items-center justify-center w-[30px] h-[30px] p-0 text-[.95rem] leading-none border border-border rounded-lg bg-surface text-fg cursor-pointer hover:bg-hover" data-theme-toggle="true" aria-label="Toggle theme"></button></nav><a class="text-muted text-[.85rem] hover:text-accent" href="https://kura.build/" target="_blank" rel="noreferrer">Powered by Kura</a></div></footer><script>document.addEventListener('keydown',function(e){if(e.key==='/' && !document.documentElement.dataset.ctrlk && !/INPUT|TEXTAREA/.test((document.activeElement||{}).tagName||'')){e.preventDefault();var s=document.querySelector('.search-box');if(s)s.focus();}});(function(){var b=document.querySelector('[data-theme-toggle]');if(!b)return;var d=document.documentElement,order=['system','light','dark'],icon={system:'🖥',light:'☀',dark:'☾'};function pref(){return d.getAttribute('data-theme-pref')||'system';}function res(p){return p==='dark'||(p==='system'&&matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light';}function set(p){d.setAttribute('data-theme-pref',p);d.setAttribute('data-theme',res(p));try{localStorage.setItem('kura-theme',p);}catch(e){}b.textContent=icon[p];b.setAttribute('title','Theme: '+p);}set(pref());b.addEventListener('click',function(){set(order[(order.indexOf(pref())+1)%order.length]);});try{matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(){if(pref()==='system')d.setAttribute('data-theme',res('system'));});}catch(e){}})();document.addEventListener('click',function(e){var t=e.target;document.querySelectorAll('details[data-menu][open]').forEach(function(d){if(!d.contains(t))d.removeAttribute('open');});var it=t.closest&&t.closest('details[data-menu] a, details[data-menu] [data-copy-md]');if(it){var dd=it.closest('details[data-menu]');if(dd)setTimeout(function(){dd.removeAttribute('open');},0);}});document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('details[data-menu][open]').forEach(function(d){d.removeAttribute('open');});});(function(){var root=document.documentElement;function opener(){return document.querySelector('[data-drawer-open]');}function items(){var d=document.getElementById('docs-nav');if(!d)return[];return[].filter.call(d.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])'),function(el){return el.offsetParent!==null;});}function set(o){var was=root.classList.contains('drawer-open');root.classList.toggle('drawer-open',o);var b=opener();if(b)b.setAttribute('aria-expanded',o?'true':'false');if(o){var f=items();if(f[0])f[0].focus();}else if(was&&b)b.focus();}document.addEventListener('click',function(e){if(e.target.closest('[data-drawer-open]')){e.preventDefault();set(!root.classList.contains('drawer-open'));return;}if(e.target.closest('[data-drawer-close]')){set(false);return;}if(e.target.closest('#docs-nav a'))set(false);});document.addEventListener('keydown',function(e){if(e.key==='Escape'){set(false);return;}if(e.key==='Tab'&&root.classList.contains('drawer-open')){var f=items();if(!f.length)return;var first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}else if(f.indexOf(document.activeElement)<0){e.preventDefault();first.focus();}}});})();(function(){
+  function trim(p){return p.length>1&&p.endsWith('/')?p.slice(0,-1):p;}
+  function sync(){
+    var path=trim(location.pathname), tab=null;
+    var links=document.querySelectorAll('.sidebar a[href],[data-tabbar] a[href]');
+    for(var i=0;i<links.length;i++){var a=links[i],on=trim(a.getAttribute('href'))===path;
+      if(on){a.setAttribute('aria-current','page');var g=a.closest('[data-tab]');if(g)tab=g.getAttribute('data-tab');}
+      else a.removeAttribute('aria-current');}
+    if(tab!=null){
+      document.querySelectorAll('[data-tab]').forEach(function(g){g.hidden=g.getAttribute('data-tab')!==tab;});
+      document.querySelectorAll('[data-tabbar] a').forEach(function(a){
+        if(a.getAttribute('data-tab-key')===tab)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+    }
+    // expand the folder(s) holding the active page. Iterate EVERY aria-current sidebar link, not
+    // just the first: a folder-as-page link lives in a <details>, but the mobile tab-bar link (also
+    // in .sidebar, earlier in the DOM) has no folder ancestor — querySelector would pick that one
+    // and expand nothing. forEach opens each link's folder chain; tab links are harmless no-ops.
+    document.querySelectorAll('.sidebar a[aria-current="page"]').forEach(function(cur){
+      var d=cur.closest('details.folder');while(d){d.open=true;d=d.parentElement&&d.parentElement.closest('details.folder');}});
+    // rewrite the locale-switch links to THIS page's equivalent path (swap the locale prefix)
+    var ll=document.querySelectorAll('[data-locale-home]');
+    if(ll.length){var lc=document.querySelector('[data-locale-home][data-locale-active]'),cp=lc?lc.getAttribute('data-locale-home'):'/';cp=cp==='/'?'':cp;
+      var rest=location.pathname;if(cp&&rest.indexOf(cp)===0)rest=rest.slice(cp.length)||'/';
+      ll.forEach(function(a){var h=a.getAttribute('data-locale-home'),p=h==='/'?'':h;a.setAttribute('href',rest==='/'?(p||'/'):(p+rest));});}
+    // mobile nav-context: "Active tab / Page title" (the shell can't know the page server-side)
+    var nc=document.querySelector('[data-nav-context]');
+    if(nc){var at=document.querySelector('[data-tabbar] a[aria-current="page"]'),h1=document.querySelector('main h1');
+      nc.textContent=[at&&at.textContent.trim(),h1&&h1.textContent.trim()].filter(Boolean).join(' / ');}
+  }
+  sync();
+  var outlet=document.querySelector('[data-june-outlet]');
+  if(outlet) new MutationObserver(sync).observe(outlet,{childList:true,subtree:true});
+})();</script><script type="module" src="/openab/_june/client.a5a40235.js"></script><script type="application/json" id="june-webmcp">[{"name":"search_docs","description":"Hybrid keyword + semantic search over the docs. Returns the most relevant passages with their doc slug, title, and relevance score.","inputSchema":{"type":"object","properties":{"query":{"type":"string","description":"A natural-language question or keywords."},"topK":{"type":"integer","description":"Number of results to return (default 5)."}},"required":["query"]}},{"name":"get_page","description":"Fetch one doc page as clean Markdown by its slug (e.g. introduction, search, agents).","inputSchema":{"type":"object","properties":{"slug":{"type":"string","description":"The page slug."}},"required":["slug"]}},{"name":"list_docs","description":"List every doc page with its slug, title, section, and `sources` (the code paths it documents). The map for finding which pages a code change affects.","inputSchema":{"type":"object","properties":{}}}]</script><script>(function(){var mc=navigator.modelContext;if(!mc||!mc.registerTool)return;var el=document.getElementById('june-webmcp');if(!el)return;var tools;try{tools=JSON.parse(el.textContent)}catch(e){return}var ac=new AbortController();tools.forEach(function(t){mc.registerTool({name:t.name,description:t.description,inputSchema:t.inputSchema,execute:function(args){return fetch('/mcp',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'tools/call',params:{name:t.name,arguments:args}})}).then(function(r){return r.json()}).then(function(j){return j.result})}},{signal:ac.signal})})})();</script></body></html>

@@ -1,0 +1,538 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="icon" href="/openab/favicon.svg" type="image/svg+xml"/><title>hooks · OpenAB Docs</title><meta name="description" content="A lightweight, cloud-native ACP harness connecting chat platforms to AI coding agents."/><meta property="og:title" content="hooks"/><meta property="og:description" content="A lightweight, cloud-native ACP harness connecting chat platforms to AI coding agents."/><meta property="og:type" content="article"/><script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.md"}},{"not":{"href_matches":"/*.json"}},{"not":{"href_matches":"/*.txt"}},{"not":{"href_matches":"/*.xml"}},{"not":{"href_matches":"/mcp"}}]},"eagerness":"moderate"}],"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.md"}},{"not":{"href_matches":"/*.json"}},{"not":{"href_matches":"/*.txt"}},{"not":{"href_matches":"/*.xml"}},{"not":{"href_matches":"/mcp"}}]},"eagerness":"moderate"}]}</script><script>(function(){if(HTMLScriptElement.supports&&HTMLScriptElement.supports('speculationrules'))return;var seen=new Set();document.addEventListener('pointerover',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var u=new URL(a.href,location.href);if(u.origin!==location.origin||seen.has(u.pathname)||u.pathname===location.pathname)return;if(/.(md|json)$/.test(u.pathname)||u.pathname==='/mcp')return;seen.add(u.pathname);var l=document.createElement('link');l.rel='prefetch';l.href=u.pathname+u.search;document.head.appendChild(l);},{passive:true});})();</script><style>
+          @view-transition { navigation: auto; }
+          ::view-transition-group(root),
+          ::view-transition-old(root),
+          ::view-transition-new(root) { animation-duration: 120ms; }
+          @media (prefers-reduced-motion: reduce) {
+            ::view-transition-group(*),
+            ::view-transition-old(*),
+            ::view-transition-new(*) { animation: none !important; }
+          }
+</style><link rel="stylesheet" href="/openab/_june/global.1a9cb889.css"/></head><body><script>(function(){try{var p=localStorage.getItem('kura-theme')||'system';var d=document.documentElement;d.setAttribute('data-theme-pref',p);d.setAttribute('data-theme',(p==='dark'||(p==='system'&&matchMedia('(prefers-color-scheme:dark)').matches))?'dark':'light');}catch(e){}})();</script><header class="sticky top-0 z-20 flex items-center gap-4 h-14 px-5 bg-topbar-bg backdrop-blur-sm border-b border-border max-md:px-4 max-md:gap-2.5"><a class="flex items-center gap-1.5 font-bold text-[1.05rem]" href="/openab/">OpenAB<!-- --> <span class="font-normal text-muted text-[.85rem]">Docs</span></a><form class="ml-auto max-md:ml-2 max-md:flex-1 max-md:min-w-0" action="/openab/search" method="get"><input class="w-[280px] max-w-[40vw] px-3 py-2 text-[.9rem] border border-border rounded-lg bg-surface-2 text-fg max-md:w-full max-md:max-w-none search-box" placeholder="Search docs…  (press /)" aria-label="Search" data-search-endpoint="/openab/search.json" data-doc-base="/openab/" name="q"/></form><nav class="flex items-center gap-4 text-muted text-[.9rem]"></nav></header><button class="hidden max-md:flex items-center gap-2.5 w-full px-4 py-2.5 bg-bg border-0 border-b border-border text-fg-soft text-[.9rem] text-left cursor-pointer focus-visible:outline-none focus-visible:bg-hover" data-drawer-open="true" aria-controls="docs-nav" aria-expanded="false"><span class="text-[1.05rem] leading-none" aria-hidden="true">☰</span><span class="font-semibold text-fg flex-none">Navigation</span><span class="nav-bar-context text-muted flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap" data-nav-context="true"></span></button><div class="drawer-backdrop" data-drawer-close="true" aria-hidden="true"></div><div class="grid grid-cols-[248px_minmax(0,1fr)_220px] max-lg:grid-cols-[248px_minmax(0,1fr)] max-md:grid-cols-1 items-start max-w-[1280px] mx-auto"><aside class="sidebar sticky top-14 h-[calc(100vh-56px)] overflow-y-auto px-4 py-6 border-r border-border" id="docs-nav"><div data-tab="_"><div class="mb-5"><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/">Introduction</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agent-installable-tools">agent-installable-tools</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agentcore">agentcore</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/ai-install-upgrade">ai-install-upgrade</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/ambient">ambient</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/antigravity">antigravity</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/claude-code">claude-code</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/codex">codex</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/config-reference">config-reference</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/control-directives">control-directives</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/copilot">copilot</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/cronjob">cronjob</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/cursor">cursor</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/devin">devin</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/discord">discord</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/feishu">feishu</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/gemini">gemini</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/gh-auth-device-flow">gh-auth-device-flow</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/github-token-setup">github-token-setup</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/github-webhook-integration">github-webhook-integration</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/google-chat">google-chat</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/grok">grok</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/helm-publishing">helm-publishing</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/hermes">hermes</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/hooks">hooks</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/image-tags">image-tags</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/inbound-attachments">inbound-attachments</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/kiro">kiro</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/line">line</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/local-dev">local-dev</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/local-vision-models">local-vision-models</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/message-dispatch-modes">message-dispatch-modes</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/messaging">messaging</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/mimocode">mimocode</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/msteams-enterprise">msteams-enterprise</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/msteams-selfhosted">msteams-selfhosted</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/multi-agent">multi-agent</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/native-agent">native-agent</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/opencode">opencode</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/openshell">openshell</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/output-directives">output-directives</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/pi">pi</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/python">python</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/reactions">reactions</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/secrets-management">secrets-management</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/sendfiles">sendfiles</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/sendimages">sendimages</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/sidecar">sidecar</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/slack">slack</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/slash-commands">slash-commands</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering-design-guide">steering-design-guide</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/stt">stt</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/telegram">telegram</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/tool-display">tool-display</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/wecom">wecom</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/workspaces">workspaces</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/xai-proxy">xai-proxy</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Adr</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/agentcore-runtime-backend">adr/agentcore-runtime-backend</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/ambient">adr/ambient</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/basic-cronjob">adr/basic-cronjob</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/context-aware-token">adr/context-aware-token</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/control-directives">adr/control-directives</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/custom-gateway">adr/custom-gateway</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/ecs-control-plane">adr/ecs-control-plane</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/hooks">adr/hooks</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/imessage-integration">adr/imessage-integration</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/line-adapter">adr/line-adapter</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/multi-platform-adapters">adr/multi-platform-adapters</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/openab-agent">adr/openab-agent</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/openab-agent-mcp">adr/openab-agent-mcp</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/openab-agent-oauth">adr/openab-agent-oauth</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/pr-contribution-guidelines">adr/pr-contribution-guidelines</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/pr-review-loop">adr/pr-review-loop</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/secrets-management">adr/secrets-management</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/telegram-rich-messages">adr/telegram-rich-messages</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/turn-boundary-batching">adr/turn-boundary-batching</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/unified-binary">adr/unified-binary</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Refarch</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/aws-ecs-fargate-spot">refarch/aws-ecs-fargate-spot</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/ci-observability-discord">refarch/ci-observability-discord</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/cronjob_k8s_refarch">refarch/cronjob_k8s_refarch</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/gbrain">refarch/gbrain</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/remote-ssh-debugging">refarch/remote-ssh-debugging</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/sidecar-proxy">refarch/sidecar-proxy</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/telegram-cloudflare-tunnel">refarch/telegram-cloudflare-tunnel</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Steering</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering/feature-request">steering/feature-request</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering/pr-review">steering/pr-review</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering/triage">steering/triage</a></li></ul></div></div></aside><div data-june-outlet=""><main class="w-auto max-w-none m-0 min-w-0 px-10 pt-8 pb-20 max-md:px-4 max-md:pt-5 max-md:pb-12"><details class="hidden max-lg:block mb-5 border border-border rounded-xl overflow-hidden"><summary class="chevron flex justify-between items-center cursor-pointer px-3.5 py-2.5 text-[.85rem] font-semibold text-fg-soft">On this page</summary><div class="flex flex-col px-3.5 pt-1 pb-2.5 border-t border-border"><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#lifecycle-order">Lifecycle Order</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#pre-seed-phase">Pre-Seed Phase</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#configuration">Configuration</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#fields">Fields</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#layer-concept">Layer Concept</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#safety">Safety</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#constraints">Constraints</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#iam-policy">IAM Policy</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#recommended-enable-s3-checksums-on-upload">Recommended: Enable S3 Checksums on Upload</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#available-hooks">Available Hooks</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#configuration-1">Configuration</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#option-a-file-path">Option A: File path</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#option-b-inline-script">Option B: Inline script</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#option-c-remote-url-with-sha-256-verification">Option C: Remote URL (with SHA-256 verification)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#fields-1">Fields</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#validation-rules">Validation Rules</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#environment">Environment</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#security">Security</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#examples">Examples</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#clone-a-configsteering-repo-on-startup">Clone a config/steering repo on startup</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#backup-state-on-shutdown-ecs-fargate">Backup state on shutdown (ECS Fargate)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#conditional-oauth-token-refresh">Conditional OAuth token refresh</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#real-world-example-s3-restore--backup-round-trip">Real-World Example: S3 restore + backup round-trip</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#1-restore-on-boot-preseed">1. Restore on boot (pre_seed)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#2-backup-on-shutdown-preshutdown">2. Backup on shutdown (pre_shutdown)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#3-supply-statebucket-and-openabagentname-at-deployment">3. Supply STATE_BUCKET and OPENAB_AGENT_NAME at deployment</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#4-iam-policy">4. IAM policy</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#platform-comparison">Platform Comparison</a></div></details><div class="flex items-center justify-between gap-4 mb-6"><div class="prose"><h1 class="!m-0">Lifecycle Hooks</h1></div><div class="relative inline-flex items-stretch flex-none"><button class="inline-flex items-center gap-1.5 px-3 py-1.5 text-[.85rem] border border-border border-r-0 rounded-l-lg bg-surface text-fg-soft cursor-pointer hover:bg-hover hover:text-fg" data-copy-md="/openab/hooks.md"><svg class="" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>Copy Markdown</button><details class="relative inline-flex items-stretch" data-menu="true"><summary class="chevron inline-flex items-center justify-center w-[30px] border border-border rounded-r-lg bg-surface text-muted cursor-pointer hover:bg-hover hover:text-fg" aria-label="More actions"></summary><div class="absolute right-0 top-[calc(100%+.4rem)] z-30 min-w-[17rem] flex flex-col gap-px p-1.5 bg-surface border border-border rounded-xl shadow-xl"><button class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" data-copy-md="/openab/hooks.md"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg><span class="flex flex-col min-w-0"><span class="font-semibold text-[.9rem] text-fg">Copy Markdown</span><span class="text-[.8rem] text-muted">Copy this page as Markdown for LLMs</span></span></button><a class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" href="/openab/hooks.md"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M16 21H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6l4 4v12a2 2 0 0 1-2 2z"></path><path d="M9 13h6M9 17h4"></path></svg><span class="flex flex-col min-w-0"><span class="inline-flex items-center gap-1 font-semibold text-[.9rem] text-fg">View as Markdown<!-- --> <svg class="text-muted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span><span class="text-[.8rem] text-muted">View this page as plain text</span></span></a><a class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" href="https://chatgpt.com/?q=Please%20read%20this%20doc%20and%20answer%20my%20questions%3A%20hooks" target="_blank" rel="noreferrer"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"></path></svg><span class="flex flex-col min-w-0"><span class="inline-flex items-center gap-1 font-semibold text-[.9rem] text-fg">Open in ChatGPT<!-- --> <svg class="text-muted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span><span class="text-[.8rem] text-muted">Ask ChatGPT about this page</span></span></a><a class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" href="https://claude.ai/new?q=Please%20read%20this%20doc%20and%20answer%20my%20questions%3A%20hooks" target="_blank" rel="noreferrer"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"></path></svg><span class="flex flex-col min-w-0"><span class="inline-flex items-center gap-1 font-semibold text-[.9rem] text-fg">Open in Claude<!-- --> <svg class="text-muted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span><span class="text-[.8rem] text-muted">Ask Claude about this page</span></span></a></div></details></div></div><article class="prose"><p>OpenAB supports lifecycle hooks that run at specific points during the container lifecycle. All lifecycle phases are configured in <code>config.toml</code> under the <code>[hooks]</code> table.</p>
+<blockquote>
+<p><strong>Platform support:</strong> Lifecycle hooks are <strong>Unix-only</strong> (Linux/macOS). They rely on Unix symlinks (<code>pre_seed</code> tarball extraction) and POSIX shell scripts (<code>pre_boot</code>/<code>pre_shutdown</code>), and are only ever exercised inside Linux containers. If any hook (<code>pre_seed</code>, <code>pre_boot</code>, or <code>pre_shutdown</code>) is configured while running on <strong>Windows</strong>, OpenAB <strong>fails fast at startup</strong> rather than misbehaving silently. Remove the <code>[hooks.*]</code> config to run on Windows.</p>
+</blockquote>
+<h2 id="lifecycle-order">Lifecycle Order</h2>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>hooks.pre_seed → hooks.pre_boot → (agent running) → hooks.pre_shutdown</span></span></code></pre>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>When</th>
+<th>Purpose</th>
+<th>Config</th>
+<th>Action Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pre_seed</code></td>
+<td>First — before <code>pre_boot</code></td>
+<td>Download &amp; extract S3 archives to seed the environment</td>
+<td><code>[hooks.pre_seed]</code></td>
+<td>Built-in S3 download + extract</td>
+</tr>
+<tr>
+<td><code>pre_boot</code></td>
+<td>After seed, before agent pool starts</td>
+<td>Run custom setup scripts before agent pool creation</td>
+<td><code>[hooks.pre_boot]</code></td>
+<td>User script</td>
+</tr>
+<tr>
+<td><code>pre_shutdown</code></td>
+<td>After pool stops, before exit</td>
+<td>Run custom cleanup scripts after pool shutdown</td>
+<td><code>[hooks.pre_shutdown]</code></td>
+<td>User script</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pre-seed-phase">Pre-Seed Phase</h2>
+<p>The <code>pre_seed</code> phase runs <strong>before</strong> <code>pre_boot</code>. It downloads archives from S3 and extracts them into the agent's home directory (or a custom target). Supported formats: <code>.zip</code>, <code>.tar.gz</code>, and <code>.tgz</code> (auto-detected via magic bytes). This eliminates the need for users to install AWS CLI and write download scripts in <code>pre_boot</code>.</p>
+<blockquote>
+<p><code>pre-seed</code> is enabled by default. No feature flag needed.</p>
+</blockquote>
+<h3 id="configuration">Configuration</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">hooks</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">pre_seed</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">sources = [</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">  "s3://my-bucket/base-env.tar.gz"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">  "s3://my-bucket/shared-memory.zip"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">  "s3://my-bucket/agent-overrides.tgz"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># target = "/home/agent"                  # default: $HOME</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># max_bytes = 104857600                   # max compressed size per archive (default: 100 MiB)</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># timeout_seconds = 300                   # per-source timeout (default: 300)</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># on_failure = "abort"                    # "abort" or "warn" (default: "abort")</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># region = "us-west-2"                    # optional: override AWS region</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># endpoint_url = "http://localhost:4566"  # optional: LocalStack / VPC endpoint</span></span></code></pre>
+<h3 id="fields">Fields</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sources</code></td>
+<td>string[]</td>
+<td><code>[]</code></td>
+<td>S3 URIs of archives (<code>.zip</code>, <code>.tar.gz</code>, <code>.tgz</code>). Max 5. Extracted in order.</td>
+</tr>
+<tr>
+<td><code>target</code></td>
+<td>string</td>
+<td><code>$HOME</code></td>
+<td>Extraction target directory.</td>
+</tr>
+<tr>
+<td><code>max_bytes</code></td>
+<td>u64</td>
+<td><code>104857600</code></td>
+<td>Max compressed archive size in bytes (100 MiB).</td>
+</tr>
+<tr>
+<td><code>timeout_seconds</code></td>
+<td>u64</td>
+<td><code>300</code></td>
+<td>Per-source download+extract timeout.</td>
+</tr>
+<tr>
+<td><code>on_failure</code></td>
+<td>string</td>
+<td><code>&quot;abort&quot;</code></td>
+<td><code>&quot;abort&quot;</code> exits openab; <code>&quot;warn&quot;</code> logs and continues.</td>
+</tr>
+<tr>
+<td><code>region</code></td>
+<td>string</td>
+<td>—</td>
+<td>Override AWS region.</td>
+</tr>
+<tr>
+<td><code>endpoint_url</code></td>
+<td>string</td>
+<td>—</td>
+<td>Override S3 endpoint URL.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="layer-concept">Layer Concept</h3>
+<p>Sources are extracted sequentially (first → last). Files from later archives overwrite earlier ones — like layers in a container image:</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>Layer 3 (last)   ─── highest priority, overwrites all below</span></span>
+<span class="line"><span>Layer 2          ─── overwrites layer 1</span></span>
+<span class="line"><span>Layer 1 (first)  ─── base layer</span></span>
+<span class="line"><span>─────────────────</span></span>
+<span class="line"><span>     $HOME</span></span></code></pre>
+<h3 id="safety">Safety</h3>
+<ul>
+<li><strong>Integrity verification</strong>: two layers of protection:
+<ol>
+<li><strong>S3-native checksum (automatic)</strong>: if the object was uploaded with <code>--checksum-algorithm SHA256</code>, OpenAB automatically verifies it on download — no config needed</li>
+<li><strong>User-provided <code>sha256s</code> (optional)</strong>: explicit checksums in config for additional defense-in-depth</li>
+</ol>
+</li>
+<li><strong>Size cap</strong>: downloads exceeding <code>max_bytes</code> are rejected before extraction</li>
+<li><strong>Atomic extraction</strong>: archives are first extracted to a temp directory, then moved into target — if extraction fails, target is not corrupted. Note: the move phase is per-file; if it fails mid-way with <code>on_failure = &quot;warn&quot;</code>, the target may be partially updated.</li>
+<li><strong>Path traversal prevention</strong>: zip uses <code>enclosed_name()</code>; tarball uses <code>unpack_in()</code> which rejects <code>..</code> escapes</li>
+<li><strong>Permission hardening</strong>: suid/sgid/sticky bits are stripped from extracted files</li>
+</ul>
+<h3 id="constraints">Constraints</h3>
+<ul>
+<li>Maximum <strong>5</strong> sources</li>
+<li>Only <code>s3://</code> URIs supported</li>
+<li>Supported formats: <code>.zip</code>, <code>.tar.gz</code>, <code>.tgz</code> (auto-detected via gzip magic bytes)</li>
+<li>Uses the standard AWS credential chain (IRSA, ECS task role, env vars)</li>
+<li>Optional <code>region</code>/<code>endpoint_url</code> override for LocalStack or VPC endpoints</li>
+</ul>
+<h3 id="iam-policy">IAM Policy</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-json"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">{</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">  "Effect"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"Allow"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">  "Action"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"s3:GetObject"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">],</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">  "Resource"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: [</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">    "arn:aws:s3:::my-bucket/base-env.zip"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">    "arn:aws:s3:::my-bucket/shared-memory.zip"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">    "arn:aws:s3:::my-bucket/agent-overrides.zip"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">  ]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">}</span></span></code></pre>
+<h3 id="recommended-enable-s3-checksums-on-upload">Recommended: Enable S3 Checksums on Upload</h3>
+<p>For automatic integrity verification without maintaining <code>sha256s</code> in config, upload zip archives with SHA-256 checksums enabled:</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-bash"><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># Upload with SHA-256 checksum (recommended)</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">aws</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> s3</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> cp</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> env.zip</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> s3://my-bucket/env.zip</span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF"> --checksum-algorithm</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> SHA256</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># Verify it was stored</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">aws</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> s3api</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> head-object</span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF"> --bucket</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> my-bucket</span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF"> --key</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> env.zip</span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF"> --checksum-mode</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> ENABLED</span></span></code></pre>
+<p>When objects have S3-native SHA-256 checksums, OpenAB verifies them automatically on download — no <code>sha256s</code> config needed. This is the simplest path to integrity verification.</p>
+<blockquote>
+<p><strong>Note:</strong> If <code>sha256s</code> is also provided in config, both checks run. The S3-native check uses the base64-encoded checksum from the <code>x-amz-checksum-sha256</code> response header. If neither is available, download proceeds without integrity verification (relies on IAM + bucket policy for trust).</p>
+</blockquote>
+<hr />
+<h2 id="available-hooks">Available Hooks</h2>
+<p>The hooks below are <strong>script-based</strong> (<code>pre_boot</code>, <code>pre_shutdown</code>) and share the <code>script</code> / <code>inline</code> / <code>url</code> configuration described in this section. <code>pre_seed</code> is configured separately — see <a href="#pre-seed-phase">Pre-Seed Phase</a> above.</p>
+<table>
+<thead>
+<tr>
+<th>Hook</th>
+<th>Timing</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pre_boot</code></td>
+<td>Before agent pool creation</td>
+<td>Bootstrap files, sync from S3, install CLIs</td>
+</tr>
+<tr>
+<td><code>pre_shutdown</code></td>
+<td>After pool shutdown, before exit</td>
+<td>Backup state, sync to S3</td>
+</tr>
+</tbody>
+</table>
+<h2 id="configuration-1">Configuration</h2>
+<p>Each hook supports exactly <strong>one</strong> script source:</p>
+<h3 id="option-a-file-path">Option A: File path</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">hooks</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">pre_boot</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">script = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"/etc/openab/pre-boot.sh"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">timeout_seconds = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">60</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">on_failure = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"abort"</span></span></code></pre>
+<h3 id="option-b-inline-script">Option B: Inline script</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">hooks</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">pre_boot</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">inline = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">'''</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">#!/bin/sh</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">set -e</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">aws s3 sync "$BOOTSTRAP_URI" "$HOME/"</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">'''</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">timeout_seconds = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">120</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">on_failure = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"abort"</span></span></code></pre>
+<h3 id="option-c-remote-url-with-sha-256-verification">Option C: Remote URL (with SHA-256 verification)</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">hooks</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">pre_boot</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">url = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"https://raw.githubusercontent.com/acme/config/main/pre-boot.sh"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">sha256 = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">timeout_seconds = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">60</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">on_failure = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"abort"</span></span></code></pre>
+<h2 id="fields-1">Fields</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>script</code></td>
+<td>—</td>
+<td>Absolute path to an executable script</td>
+</tr>
+<tr>
+<td><code>inline</code></td>
+<td>—</td>
+<td>Script content (written to temp file and executed)</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>—</td>
+<td>Remote script URL (max 1 MiB)</td>
+</tr>
+<tr>
+<td><code>sha256</code></td>
+<td>—</td>
+<td>Required with <code>url</code> — hex-encoded SHA-256 of the script</td>
+</tr>
+<tr>
+<td><code>timeout_seconds</code></td>
+<td><code>60</code></td>
+<td>Max wall-clock time before the script is killed</td>
+</tr>
+<tr>
+<td><code>on_failure</code></td>
+<td><code>&quot;abort&quot;</code></td>
+<td><code>&quot;abort&quot;</code> exits openab; <code>&quot;warn&quot;</code> logs and continues</td>
+</tr>
+</tbody>
+</table>
+<h2 id="validation-rules">Validation Rules</h2>
+<ul>
+<li>Exactly one of <code>script</code>, <code>inline</code>, or <code>url</code> must be set</li>
+<li><code>url</code> requires <code>sha256</code></li>
+<li><code>script</code> must be an absolute path</li>
+</ul>
+<p>Validation runs at startup — config errors are caught before any side effects.</p>
+<h2 id="environment">Environment</h2>
+<p>Scripts run with a sanitized environment:</p>
+<p><strong>Always passed:</strong></p>
+<ul>
+<li><code>HOME</code>, <code>PATH</code>, <code>USER</code> (unix) / <code>USERPROFILE</code>, <code>USERNAME</code>, <code>SystemRoot</code>, <code>SystemDrive</code> (windows)</li>
+</ul>
+<p><strong>Cloud credentials (auto-detected and passed through):</strong></p>
+<ul>
+<li><code>AWS_*</code>, <code>AMAZON_*</code>, <code>ECS_CONTAINER_METADATA_URI*</code></li>
+<li><code>GOOGLE_*</code>, <code>GCLOUD_*</code>, <code>CLOUDSDK_*</code></li>
+<li><code>AZURE_*</code></li>
+</ul>
+<p><strong>Bootstrap variables (passed if set):</strong></p>
+<ul>
+<li><code>BOOTSTRAP_URI</code>, <code>BOOTSTRAP_BASE_URI</code>, <code>BOOTSTRAP_PERSONAL_URI</code></li>
+<li><code>STATE_BUCKET</code>, <code>TASK_FAMILY</code></li>
+</ul>
+<p><strong>OpenAB identity (passed if set):</strong></p>
+<ul>
+<li><code>OPENAB_AGENT_NAME</code> — the agent's configured name</li>
+<li><code>OPENAB_BACKEND_AGENT</code> — the backend agent type (e.g. <code>claude</code>, <code>codex</code>)</li>
+</ul>
+<blockquote>
+<p><strong>Note:</strong> <code>DISCORD_BOT_TOKEN</code> and other openab secrets are NOT exposed to hook scripts.</p>
+</blockquote>
+<h2 id="security">Security</h2>
+<ul>
+<li>Temp files are created atomically with <code>0700</code> permissions (unix)</li>
+<li>Remote scripts require SHA-256 verification — openab refuses to execute on mismatch</li>
+<li>Scripts run as the container's UID (not root, unless the container runs as root)</li>
+<li>Remote script size is capped at 1 MiB</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<h3 id="clone-a-configsteering-repo-on-startup">Clone a config/steering repo on startup</h3>
+<p><code>pre_boot</code> is for <strong>running logic</strong> at boot — cloning a repo, installing a tool, rendering config from env. For pulling plain S3 archives into <code>$HOME</code>, prefer <a href="#pre-seed-phase"><code>pre_seed</code></a> (path-traversal protection, size caps, and checksums built in — no script needed).</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">hooks</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">pre_boot</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">timeout_seconds = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">120</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">on_failure = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"abort"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">inline = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">'''</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">#!/bin/sh</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">set -e</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"># Pull steering/config from a private git repo (something pre_seed can't do)</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">if [ ! -d "$HOME/.config/steering/.git" ]; then</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">  git clone --depth 1 "$STEERING_REPO_URL" "$HOME/.config/steering"</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">else</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">  git -C "$HOME/.config/steering" pull --ff-only</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">fi</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">'''</span></span></code></pre>
+<blockquote>
+<p><strong>Auth ordering:</strong> cloning a <strong>private</strong> repo needs credentials. Because <code>pre_seed</code> runs <em>before</em> <code>pre_boot</code>, seed the GitHub auth there — include <code>~/.config/gh/</code> (the <code>gh</code> CLI OAuth token) or <code>~/.git-credentials</code> in one of your <code>pre_seed</code> archives. By the time this <code>pre_boot</code> script runs, <code>git</code>/<code>gh</code> is already authenticated and the clone succeeds. (Alternatively, inject a token via <code>[agent].env</code> and embed it in the clone URL — but seeding via <code>pre_seed</code> keeps the token out of config.)</p>
+</blockquote>
+<h3 id="backup-state-on-shutdown-ecs-fargate">Backup state on shutdown (ECS Fargate)</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">hooks</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">pre_shutdown</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">timeout_seconds = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">30</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">on_failure = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"warn"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">inline = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">'''</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">#!/bin/sh</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">aws s3 sync "$HOME/" "s3://$STATE_BUCKET/$TASK_FAMILY/" \</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">  --exclude "aws-cli/*" --exclude "bin/*" --quiet</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">'''</span></span></code></pre>
+<h3 id="conditional-oauth-token-refresh">Conditional OAuth token refresh</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">hooks</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">pre_boot</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">script = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"/etc/openab/pre-boot.sh"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">timeout_seconds = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">60</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">on_failure = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"warn"</span></span></code></pre>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-bash"><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">#!/bin/sh</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># /etc/openab/pre-boot.sh</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">set</span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF"> -e</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">if</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> [ </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">-f</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> "</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">$HOME</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">/.kiro/auth.json"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> ]; </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">then</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">  EXPIRES</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">$(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">jq</span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF"> -r</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> '.expires'</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> "</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">$HOME</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">/.kiro/auth.json"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">  NOW</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">$(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">date</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> +%s</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">  if</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> [ </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">$NOW</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72"> -gt</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> "</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">$EXPIRES</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> ]; </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">then</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">    kiro-cli</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> auth</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> refresh</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72"> ||</span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF"> true</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">  fi</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">fi</span></span></code></pre>
+<h2 id="real-world-example-s3-restore--backup-round-trip">Real-World Example: S3 restore + backup round-trip</h2>
+<p>A common pattern: bots run on stateless compute (ECS Fargate Spot, Kubernetes with <code>emptyDir</code>) where the home directory is wiped on every restart. To survive restarts, each bot:</p>
+<ol>
+<li><strong>Restores</strong> its home directory from S3 on boot via <code>pre_seed</code></li>
+<li><strong>Backs up</strong> its home directory to S3 on shutdown via <code>pre_shutdown</code></li>
+</ol>
+<p>The backup key written on shutdown is exactly the key restored on the next boot — a closed loop that gives persistent state without a PVC.</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>                     pre_seed (boot)</span></span>
+<span class="line"><span>   ┌──────────────────────────────────────────────┐</span></span>
+<span class="line"><span>   │   s3://$STATE_BUCKET/$OPENAB_AGENT_NAME-home.tar.gz</span></span>
+<span class="line"><span>   ▼                                                │</span></span>
+<span class="line"><span> $HOME  ◄── extract ◄── download                    │  upload ──► tar $HOME</span></span>
+<span class="line"><span>   │                                                ▲</span></span>
+<span class="line"><span>   └──────────────────────────────────────────────┘</span></span>
+<span class="line"><span>                  pre_shutdown (shutdown)</span></span></code></pre>
+<h3 id="1-restore-on-boot-preseed">1. Restore on boot (<code>pre_seed</code>)</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">hooks</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">pre_seed</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">sources = [</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">  "s3://${STATE_BUCKET}/${OPENAB_AGENT_NAME}-home.tar.gz"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,   </span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># layer 1: this agent's saved home</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">  "s3://${STATE_BUCKET}/shared/default.tar.gz"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,              </span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># layer 2: shared defaults / steering</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">timeout_seconds = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">120</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">on_failure = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"abort"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">max_bytes = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">629145600</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">   # 600 MiB per archive</span></span></code></pre>
+<blockquote>
+<p><strong>Syntax matters.</strong> In <code>pre_seed.sources</code>, use <strong><code>${VAR}</code></strong> (with braces). OpenAB expands these from its <strong>own process environment at config-load time</strong> — they are <em>not</em> shell variables and are <em>not</em> expanded at download time. Sources are extracted first → last, so <code>shared/default.tar.gz</code> (layer 2) overwrites any same-path files from layer 1. Order them so the layer you want to win comes last.</p>
+</blockquote>
+<p><code>${STATE_BUCKET}</code> and <code>${OPENAB_AGENT_NAME}</code> must be present in the OpenAB container's environment — you supply them at deployment time (see step 3).</p>
+<h3 id="2-backup-on-shutdown-preshutdown">2. Backup on shutdown (<code>pre_shutdown</code>)</h3>
+<p>This inlines a <a href="https://gist.github.com/chaodu-agent/ffc614ce670e79761c6c3c98d5472737">reference <code>pre-shutdown.sh</code></a> — it tars <code>$HOME</code> (skipping caches and toolchains that bloat the archive) and uploads it to the exact key <code>pre_seed</code> restores from:</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">hooks</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">pre_shutdown</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">timeout_seconds = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">120</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">on_failure = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"warn"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">inline = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">'''</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">#!/bin/sh</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"># Tar up $HOME and sync to S3 (preserves permissions, symlinks)</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"># Env vars: OPENAB_AGENT_NAME, STATE_BUCKET</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">export PATH="$HOME/bin:$PATH"</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">tar czf /tmp/home.tar.gz -C "$HOME" \</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">  --exclude="./.cache" \</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">  --exclude="./.npm" \</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">  --exclude="./node_modules" \</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">  --exclude="./.rustup" \</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">  --exclude="./.cargo" \</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">  --exclude="./.local/share/uv" \</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">  --exclude="./aws-cli" \</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">  --exclude="./.local/aws-cli" \</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">  . 2>/dev/null</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">aws s3 cp /tmp/home.tar.gz "s3://$STATE_BUCKET/$OPENAB_AGENT_NAME-home.tar.gz" --quiet || true</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">rm -f /tmp/home.tar.gz</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">'''</span></span></code></pre>
+<blockquote>
+<p><strong>Syntax matters (the other way).</strong> Inside <code>inline</code> scripts use <strong><code>$VAR</code></strong> (no braces). The shell resolves them at runtime when the script runs. If you wrote <code>${VAR}</code> here, OpenAB's config loader would expand it at load time instead of leaving it for the shell. The exclude list keeps the archive small enough to stay under <code>max_bytes</code>.</p>
+</blockquote>
+<blockquote>
+<p><code>on_failure = &quot;warn&quot;</code> is deliberate: a failed backup should log and let the container exit cleanly rather than block shutdown. The matching <code>pre_seed</code> uses <code>&quot;abort&quot;</code> so a missing/corrupt restore fails loudly at boot.</p>
+</blockquote>
+<h3 id="3-supply-statebucket-and-openabagentname-at-deployment">3. Supply <code>STATE_BUCKET</code> and <code>OPENAB_AGENT_NAME</code> at deployment</h3>
+<p>These are plain environment variables — pass them however your platform injects env.</p>
+<p><strong>Helm (<code>--set</code>):</strong></p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-bash"><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">helm</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> install</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> openab</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> openab/openab</span><span style="--shiki-light:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">  --set</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> agents.kiro.discord.botToken="</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">$DISCORD_BOT_TOKEN</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"</span><span style="--shiki-light:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">  --set-string</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> 'agents.kiro.discord.allowedChannels[0]=YOUR_CHANNEL_ID'</span><span style="--shiki-light:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">  --set</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> agents.kiro.env.STATE_BUCKET="my-openab-state"</span><span style="--shiki-light:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">  --set</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> agents.kiro.env.OPENAB_AGENT_NAME="bot1"</span></span></code></pre>
+<p><strong>Helm (<code>values.yaml</code>):</strong></p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-yaml"><span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">agents</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">:</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">  kiro</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">:</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">    env</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">:</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">      STATE_BUCKET</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">my-openab-state</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">      OPENAB_AGENT_NAME</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">bot1</span></span></code></pre>
+<p><strong>ECS task definition (<code>environment</code>):</strong></p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-json"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">{</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">  "containerDefinitions"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: [</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">    {</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "name"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"openab"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "image"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"ghcr.io/openabdev/openab:latest"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "environment"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: [</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">        { </span><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">"name"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"STATE_BUCKET"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">"value"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"my-openab-state"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> },</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">        { </span><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">"name"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"OPENAB_AGENT_NAME"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">"value"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"bot1"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> }</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">      ]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">    }</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">  ]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">}</span></span></code></pre>
+<p><strong><a href="https://github.com/oablab/ecsctl">ecsctl</a> manifest</strong> (<code>ecsctl export &lt;service&gt;</code> renders the live service as YAML):</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-yaml"><span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">apiVersion</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">ecsctl/v1</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">kind</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">Service</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">metadata</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">:</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">  name</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">openab-bot1</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">  cluster</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">openab</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">spec</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">:</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">  image</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">ghcr.io/openabdev/openab:beta-kiro</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">  cpu</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">'2048'</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">  memory</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">'4096'</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">  arch</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">X86_64</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">  capacity</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">FARGATE_SPOT</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">  desiredCount</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">1</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">  execEnabled</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">true</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">  env</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">:</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">    GHPOOL_URL</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">http://ghpool.openab.local:8080</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">    OPENAB_BACKEND_AGENT</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">openab-kiro</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">    RUST_LOG</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">openab=debug,openab_core=debug</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">    OPENAB_AGENT_NAME</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">bot1</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">    GITHUB_API_URL</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">http://ghpool.openab.local:8080</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#7EE787">    STATE_BUCKET</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">my-openab-state</span></span></code></pre>
+<p>The <code>spec.env</code> map carries <code>OPENAB_AGENT_NAME</code> and <code>STATE_BUCKET</code> into the container — <code>pre_seed</code> and <code>pre_shutdown</code> pick them up automatically. Apply with <code>ecsctl apply -f service.yaml</code>.</p>
+<p>Run a second bot by deploying another release/task with a different <code>OPENAB_AGENT_NAME</code> (e.g. <code>bot2</code>, <code>bot3</code>) — each gets its own <code>&lt;name&gt;-home.tar.gz</code> key while sharing the same <code>shared/default.tar.gz</code> base layer and <code>STATE_BUCKET</code>.</p>
+<h3 id="4-iam-policy">4. IAM policy</h3>
+<p>The container's role (IRSA on EKS, task role on ECS) needs read for restore and write for backup:</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-json"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">{</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">  "Version"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"2012-10-17"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">  "Statement"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: [</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">    {</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "Sid"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"PreSeedRestore"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "Effect"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"Allow"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "Action"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"s3:GetObject"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">],</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "Resource"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: [</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">        "arn:aws:s3:::my-openab-state/bot1-home.tar.gz"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">        "arn:aws:s3:::my-openab-state/shared/default.tar.gz"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">      ]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">    },</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">    {</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "Sid"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"PreShutdownBackup"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "Effect"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"Allow"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "Action"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"s3:PutObject"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">],</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "Resource"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"arn:aws:s3:::my-openab-state/bot1-home.tar.gz"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">    }</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">  ]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">}</span></span></code></pre>
+<hr />
+<h2 id="platform-comparison">Platform Comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Best for</th>
+<th>Requires redeploy?</th>
+<th>Network at boot?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>script</code></td>
+<td>k8s (ConfigMap mount), EFS, image bake</td>
+<td>Only if image-baked</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>inline</code></td>
+<td>ECS, Docker Compose, bare metal</td>
+<td>Config change only</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>url</code> + <code>sha256</code></td>
+<td>Central script repo, multi-cluster</td>
+<td>No (update sha256 to roll)</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+</article><nav class="flex justify-between gap-4 mt-12 pt-6 border-t border-border"><a class="flex-1 px-4 py-3.5 border border-border rounded-xl hover:border-accent" href="/openab/hermes"><div class="text-muted text-[.78rem]">← <!-- -->Previous</div><div class="font-semibold text-accent">hermes</div></a><a class="flex-1 px-4 py-3.5 border border-border rounded-xl hover:border-accent text-right" href="/openab/image-tags"><div class="text-muted text-[.78rem]">Next<!-- --> →</div><div class="font-semibold text-accent">image-tags</div></a></nav><script>document.querySelectorAll('[data-copy-md]').forEach(function(b){b.addEventListener('click',async function(){try{var r=await fetch(b.getAttribute('data-copy-md'));var t=await r.text();await navigator.clipboard.writeText(t);var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o;},1500);}catch(e){alert('Copy failed: '+e);}});});document.querySelectorAll('.prose pre').forEach(function(pre){if(pre.querySelector('.copy-code'))return;var b=document.createElement('button');b.className='copy-code';b.textContent='Copy';b.addEventListener('click',async function(){var c=pre.querySelector('code');try{await navigator.clipboard.writeText(c?c.innerText:pre.innerText);var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o;},1200);}catch(e){}});pre.appendChild(b);});document.querySelectorAll('.tabs').forEach(function(t){t.querySelectorAll('.tab-btn').forEach(function(b){b.addEventListener('click',function(){var i=b.getAttribute('data-tab');t.querySelectorAll('.tab-btn').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-tab')===i);});t.querySelectorAll('.tab-panel').forEach(function(p){p.hidden=p.getAttribute('data-tab')!==i;});});});});(function(){var blocks=document.querySelectorAll('code.language-mermaid');if(!blocks.length)return;var items=[];blocks.forEach(function(c){var pre=c.closest('pre')||c;var h=document.createElement('div');h.className='mermaid-diagram';pre.replaceWith(h);items.push({src:c.textContent,holder:h});});var lib,id=0;function load(){return lib||(lib=import("https://esm.sh/mermaid@11").then(function(m){return m.default;}));}function theme(){return document.documentElement.getAttribute('data-theme')==='dark'?'dark':'default';}function run(){load().then(function(mermaid){mermaid.initialize({startOnLoad:false,securityLevel:'loose',theme:theme()});items.forEach(function(it){mermaid.render('kura-mmd-'+(id++),it.src).then(function(r){it.holder.innerHTML=r.svg;}).catch(function(e){it.holder.innerHTML='<pre class="mermaid-error">'+String((e&&e.message)||e)+'</pre>';});});}).catch(function(){});}run();var cur=document.documentElement.getAttribute('data-theme');new MutationObserver(function(){var t=document.documentElement.getAttribute('data-theme');if(t!==cur){cur=t;run();}}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});})();</script></main><aside class="sticky top-14 max-h-[calc(100vh-56px)] overflow-y-auto px-4 py-8 max-lg:hidden"><p class="text-[.72rem] font-bold tracking-wider uppercase text-muted mb-2.5">On this page</p><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#lifecycle-order">Lifecycle Order</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#pre-seed-phase">Pre-Seed Phase</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#configuration">Configuration</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#fields">Fields</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#layer-concept">Layer Concept</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#safety">Safety</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#constraints">Constraints</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#iam-policy">IAM Policy</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#recommended-enable-s3-checksums-on-upload">Recommended: Enable S3 Checksums on Upload</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#available-hooks">Available Hooks</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#configuration-1">Configuration</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#option-a-file-path">Option A: File path</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#option-b-inline-script">Option B: Inline script</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#option-c-remote-url-with-sha-256-verification">Option C: Remote URL (with SHA-256 verification)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#fields-1">Fields</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#validation-rules">Validation Rules</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#environment">Environment</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#security">Security</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#examples">Examples</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#clone-a-configsteering-repo-on-startup">Clone a config/steering repo on startup</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#backup-state-on-shutdown-ecs-fargate">Backup state on shutdown (ECS Fargate)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#conditional-oauth-token-refresh">Conditional OAuth token refresh</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#real-world-example-s3-restore--backup-round-trip">Real-World Example: S3 restore + backup round-trip</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#1-restore-on-boot-preseed">1. Restore on boot (pre_seed)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#2-backup-on-shutdown-preshutdown">2. Backup on shutdown (pre_shutdown)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#3-supply-statebucket-and-openabagentname-at-deployment">3. Supply STATE_BUCKET and OPENAB_AGENT_NAME at deployment</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#4-iam-policy">4. IAM policy</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#platform-comparison">Platform Comparison</a></aside></div></div><footer class="border-t border-border mt-8"><div class="flex items-center justify-between flex-wrap gap-4 max-w-[1280px] mx-auto px-6 py-5 max-md:px-4"><nav class="flex items-center gap-[1.1rem] text-[.85rem]"><a class="text-muted hover:text-fg" href="/llms.txt">llms.txt</a><a class="text-muted hover:text-fg" href="/mcp">MCP</a><button type="button" class="inline-flex items-center justify-center w-[30px] h-[30px] p-0 text-[.95rem] leading-none border border-border rounded-lg bg-surface text-fg cursor-pointer hover:bg-hover" data-theme-toggle="true" aria-label="Toggle theme"></button></nav><a class="text-muted text-[.85rem] hover:text-accent" href="https://kura.build/" target="_blank" rel="noreferrer">Powered by Kura</a></div></footer><script>document.addEventListener('keydown',function(e){if(e.key==='/' && !document.documentElement.dataset.ctrlk && !/INPUT|TEXTAREA/.test((document.activeElement||{}).tagName||'')){e.preventDefault();var s=document.querySelector('.search-box');if(s)s.focus();}});(function(){var b=document.querySelector('[data-theme-toggle]');if(!b)return;var d=document.documentElement,order=['system','light','dark'],icon={system:'🖥',light:'☀',dark:'☾'};function pref(){return d.getAttribute('data-theme-pref')||'system';}function res(p){return p==='dark'||(p==='system'&&matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light';}function set(p){d.setAttribute('data-theme-pref',p);d.setAttribute('data-theme',res(p));try{localStorage.setItem('kura-theme',p);}catch(e){}b.textContent=icon[p];b.setAttribute('title','Theme: '+p);}set(pref());b.addEventListener('click',function(){set(order[(order.indexOf(pref())+1)%order.length]);});try{matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(){if(pref()==='system')d.setAttribute('data-theme',res('system'));});}catch(e){}})();document.addEventListener('click',function(e){var t=e.target;document.querySelectorAll('details[data-menu][open]').forEach(function(d){if(!d.contains(t))d.removeAttribute('open');});var it=t.closest&&t.closest('details[data-menu] a, details[data-menu] [data-copy-md]');if(it){var dd=it.closest('details[data-menu]');if(dd)setTimeout(function(){dd.removeAttribute('open');},0);}});document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('details[data-menu][open]').forEach(function(d){d.removeAttribute('open');});});(function(){var root=document.documentElement;function opener(){return document.querySelector('[data-drawer-open]');}function items(){var d=document.getElementById('docs-nav');if(!d)return[];return[].filter.call(d.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])'),function(el){return el.offsetParent!==null;});}function set(o){var was=root.classList.contains('drawer-open');root.classList.toggle('drawer-open',o);var b=opener();if(b)b.setAttribute('aria-expanded',o?'true':'false');if(o){var f=items();if(f[0])f[0].focus();}else if(was&&b)b.focus();}document.addEventListener('click',function(e){if(e.target.closest('[data-drawer-open]')){e.preventDefault();set(!root.classList.contains('drawer-open'));return;}if(e.target.closest('[data-drawer-close]')){set(false);return;}if(e.target.closest('#docs-nav a'))set(false);});document.addEventListener('keydown',function(e){if(e.key==='Escape'){set(false);return;}if(e.key==='Tab'&&root.classList.contains('drawer-open')){var f=items();if(!f.length)return;var first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}else if(f.indexOf(document.activeElement)<0){e.preventDefault();first.focus();}}});})();(function(){
+  function trim(p){return p.length>1&&p.endsWith('/')?p.slice(0,-1):p;}
+  function sync(){
+    var path=trim(location.pathname), tab=null;
+    var links=document.querySelectorAll('.sidebar a[href],[data-tabbar] a[href]');
+    for(var i=0;i<links.length;i++){var a=links[i],on=trim(a.getAttribute('href'))===path;
+      if(on){a.setAttribute('aria-current','page');var g=a.closest('[data-tab]');if(g)tab=g.getAttribute('data-tab');}
+      else a.removeAttribute('aria-current');}
+    if(tab!=null){
+      document.querySelectorAll('[data-tab]').forEach(function(g){g.hidden=g.getAttribute('data-tab')!==tab;});
+      document.querySelectorAll('[data-tabbar] a').forEach(function(a){
+        if(a.getAttribute('data-tab-key')===tab)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+    }
+    // expand the folder(s) holding the active page. Iterate EVERY aria-current sidebar link, not
+    // just the first: a folder-as-page link lives in a <details>, but the mobile tab-bar link (also
+    // in .sidebar, earlier in the DOM) has no folder ancestor — querySelector would pick that one
+    // and expand nothing. forEach opens each link's folder chain; tab links are harmless no-ops.
+    document.querySelectorAll('.sidebar a[aria-current="page"]').forEach(function(cur){
+      var d=cur.closest('details.folder');while(d){d.open=true;d=d.parentElement&&d.parentElement.closest('details.folder');}});
+    // rewrite the locale-switch links to THIS page's equivalent path (swap the locale prefix)
+    var ll=document.querySelectorAll('[data-locale-home]');
+    if(ll.length){var lc=document.querySelector('[data-locale-home][data-locale-active]'),cp=lc?lc.getAttribute('data-locale-home'):'/';cp=cp==='/'?'':cp;
+      var rest=location.pathname;if(cp&&rest.indexOf(cp)===0)rest=rest.slice(cp.length)||'/';
+      ll.forEach(function(a){var h=a.getAttribute('data-locale-home'),p=h==='/'?'':h;a.setAttribute('href',rest==='/'?(p||'/'):(p+rest));});}
+    // mobile nav-context: "Active tab / Page title" (the shell can't know the page server-side)
+    var nc=document.querySelector('[data-nav-context]');
+    if(nc){var at=document.querySelector('[data-tabbar] a[aria-current="page"]'),h1=document.querySelector('main h1');
+      nc.textContent=[at&&at.textContent.trim(),h1&&h1.textContent.trim()].filter(Boolean).join(' / ');}
+  }
+  sync();
+  var outlet=document.querySelector('[data-june-outlet]');
+  if(outlet) new MutationObserver(sync).observe(outlet,{childList:true,subtree:true});
+})();</script><script type="module" src="/openab/_june/client.a5a40235.js"></script><script type="application/json" id="june-webmcp">[{"name":"search_docs","description":"Hybrid keyword + semantic search over the docs. Returns the most relevant passages with their doc slug, title, and relevance score.","inputSchema":{"type":"object","properties":{"query":{"type":"string","description":"A natural-language question or keywords."},"topK":{"type":"integer","description":"Number of results to return (default 5)."}},"required":["query"]}},{"name":"get_page","description":"Fetch one doc page as clean Markdown by its slug (e.g. introduction, search, agents).","inputSchema":{"type":"object","properties":{"slug":{"type":"string","description":"The page slug."}},"required":["slug"]}},{"name":"list_docs","description":"List every doc page with its slug, title, section, and `sources` (the code paths it documents). The map for finding which pages a code change affects.","inputSchema":{"type":"object","properties":{}}}]</script><script>(function(){var mc=navigator.modelContext;if(!mc||!mc.registerTool)return;var el=document.getElementById('june-webmcp');if(!el)return;var tools;try{tools=JSON.parse(el.textContent)}catch(e){return}var ac=new AbortController();tools.forEach(function(t){mc.registerTool({name:t.name,description:t.description,inputSchema:t.inputSchema,execute:function(args){return fetch('/mcp',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'tools/call',params:{name:t.name,arguments:args}})}).then(function(r){return r.json()}).then(function(j){return j.result})}},{signal:ac.signal})})})();</script></body></html>

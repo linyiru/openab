@@ -1,0 +1,679 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="icon" href="/openab/favicon.svg" type="image/svg+xml"/><title>adr/ambient · OpenAB Docs</title><meta name="description" content="A lightweight, cloud-native ACP harness connecting chat platforms to AI coding agents."/><meta property="og:title" content="adr/ambient"/><meta property="og:description" content="A lightweight, cloud-native ACP harness connecting chat platforms to AI coding agents."/><meta property="og:type" content="article"/><script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.md"}},{"not":{"href_matches":"/*.json"}},{"not":{"href_matches":"/*.txt"}},{"not":{"href_matches":"/*.xml"}},{"not":{"href_matches":"/mcp"}}]},"eagerness":"moderate"}],"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.md"}},{"not":{"href_matches":"/*.json"}},{"not":{"href_matches":"/*.txt"}},{"not":{"href_matches":"/*.xml"}},{"not":{"href_matches":"/mcp"}}]},"eagerness":"moderate"}]}</script><script>(function(){if(HTMLScriptElement.supports&&HTMLScriptElement.supports('speculationrules'))return;var seen=new Set();document.addEventListener('pointerover',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var u=new URL(a.href,location.href);if(u.origin!==location.origin||seen.has(u.pathname)||u.pathname===location.pathname)return;if(/.(md|json)$/.test(u.pathname)||u.pathname==='/mcp')return;seen.add(u.pathname);var l=document.createElement('link');l.rel='prefetch';l.href=u.pathname+u.search;document.head.appendChild(l);},{passive:true});})();</script><style>
+          @view-transition { navigation: auto; }
+          ::view-transition-group(root),
+          ::view-transition-old(root),
+          ::view-transition-new(root) { animation-duration: 120ms; }
+          @media (prefers-reduced-motion: reduce) {
+            ::view-transition-group(*),
+            ::view-transition-old(*),
+            ::view-transition-new(*) { animation: none !important; }
+          }
+</style><link rel="stylesheet" href="/openab/_june/global.1a9cb889.css"/></head><body><script>(function(){try{var p=localStorage.getItem('kura-theme')||'system';var d=document.documentElement;d.setAttribute('data-theme-pref',p);d.setAttribute('data-theme',(p==='dark'||(p==='system'&&matchMedia('(prefers-color-scheme:dark)').matches))?'dark':'light');}catch(e){}})();</script><header class="sticky top-0 z-20 flex items-center gap-4 h-14 px-5 bg-topbar-bg backdrop-blur-sm border-b border-border max-md:px-4 max-md:gap-2.5"><a class="flex items-center gap-1.5 font-bold text-[1.05rem]" href="/openab/">OpenAB<!-- --> <span class="font-normal text-muted text-[.85rem]">Docs</span></a><form class="ml-auto max-md:ml-2 max-md:flex-1 max-md:min-w-0" action="/openab/search" method="get"><input class="w-[280px] max-w-[40vw] px-3 py-2 text-[.9rem] border border-border rounded-lg bg-surface-2 text-fg max-md:w-full max-md:max-w-none search-box" placeholder="Search docs…  (press /)" aria-label="Search" data-search-endpoint="/openab/search.json" data-doc-base="/openab/" name="q"/></form><nav class="flex items-center gap-4 text-muted text-[.9rem]"></nav></header><button class="hidden max-md:flex items-center gap-2.5 w-full px-4 py-2.5 bg-bg border-0 border-b border-border text-fg-soft text-[.9rem] text-left cursor-pointer focus-visible:outline-none focus-visible:bg-hover" data-drawer-open="true" aria-controls="docs-nav" aria-expanded="false"><span class="text-[1.05rem] leading-none" aria-hidden="true">☰</span><span class="font-semibold text-fg flex-none">Navigation</span><span class="nav-bar-context text-muted flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap" data-nav-context="true"></span></button><div class="drawer-backdrop" data-drawer-close="true" aria-hidden="true"></div><div class="grid grid-cols-[248px_minmax(0,1fr)_220px] max-lg:grid-cols-[248px_minmax(0,1fr)] max-md:grid-cols-1 items-start max-w-[1280px] mx-auto"><aside class="sidebar sticky top-14 h-[calc(100vh-56px)] overflow-y-auto px-4 py-6 border-r border-border" id="docs-nav"><div data-tab="_"><div class="mb-5"><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/">Introduction</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agent-installable-tools">agent-installable-tools</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agentcore">agentcore</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/ai-install-upgrade">ai-install-upgrade</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/ambient">ambient</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/antigravity">antigravity</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/claude-code">claude-code</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/codex">codex</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/config-reference">config-reference</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/control-directives">control-directives</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/copilot">copilot</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/cronjob">cronjob</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/cursor">cursor</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/devin">devin</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/discord">discord</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/feishu">feishu</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/gemini">gemini</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/gh-auth-device-flow">gh-auth-device-flow</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/github-token-setup">github-token-setup</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/github-webhook-integration">github-webhook-integration</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/google-chat">google-chat</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/grok">grok</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/helm-publishing">helm-publishing</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/hermes">hermes</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/hooks">hooks</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/image-tags">image-tags</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/inbound-attachments">inbound-attachments</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/kiro">kiro</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/line">line</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/local-dev">local-dev</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/local-vision-models">local-vision-models</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/message-dispatch-modes">message-dispatch-modes</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/messaging">messaging</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/mimocode">mimocode</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/msteams-enterprise">msteams-enterprise</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/msteams-selfhosted">msteams-selfhosted</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/multi-agent">multi-agent</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/native-agent">native-agent</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/opencode">opencode</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/openshell">openshell</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/output-directives">output-directives</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/pi">pi</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/python">python</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/reactions">reactions</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/secrets-management">secrets-management</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/sendfiles">sendfiles</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/sendimages">sendimages</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/sidecar">sidecar</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/slack">slack</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/slash-commands">slash-commands</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering-design-guide">steering-design-guide</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/stt">stt</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/telegram">telegram</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/tool-display">tool-display</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/wecom">wecom</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/workspaces">workspaces</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/xai-proxy">xai-proxy</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Adr</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/agentcore-runtime-backend">adr/agentcore-runtime-backend</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/ambient">adr/ambient</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/basic-cronjob">adr/basic-cronjob</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/context-aware-token">adr/context-aware-token</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/control-directives">adr/control-directives</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/custom-gateway">adr/custom-gateway</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/ecs-control-plane">adr/ecs-control-plane</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/hooks">adr/hooks</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/imessage-integration">adr/imessage-integration</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/line-adapter">adr/line-adapter</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/multi-platform-adapters">adr/multi-platform-adapters</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/openab-agent">adr/openab-agent</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/openab-agent-mcp">adr/openab-agent-mcp</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/openab-agent-oauth">adr/openab-agent-oauth</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/pr-contribution-guidelines">adr/pr-contribution-guidelines</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/pr-review-loop">adr/pr-review-loop</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/secrets-management">adr/secrets-management</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/telegram-rich-messages">adr/telegram-rich-messages</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/turn-boundary-batching">adr/turn-boundary-batching</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/unified-binary">adr/unified-binary</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Refarch</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/aws-ecs-fargate-spot">refarch/aws-ecs-fargate-spot</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/ci-observability-discord">refarch/ci-observability-discord</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/cronjob_k8s_refarch">refarch/cronjob_k8s_refarch</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/gbrain">refarch/gbrain</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/remote-ssh-debugging">refarch/remote-ssh-debugging</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/sidecar-proxy">refarch/sidecar-proxy</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/telegram-cloudflare-tunnel">refarch/telegram-cloudflare-tunnel</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Steering</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering/feature-request">steering/feature-request</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering/pr-review">steering/pr-review</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering/triage">steering/triage</a></li></ul></div></div></aside><div data-june-outlet=""><main class="w-auto max-w-none m-0 min-w-0 px-10 pt-8 pb-20 max-md:px-4 max-md:pt-5 max-md:pb-12"><details class="hidden max-lg:block mb-5 border border-border rounded-xl overflow-hidden"><summary class="chevron flex justify-between items-center cursor-pointer px-3.5 py-2.5 text-[.85rem] font-semibold text-fg-soft">On this page</summary><div class="flex flex-col px-3.5 pt-1 pb-2.5 border-t border-border"><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#context">Context</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#prior-art">Prior Art</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#openclaw--activation-always">OpenClaw — /activation always</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#hermes-agent--freeresponsechannels">Hermes Agent — free_response_channels</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#research--quotcontrolling-ai-agent-participation-in-group-conversationsquot">Research — &amp;quot;Controlling AI Agent Participation in Group Conversations&amp;quot;</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#gap-our-design-fills">Gap Our Design Fills</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#decision">Decision</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#architecture-overview">Architecture Overview</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#dual-path-concurrency-mention-vs-ambient">Dual-Path Concurrency (Mention vs Ambient)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#mechanism">Mechanism</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#buffer-lifecycle">Buffer Lifecycle</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#flush-triggers">Flush Triggers</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#message-filtering-for-buffer">Message Filtering for Buffer</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#batch-payload">Batch Payload</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#session-strategy">Session Strategy</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#configuration">Configuration</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#error-handling">Error Handling</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#sentinel-value">Sentinel Value</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#consequences">Consequences</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#benefits">Benefits</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#trade-offs">Trade-offs</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#alternatives-considered">Alternatives Considered</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#implementation-notes">Implementation Notes</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#reuse-of-existing-dispatcher-infrastructure">Reuse of Existing Dispatcher Infrastructure</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#ambient-consumer-loop">Ambient Consumer Loop</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#other-implementation-details">Other Implementation Details</a></div></details><div class="flex items-center justify-between gap-4 mb-6"><div class="prose"><h1 class="!m-0">ADR: Ambient Mode</h1></div><div class="relative inline-flex items-stretch flex-none"><button class="inline-flex items-center gap-1.5 px-3 py-1.5 text-[.85rem] border border-border border-r-0 rounded-l-lg bg-surface text-fg-soft cursor-pointer hover:bg-hover hover:text-fg" data-copy-md="/openab/adr/ambient.md"><svg class="" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>Copy Markdown</button><details class="relative inline-flex items-stretch" data-menu="true"><summary class="chevron inline-flex items-center justify-center w-[30px] border border-border rounded-r-lg bg-surface text-muted cursor-pointer hover:bg-hover hover:text-fg" aria-label="More actions"></summary><div class="absolute right-0 top-[calc(100%+.4rem)] z-30 min-w-[17rem] flex flex-col gap-px p-1.5 bg-surface border border-border rounded-xl shadow-xl"><button class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" data-copy-md="/openab/adr/ambient.md"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg><span class="flex flex-col min-w-0"><span class="font-semibold text-[.9rem] text-fg">Copy Markdown</span><span class="text-[.8rem] text-muted">Copy this page as Markdown for LLMs</span></span></button><a class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" href="/openab/adr/ambient.md"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M16 21H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6l4 4v12a2 2 0 0 1-2 2z"></path><path d="M9 13h6M9 17h4"></path></svg><span class="flex flex-col min-w-0"><span class="inline-flex items-center gap-1 font-semibold text-[.9rem] text-fg">View as Markdown<!-- --> <svg class="text-muted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span><span class="text-[.8rem] text-muted">View this page as plain text</span></span></a><a class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" href="https://chatgpt.com/?q=Please%20read%20this%20doc%20and%20answer%20my%20questions%3A%20adr%2Fambient" target="_blank" rel="noreferrer"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"></path></svg><span class="flex flex-col min-w-0"><span class="inline-flex items-center gap-1 font-semibold text-[.9rem] text-fg">Open in ChatGPT<!-- --> <svg class="text-muted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span><span class="text-[.8rem] text-muted">Ask ChatGPT about this page</span></span></a><a class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" href="https://claude.ai/new?q=Please%20read%20this%20doc%20and%20answer%20my%20questions%3A%20adr%2Fambient" target="_blank" rel="noreferrer"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"></path></svg><span class="flex flex-col min-w-0"><span class="inline-flex items-center gap-1 font-semibold text-[.9rem] text-fg">Open in Claude<!-- --> <svg class="text-muted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span><span class="text-[.8rem] text-muted">Ask Claude about this page</span></span></a></div></details></div></div><article class="prose"><ul>
+<li><strong>Status:</strong> Proposed</li>
+<li><strong>Date:</strong> 2026-06-26</li>
+<li><strong>Author:</strong> chaodu-agent</li>
+</ul>
+<h2 id="context">Context</h2>
+<p>Today, OpenAB only dispatches messages to an agent when the agent is explicitly
+mentioned (or the message is in a thread the agent participates in). This means
+agents are deaf to surrounding conversation unless invoked — they cannot
+proactively contribute context, answer questions addressed to no one in
+particular, or notice when a discussion touches their area of expertise.</p>
+<p>We want agents to behave more like attentive team members who listen to the room
+and speak up when they have something valuable to add, without requiring an
+explicit <code>@mention</code> every time.</p>
+<h2 id="prior-art">Prior Art</h2>
+<h3 id="openclaw--activation-always">OpenClaw — <code>/activation always</code></h3>
+<p>OpenClaw supports an <code>always</code> activation mode as a cross-platform group chat
+feature (WhatsApp, Telegram, Discord, Slack, iMessage — configured via
+<code>agents.list[].groupChat.mentionPatterns</code> and <code>channels.*.groups</code>):</p>
+<ul>
+<li>Every message is dispatched to the agent (no mention required).</li>
+<li>Agent returns the sentinel token <code>NO_REPLY</code> when it has nothing to add;
+the gateway discards silently.</li>
+<li>Pending messages (up to 50) are accumulated as context and injected as
+<code>[Chat messages since your last reply - for context]</code>.</li>
+<li>Per-group toggle via <code>/activation always</code> or <code>/activation mention</code>.</li>
+<li><strong>Limitation:</strong> messages are dispatched one-by-one — each message triggers a
+separate LLM invocation, even if it results in <code>NO_REPLY</code>. No batching.</li>
+</ul>
+<h3 id="hermes-agent--freeresponsechannels">Hermes Agent — <code>free_response_channels</code></h3>
+<p>Hermes provides <code>DISCORD_FREE_RESPONSE_CHANNELS</code> and
+<code>DISCORD_REQUIRE_MENTION=false</code>:</p>
+<ul>
+<li>The bot responds to <strong>every</strong> message in designated channels without mention.</li>
+<li>Free-response channels skip auto-threading (replies inline) and isolate
+sessions per user (<code>group_sessions_per_user: true</code> by default).</li>
+<li>History backfill (<code>DISCORD_HISTORY_BACKFILL</code>) recovers missed channel context
+on <code>@mention</code> — only triggered when <code>require_mention: true</code> and skipped in
+free-response channels and DMs where the transcript is already complete.
+Scans up to 50 messages backwards, stopping at the bot's own last message.</li>
+<li><strong>Limitation:</strong> no autonomous decision-making — the bot always replies. There
+is no <code>NO_REPLY</code> equivalent; it's either &quot;respond to everything&quot; or
+&quot;respond only on mention.&quot;</li>
+</ul>
+<h3 id="research--quotcontrolling-ai-agent-participation-in-group-conversationsquot">Research — &quot;Controlling AI Agent Participation in Group Conversations&quot;</h3>
+<p>(arXiv 2501.17258, Jan 2025) — studies user preferences for AI agent behavior
+in group settings. Key finding: users benefited from having the AI in the group,
+but disliked when the agent dominated the conversation and desired controls
+over its interactive behaviors.</p>
+<h3 id="gap-our-design-fills">Gap Our Design Fills</h3>
+<p>Neither OpenClaw nor Hermes implements <strong>batch flush</strong> — they dispatch per
+message. Our design accumulates messages and flushes them as a batch, which:</p>
+<ol>
+<li>Reduces LLM invocations (one call per batch instead of N).</li>
+<li>Gives the agent fuller conversational context for better judgment.</li>
+<li>Provides natural rate-limiting without additional cooldown mechanisms.</li>
+</ol>
+<h2 id="decision">Decision</h2>
+<p>Introduce an <strong>Ambient Mode</strong> using a <strong>batch flush</strong> strategy.</p>
+<h3 id="architecture-overview">Architecture Overview</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>┌─────────────────────────────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│                          Discord Gateway (events)                            │</span></span>
+<span class="line"><span>└───────────────────────────────────┬─────────────────────────────────────────┘</span></span>
+<span class="line"><span>                                    │ MESSAGE_CREATE</span></span>
+<span class="line"><span>                                    ▼</span></span>
+<span class="line"><span>┌─────────────────────────────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  Handler::message()                                                         │</span></span>
+<span class="line"><span>│                                                                             │</span></span>
+<span class="line"><span>│  ┌─────────────┐    YES    ┌──────────────────────────────────────────┐     │</span></span>
+<span class="line"><span>│  │ Own bot msg?├──────────►│ DROP (echo prevention)                   │     │</span></span>
+<span class="line"><span>│  └──────┬──────┘           └──────────────────────────────────────────┘     │</span></span>
+<span class="line"><span>│         │ NO                                                                │</span></span>
+<span class="line"><span>│         ▼                                                                   │</span></span>
+<span class="line"><span>│  ┌─────────────┐    YES    ┌──────────────────────────────────────────┐     │</span></span>
+<span class="line"><span>│  │ @mention?   ├──────────►│ Normal Mention Dispatch Path             │     │</span></span>
+<span class="line"><span>│  │             │           │ • Discard ambient buffer for this channel│     │</span></span>
+<span class="line"><span>│  └──────┬──────┘           │ • Cancel in-flight ambient flush         │     │</span></span>
+<span class="line"><span>│         │ NO               │ • Thread + reactions + full session       │     │</span></span>
+<span class="line"><span>│         ▼                  └──────────────────────────────────────────┘     │</span></span>
+<span class="line"><span>│  ┌──────────────────┐ NO   ┌──────────────────────────────────────────┐    │</span></span>
+<span class="line"><span>│  │ Ambient channel?  ├────►│ IGNORE (not ambient-enabled)             │    │</span></span>
+<span class="line"><span>│  └──────┬────────────┘     └──────────────────────────────────────────┘    │</span></span>
+<span class="line"><span>│         │ YES                                                               │</span></span>
+<span class="line"><span>│         ▼                                                                   │</span></span>
+<span class="line"><span>│  ┌──────────────────────────────────────────────────────────────────┐      │</span></span>
+<span class="line"><span>│  │              Ambient Dispatcher::submit(msg)                      │      │</span></span>
+<span class="line"><span>│  └──────────────────────────────┬───────────────────────────────────┘      │</span></span>
+<span class="line"><span>└─────────────────────────────────┼───────────────────────────────────────────┘</span></span>
+<span class="line"><span>                                  │ mpsc::channel (bounded)</span></span>
+<span class="line"><span>                                  ▼</span></span>
+<span class="line"><span>┌─────────────────────────────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  Ambient Consumer Loop (per-channel)                                        │</span></span>
+<span class="line"><span>│                                                                             │</span></span>
+<span class="line"><span>│  ┌───────────────────────────────────────────────────────────────────────┐  │</span></span>
+<span class="line"><span>│  │ Buffer Phase                                                          │  │</span></span>
+<span class="line"><span>│  │                                                                       │  │</span></span>
+<span class="line"><span>│  │   msg ──► [  buffer  ] ◄── accumulate until trigger                   │  │</span></span>
+<span class="line"><span>│  │                                                                       │  │</span></span>
+<span class="line"><span>│  │   Flush triggers (whichever first):                                   │  │</span></span>
+<span class="line"><span>│  │     • Timer expired (flush_interval ± 20% jitter)                     │  │</span></span>
+<span class="line"><span>│  │     • Count reached (flush_max_messages = 10)                         │  │</span></span>
+<span class="line"><span>│  │     • Hard cap hit  (flush_hard_cap = 50)                             │  │</span></span>
+<span class="line"><span>│  └───────────────────────────────┬───────────────────────────────────────┘  │</span></span>
+<span class="line"><span>│                                  │ swap-and-drain                            │</span></span>
+<span class="line"><span>│                                  ▼                                           │</span></span>
+<span class="line"><span>│  ┌───────────────────────────────────────────────────────────────────────┐  │</span></span>
+<span class="line"><span>│  │ Flush Phase                                                           │  │</span></span>
+<span class="line"><span>│  │                                                                       │  │</span></span>
+<span class="line"><span>│  │   1. Acquire global semaphore (max_concurrent_flushes = 3)            │  │</span></span>
+<span class="line"><span>│  │   2. Set channel_flushing = true                                      │  │</span></span>
+<span class="line"><span>│  │   3. Fetch context_window (20 msgs) from Discord API                  │  │</span></span>
+<span class="line"><span>│  │   4. Build payload:                                                   │  │</span></span>
+<span class="line"><span>│  │      ┌──────────────────────────────────────────────────────┐         │  │</span></span>
+<span class="line"><span>│  │      │ System: "You are in ambient mode..."                 │         │  │</span></span>
+<span class="line"><span>│  │      │ [Ambient context — channel history]                  │         │  │</span></span>
+<span class="line"><span>│  │      │ [Ambient batch — N new messages]                     │         │  │</span></span>
+<span class="line"><span>│  │      │ [End of batch — reply [NO_REPLY] if nothing to add]  │         │  │</span></span>
+<span class="line"><span>│  │      └──────────────────────────────────────────────────────┘         │  │</span></span>
+<span class="line"><span>│  │   5. Send to LLM (ambient session pool)                               │  │</span></span>
+<span class="line"><span>│  │   6. Set channel_flushing = false                                     │  │</span></span>
+<span class="line"><span>│  │   7. Release semaphore                                                │  │</span></span>
+<span class="line"><span>│  └───────────────────────────────┬───────────────────────────────────────┘  │</span></span>
+<span class="line"><span>└──────────────────────────────────┼──────────────────────────────────────────┘</span></span>
+<span class="line"><span>                                   │</span></span>
+<span class="line"><span>                                   ▼</span></span>
+<span class="line"><span>┌─────────────────────────────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  Response Router                                                            │</span></span>
+<span class="line"><span>│                                                                             │</span></span>
+<span class="line"><span>│   LLM Response ──► trim + lowercase                                         │</span></span>
+<span class="line"><span>│                        │                                                    │</span></span>
+<span class="line"><span>│              ┌─────────┴─────────┐                                          │</span></span>
+<span class="line"><span>│              ▼                   ▼                                           │</span></span>
+<span class="line"><span>│   "[no_reply]"              Actual content                                  │</span></span>
+<span class="line"><span>│        │                         │                                          │</span></span>
+<span class="line"><span>│        ▼                         ▼                                          │</span></span>
+<span class="line"><span>│   🗑️ Discard silently      📤 Post to channel                              │</span></span>
+<span class="line"><span>│   (no reactions,           (no 👀🤔🔥 reactions,                            │</span></span>
+<span class="line"><span>│    no threading)            direct message post)                            │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────────────────────────────┘</span></span></code></pre>
+<h3 id="dual-path-concurrency-mention-vs-ambient">Dual-Path Concurrency (Mention vs Ambient)</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>Channel #general (ambient-enabled)</span></span>
+<span class="line"><span>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Timeline:</span></span>
+<span class="line"><span>  t=0s   UserA: "how do I deploy?"        ──► ambient buffer</span></span>
+<span class="line"><span>  t=3s   UserB: "check the wiki"          ──► ambient buffer</span></span>
+<span class="line"><span>  t=8s   UserA: "wiki is outdated"        ──► ambient buffer</span></span>
+<span class="line"><span>  t=15s  UserC: "@bot help me deploy"     ──► MENTION PATH</span></span>
+<span class="line"><span>                                               │</span></span>
+<span class="line"><span>         ┌─────────────────────────────────────┘</span></span>
+<span class="line"><span>         ▼</span></span>
+<span class="line"><span>  ┌────────────────────────────────┐    ┌────────────────────────────┐</span></span>
+<span class="line"><span>  │ Mention Dispatch               │    │ Ambient Buffer             │</span></span>
+<span class="line"><span>  │                                │    │                            │</span></span>
+<span class="line"><span>  │ Session: discord:&#x3C;thread_id>   │    │ [msg1, msg2, msg3]         │</span></span>
+<span class="line"><span>  │ Pool: Main                     │    │         │                  │</span></span>
+<span class="line"><span>  │ Reactions: 👀🤔🔥🆗            │    │         ▼                  │</span></span>
+<span class="line"><span>  │ Response: in new thread        │    │   DISCARDED (not flushed)  │</span></span>
+<span class="line"><span>  └────────────────────────────────┘    └────────────────────────────┘</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>  t=16s  (new buffer cycle starts fresh)</span></span>
+<span class="line"><span>  t=20s  UserD: "anyone tried helm 3.15?"  ──► new ambient buffer</span></span>
+<span class="line"><span>  ...</span></span>
+<span class="line"><span>  t=76s  flush_interval elapsed            ──► flush new buffer</span></span></code></pre>
+<h3 id="mechanism">Mechanism</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>Discord Channel</span></span>
+<span class="line"><span>────────────────────────────────────────────────────────────────────</span></span>
+<span class="line"><span>  msg1 (t=0s)  │</span></span>
+<span class="line"><span>  msg2 (t=3s)  │  accumulate in buffer</span></span>
+<span class="line"><span>  msg3 (t=8s)  │</span></span>
+<span class="line"><span>  msg4 (t=12s) │</span></span>
+<span class="line"><span>               ▼</span></span>
+<span class="line"><span>         ┌─────────────────────────────┐</span></span>
+<span class="line"><span>         │ Flush trigger fired         │</span></span>
+<span class="line"><span>         │ (60s elapsed OR 10 msgs)    │</span></span>
+<span class="line"><span>         └─────────────┬───────────────┘</span></span>
+<span class="line"><span>                       │</span></span>
+<span class="line"><span>                       ▼</span></span>
+<span class="line"><span>┌──────────────────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  OpenAB Gateway                                                  │</span></span>
+<span class="line"><span>│                                                                  │</span></span>
+<span class="line"><span>│  ┌────────────────────────────────────────────────────────────┐  │</span></span>
+<span class="line"><span>│  │ Ambient Dispatch (batch)                                   │  │</span></span>
+<span class="line"><span>│  │                                                            │  │</span></span>
+<span class="line"><span>│  │ • Drain messages from mpsc channel into batch              │  │</span></span>
+<span class="line"><span>│  │   (new messages queue for next flush cycle)                │  │</span></span>
+<span class="line"><span>│  │ • Prepend: channel history (context_window via API)        │  │</span></span>
+<span class="line"><span>│  │ • Prepend system instruction:                              │  │</span></span>
+<span class="line"><span>│  │   "You are in ambient mode. Below is a batch of recent     │  │</span></span>
+<span class="line"><span>│  │    messages. If you have nothing valuable to add, reply    │  │</span></span>
+<span class="line"><span>│  │    exactly: [NO_REPLY]"                                    │  │</span></span>
+<span class="line"><span>│  │ • Send batch to agent                                      │  │</span></span>
+<span class="line"><span>│  └────────────────────────────┬───────────────────────────────┘  │</span></span>
+<span class="line"><span>│                               │                                  │</span></span>
+<span class="line"><span>│                               ▼                                  │</span></span>
+<span class="line"><span>│  ┌────────────────────────────────────────────────────────────┐  │</span></span>
+<span class="line"><span>│  │ Response Router                                            │  │</span></span>
+<span class="line"><span>│  │                                                            │  │</span></span>
+<span class="line"><span>│  │ • Agent replies "[NO_REPLY]" → discard silently            │  │</span></span>
+<span class="line"><span>│  │ • Agent replies with content  → post to Discord            │  │</span></span>
+<span class="line"><span>│  └────────────────────────────────────────────────────────────┘  │</span></span>
+<span class="line"><span>└──────────────────────────────────────────────────────────────────┘</span></span></code></pre>
+<h3 id="buffer-lifecycle">Buffer Lifecycle</h3>
+<p>Conceptually, the ambient buffer operates as a <strong>swap-and-drain</strong> model —
+ingestion is decoupled from flush processing so neither blocks the other.</p>
+<p>In practice, this is implemented via the existing <code>Dispatcher</code> infrastructure
+using a bounded <code>mpsc::channel</code> per ambient channel (see Implementation Notes).
+The mpsc channel provides the same decoupling guarantees: <code>submit()</code> pushes
+messages into the channel (non-blocking for senders), and the ambient consumer
+loop drains messages via <code>rx.recv()</code> with a deadline. The &quot;swap&quot; happens
+implicitly — once the consumer drains and moves into flush processing, new
+messages queue in the channel buffer for the next cycle.</p>
+<p>The key invariant: flush processing never blocks message ingestion.</p>
+<h3 id="flush-triggers">Flush Triggers</h3>
+<p>Messages are accumulated in a per-channel buffer and flushed when <strong>any</strong>
+condition is met (whichever comes first):</p>
+<table>
+<thead>
+<tr>
+<th>Trigger</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Time</td>
+<td><code>flush_interval_seconds = 60</code></td>
+<td>Seconds since first buffered message</td>
+</tr>
+<tr>
+<td>Count</td>
+<td><code>flush_max_messages = 10</code></td>
+<td>Max messages to accumulate before flush</td>
+</tr>
+<tr>
+<td>Hard cap</td>
+<td><code>flush_hard_cap = 50</code></td>
+<td>Safety cap — force flush if <code>flush_max_messages</code> is set high or disabled</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Relationship between <code>flush_max_messages</code> and <code>flush_hard_cap</code>:</strong>
+<code>flush_max_messages</code> is the operational trigger (default 10). <code>flush_hard_cap</code>
+is a safety net for deployments where operators set <code>flush_max_messages</code> to a
+very large value (or 0 to disable count-based flushing) to rely solely on
+timer-based flushes. In that scenario, <code>flush_hard_cap</code> prevents unbounded
+buffer growth during message spikes. With default values (10 and 50), the hard
+cap is effectively dormant — this is intentional.
+| Mention | immediate | @mention discards buffer, triggers normal mention dispatch (not a flush) |</p>
+<p><strong>Flush interval jitter:</strong> to prevent thundering herd when many channels flush
+simultaneously, the actual interval is <code>flush_interval_seconds ± 20%</code> (random
+per-channel, recomputed each cycle).</p>
+<p><strong>@mention handling:</strong> when a <code>@mention</code> is detected at the Handler level
+(before the buffer), the system:</p>
+<ol>
+<li>Discards the ambient buffer for that channel (messages are lost — not flushed).</li>
+<li>If an ambient flush is already in-flight, sets a <code>cancelled</code> flag to suppress
+the ambient response before posting (see Concurrent reply prevention below).</li>
+<li>Dispatches the @mention via the normal mention-triggered path (with full
+reactions, threading, etc.).</li>
+</ol>
+<p>Rationale: the bot is about to reply directly via mention — flushing the ambient
+buffer simultaneously would produce a redundant double-reply. The discarded
+messages provided conversational context that the mention dispatch can retrieve
+via <code>context_window</code> (Discord API history fetch) if needed.</p>
+<p><strong>Concurrent reply prevention:</strong> to prevent double-replying to the same channel:</p>
+<ul>
+<li>The ambient consumer holds a per-channel <code>AtomicBool</code> flag (<code>flushing</code>) with
+a <strong>safety timeout</strong> (<code>flush_timeout_seconds = 120</code>). If the flag remains set
+beyond the timeout (e.g., consumer panicked/OOM), it is automatically reset
+and the condition is logged as an error.</li>
+<li>When a @mention arrives on an ambient channel (detected at Handler level,
+before the buffer), the system:
+<ol>
+<li>If ambient consumer is idle (not flushing): discard buffer, dispatch
+mention normally.</li>
+<li>If ambient consumer is mid-flush: set a <code>cancelled</code> flag <strong>and</strong> suppress
+the ambient response atomically using a <code>post_guard</code> — the guard is
+acquired before the <code>[NO_REPLY]</code> check and held through <code>post_response()</code>.
+The mention dispatch path invalidates the guard, ensuring no ambient
+message is posted after cancellation.</li>
+</ol>
+</li>
+<li>Conversely, if a mention dispatch is already in-flight, the ambient consumer
+skips posting its response — the user already got a direct reply.</li>
+<li>This ensures at most one bot response is posted to a channel at any given
+moment from the ambient + mention paths combined.</li>
+</ul>
+<h3 id="message-filtering-for-buffer">Message Filtering for Buffer</h3>
+<p>Not all messages enter the ambient buffer:</p>
+<ul>
+<li>✅ <strong>User messages</strong> in ambient-enabled channels (without @mention) → buffer</li>
+<li>✅ <strong>Bot messages from other bots</strong> (if <code>allow_bot_messages</code> permits) → buffer</li>
+<li>❌ <strong>Own bot messages</strong> → never buffered (prevents echo loops)</li>
+<li>❌ <strong>Messages that @mention the bot</strong> → bypass buffer, discard existing
+buffer contents + normal mention dispatch</li>
+<li>❌ <strong>Messages in threads created by the bot</strong> → handled by existing
+thread-based session logic, not ambient</li>
+</ul>
+<h3 id="batch-payload">Batch Payload</h3>
+<p>The flushed batch is formatted as a conversation block:</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>[Ambient context — recent channel history]</span></span>
+<span class="line"><span>[12:00:01] UserC: I pushed the helm fix yesterday</span></span>
+<span class="line"><span>[12:00:02] UserB: cool</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>[Ambient batch — 4 new messages since last flush]</span></span>
+<span class="line"><span>[12:03:01] UserA: Anyone know how to fix the helm release?</span></span>
+<span class="line"><span>[12:03:04] UserB: Which chart version?</span></span>
+<span class="line"><span>[12:03:11] UserA: 0.8.5</span></span>
+<span class="line"><span>[12:03:15] UserC: Try rolling back first</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>[End of batch — reply only if you can add meaningful value.</span></span>
+<span class="line"><span> Otherwise reply exactly: [NO_REPLY]]</span></span></code></pre>
+<h3 id="session-strategy">Session Strategy</h3>
+<p>Ambient dispatches use a <strong>dedicated session pool</strong>, separate from the main
+mention-triggered pool:</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Mention dispatch</th>
+<th>Ambient dispatch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Session key</td>
+<td><code>discord:&lt;thread_id&gt;</code></td>
+<td><code>ambient:discord:&lt;channel_id&gt;</code></td>
+</tr>
+<tr>
+<td>Pool</td>
+<td>Main pool (<code>[pool]</code>)</td>
+<td>Ambient pool (<code>[pool.ambient]</code>)</td>
+</tr>
+<tr>
+<td>Lifetime</td>
+<td>Long-lived (session_ttl_hours)</td>
+<td>Short-lived (ambient_session_ttl_minutes)</td>
+</tr>
+<tr>
+<td>Cross-flush memory</td>
+<td>Full transcript</td>
+<td>Rolling window (last N flushes)</td>
+</tr>
+<tr>
+<td>Reactions</td>
+<td>✅ Full (👀🤔🔥🆗)</td>
+<td>❌ Suppressed</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why separate pools:</strong> prevents ambient traffic from exhausting the main pool
+and blocking normal @mention responses. The ambient pool has its own
+<code>max_sessions</code> cap.</p>
+<p><strong>Cross-flush context:</strong> the ambient session retains a rolling window of the
+last <code>ambient_context_flushes</code> (default: 3) flush interactions, so the agent
+has memory of what it said/declined recently. Sessions expire after
+<code>ambient_session_ttl_minutes</code> (default: 60) of inactivity.</p>
+<h3 id="configuration">Configuration</h3>
+<p>All ambient settings are grouped under a top-level <code>[ambient]</code> section:</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">ambient</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">enabled = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">false</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">                       # master switch</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">flush_interval_seconds = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">60</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">           # time-based flush trigger (±20% jitter applied)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">flush_max_messages = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">10</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">               # count-based flush trigger</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">flush_hard_cap = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">50</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">                   # safety cap — force flush at this count</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">context_window = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">20</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">                   # historical messages fetched via Discord API before batch</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">max_concurrent_flushes = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">3</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">            # max simultaneous LLM calls across all ambient channels</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">flush_timeout_seconds = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">120</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">           # safety timeout — auto-reset flushing flag if exceeded</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">ambient</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">pool</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">max_sessions = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">5</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">                      # separate pool for ambient dispatches</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">session_ttl_minutes = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">60</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">              # ambient session inactivity timeout</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">context_flushes = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">3</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">                   # rolling window of retained flush history</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">ambient</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">discord</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">channels = [</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"1490282656913559673"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]    </span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># required — explicit allowlist, empty = disabled</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">allow_bot_messages = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">false</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">            # whether other bots' messages enter ambient buffer</span></span></code></pre>
+<p><strong>Design rationale:</strong> flush parameters (<code>flush_interval_seconds</code>, <code>flush_max_messages</code>,
+etc.) are platform-agnostic and live at the <code>[ambient]</code> level. Platform-specific
+settings (channel allowlists) live under <code>[ambient.&lt;platform&gt;]</code>. This allows
+future multi-platform support (<code>[ambient.slack]</code>, <code>[ambient.telegram]</code>) without
+restructuring.</p>
+<p><strong><code>channels</code> semantics:</strong> an explicit allowlist is <strong>required</strong>. If <code>channels</code>
+is empty or omitted while <code>enabled = true</code>, ambient mode is <strong>not activated</strong>
+for any channel (fail-safe). This prevents accidental global ambient activation.</p>
+<p><strong><code>context_window</code>:</strong> fetches the N most recent messages from the Discord
+channel history API (before the batch window) to provide additional context.
+This is a Discord API call with standard rate limiting. If fewer than N messages
+exist, all available messages are included. These messages are <strong>not</strong> counted
+toward <code>flush_max_messages</code>.</p>
+<h3 id="error-handling">Error Handling</h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LLM timeout / network error</td>
+<td>Batch is <strong>discarded</strong> (not retried). Next flush cycle starts fresh. Logged as warning.</td>
+</tr>
+<tr>
+<td>Agent returns tool calls</td>
+<td>Treated as normal response — if final output is not <code>[NO_REPLY]</code>, post it. Tool calls execute normally within the ambient session.</td>
+</tr>
+<tr>
+<td>Agent returns empty response</td>
+<td>Treated as <code>[NO_REPLY]</code> (discard silently).</td>
+</tr>
+<tr>
+<td>Buffer grows beyond <code>flush_hard_cap</code></td>
+<td>Force flush immediately, regardless of timer state.</td>
+</tr>
+<tr>
+<td>Discord API rate limit on <code>context_window</code> fetch</td>
+<td>Skip context window, flush batch without historical context. Log warning.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sentinel-value">Sentinel Value</h3>
+<p>The sentinel is <code>[NO_REPLY]</code> (case-insensitive, trimmed). Chosen because:</p>
+<ul>
+<li>Unlikely to appear in natural agent output.</li>
+<li>Simple to detect with a string match (no regex needed).</li>
+<li>Easy for any LLM to produce reliably.</li>
+<li>Consistent with OpenClaw's established <code>NO_REPLY</code> convention.</li>
+</ul>
+<h2 id="consequences">Consequences</h2>
+<h3 id="benefits">Benefits</h3>
+<ul>
+<li><strong>Token efficient</strong> — one LLM call per batch instead of per message. A
+channel with 10 messages in 60 seconds costs 1 invocation, not 10.</li>
+<li><strong>Better judgment</strong> — agent sees a complete conversational thread, making
+it far more likely to know when a question was already answered (→ NO_REPLY)
+vs. when it should contribute.</li>
+<li><strong>Natural rate limiting</strong> — the flush interval + jitter acts as inherent
+rate-limiting. Combined with <code>max_concurrent_flushes</code>, prevents cost spikes.</li>
+<li><strong>Agents behave like real team members</strong> — aware of context, able to
+contribute organically.</li>
+<li><strong>User-configurable</strong> — operators decide the cost/intelligence trade-off.</li>
+<li><strong>Fail-safe defaults</strong> — disabled by default, requires explicit channel list,
+separate session pool prevents impact on normal operations.</li>
+</ul>
+<h3 id="trade-offs">Trade-offs</h3>
+<ul>
+<li><strong>Latency</strong> — ambient replies are delayed by up to <code>flush_interval_seconds</code>.
+Acceptable because ambient replies are unsolicited; explicitly mentioned
+messages bypass the buffer entirely via the normal dispatch path.</li>
+<li><strong>Token cost still increases</strong> — even with batching, each flush is an LLM
+call. Mitigations: per-channel opt-in, tunable flush interval/count,
+<code>max_concurrent_flushes</code> cap.</li>
+<li><strong>Potential for noise</strong> — a poorly-tuned prompt or model may reply too
+eagerly. The batch format and explicit instructions mitigate this.</li>
+<li><strong>No retry on failure</strong> — ambient batches are fire-and-forget. If a flush
+fails, those messages are lost context. Acceptable because ambient is
+best-effort by nature.</li>
+</ul>
+<h2 id="alternatives-considered">Alternatives Considered</h2>
+<ol>
+<li><strong>Per-message dispatch (OpenClaw-style)</strong> — dispatch every message
+individually. Rejected because it burns N invocations for N messages,
+most of which return NO_REPLY. Batch flush achieves the same goal with
+~1/N the cost.</li>
+<li><strong>Keyword pre-filter</strong> — only dispatch if the message matches certain
+keywords. Rejected as primary mechanism because it defeats the purpose of
+intelligent, context-aware participation. May be added later as a cost
+optimization layer.</li>
+<li><strong>Separate lightweight classifier</strong> — use a small/cheap model to decide
+whether to invoke the main agent. Viable as a future enhancement but adds
+complexity for v1.</li>
+<li><strong>Periodic summary mode</strong> — batch N messages and summarize them before
+sending to agent. Rejected because the agent should see raw messages for
+full context; summarization loses nuance.</li>
+</ol>
+<h2 id="implementation-notes">Implementation Notes</h2>
+<h3 id="reuse-of-existing-dispatcher-infrastructure">Reuse of Existing <code>Dispatcher</code> Infrastructure</h3>
+<p>OpenAB already has a <strong>turn-boundary batching</strong> system (PR #686,
+<code>message_processing_mode</code> config) with <code>Dispatcher</code>, per-thread <code>mpsc::channel</code>,
+and <code>consumer_loop</code>. Ambient Mode should extend this infrastructure rather than
+building a parallel buffer system.</p>
+<p><strong>What we reuse:</strong></p>
+<ul>
+<li><code>Dispatcher::submit()</code> — message ingestion into bounded mpsc channel</li>
+<li><code>BufferedMessage</code> struct — carries prompt, sender_context, attachments</li>
+<li><code>consumer_loop</code> — long-lived task that drains and dispatches</li>
+<li><code>dispatch_batch</code> → <code>pack_arrival_event</code> — packing N messages into
+<code>Vec&lt;ContentBlock&gt;</code> with repeated <code>&lt;sender_context&gt;</code> delimiters</li>
+<li><code>ThreadHandle</code> lifecycle — idle eviction, SendError retry</li>
+</ul>
+<p><strong>What differs for ambient mode:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Turn-boundary (existing)</th>
+<th>Ambient consumer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Drain trigger</td>
+<td>Turn completion (greedy drain when agent finishes)</td>
+<td>Timer (<code>flush_interval ± jitter</code>) OR count (<code>flush_max_messages</code>)</td>
+</tr>
+<tr>
+<td>Key</td>
+<td><code>(platform, thread_id)</code></td>
+<td><code>ambient:(platform, channel_id)</code></td>
+</tr>
+<tr>
+<td>Prerequisite</td>
+<td>Message already passed mention/involved gate</td>
+<td>Message has NO mention (new gate path)</td>
+</tr>
+<tr>
+<td>Response handling</td>
+<td>Normal post</td>
+<td><code>[NO_REPLY]</code> check before posting</td>
+</tr>
+<tr>
+<td>Reactions</td>
+<td>Full (👀🤔🔥🆗)</td>
+<td>Suppressed</td>
+</tr>
+<tr>
+<td>Session pool</td>
+<td>Main pool</td>
+<td>Ambient pool (separate <code>max_sessions</code>)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Not a new <code>message_processing_mode</code>:</strong> ambient mode is a <strong>parallel dispatch
+path</strong>, not a replacement for the primary processing mode. The existing
+<code>message_processing_mode</code> enum (<code>per-message</code>, <code>per-thread</code>, <code>per-lane</code>) is
+unchanged. Ambient mode is configured separately via <code>[ambient]</code> and runs as
+a separate Dispatcher instance alongside the primary one.</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># Existing modes (unchanged) — applies to mention-triggered messages:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">message_processing_mode = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"per-message"</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">   # 1 msg → 1 turn</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">message_processing_mode = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"per-thread"</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">    # batch at turn boundary</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">message_processing_mode = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"per-lane"</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">      # batch at turn boundary, per-sender</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># Ambient mode is independent — configured in [ambient], not here.</span></span></code></pre>
+<p>Ambient mode runs as a <strong>separate Dispatcher instance</strong> alongside the primary
+one. The primary Dispatcher handles mention-triggered messages (using whatever
+<code>message_processing_mode</code> is configured). The ambient Dispatcher handles
+non-mentioned messages in ambient-enabled channels with a timer-based consumer.</p>
+<h3 id="ambient-consumer-loop">Ambient Consumer Loop</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-rust"><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">// Pseudocode — ambient consumer differs from turn-boundary consumer:</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">async</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72"> fn</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D2A8FF"> ambient_consumer_loop</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">(rx, config, flush_semaphore, channel_flushing) {</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">    loop</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> {</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">        let</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> first </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">=</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72"> match</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> rx</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D2A8FF">recv</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">()</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">.await</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> {</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">            Some</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">(msg) </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">=></span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> msg,</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">            None</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72"> =></span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72"> return</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,                    </span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">// channel closed, exit consumer</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">        };</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">        let</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> deadline </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657"> Instant</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">::</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D2A8FF">now</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">() </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">+</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> config</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D2A8FF">flush_interval_jittered</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">();</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">        let</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72"> mut</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> batch </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D2A8FF"> vec!</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[first];</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">        loop</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> {</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">            let</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> remaining </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> deadline </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">-</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657"> Instant</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">::</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D2A8FF">now</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">();</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">            match</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D2A8FF"> timeout</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">(remaining, rx</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D2A8FF">recv</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">())</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">.await</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> {</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">                Ok</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">Some</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">(msg)) </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">=></span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> {</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">                    batch</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D2A8FF">push</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">(msg);</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">                    if</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> batch</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D2A8FF">len</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">() </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">>=</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> config</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">.</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">flush_max_messages { </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">break</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">; }</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">                    if</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> batch</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D2A8FF">len</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">() </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">>=</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> config</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">.</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">flush_hard_cap { </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">break</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">; }</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">                }</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">                Ok</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">None</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">=></span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72"> break</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,             </span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">// channel closed</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">                Err</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">(_) </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">=></span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72"> break</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,               </span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">// timer expired</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">            }</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">        }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">        // Acquire global concurrency permit (blocks if max_concurrent_flushes reached)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">        let</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> _permit </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> flush_semaphore</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D2A8FF">acquire</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">()</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">.await</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">        // Mark channel as flushing (with safety timeout for auto-reset)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">        let</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> _flushing_guard </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657"> FlushingGuard</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">::</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D2A8FF">new</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">(</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">            channel_flushing,</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">            config</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">.</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">flush_timeout_seconds,</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">        ); </span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">// auto-resets on drop OR timeout</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">        // Flush: dispatch batch with [NO_REPLY] system prompt</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">        match</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D2A8FF"> dispatch_ambient_batch</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">(batch)</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">.await</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> {</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">            Ok</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">(response) </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">=></span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> {</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">                if</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72"> !</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">response</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D2A8FF">trim</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">()</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D2A8FF">eq_ignore_ascii_case</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">(</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"[NO_REPLY]"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">) {</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">                    // Atomic check-and-post: acquire post_guard to prevent</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">                    // race with mention cancellation</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">                    if</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72"> let</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657"> Some</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">(_guard) </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> post_guard</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D2A8FF">try_acquire</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">() {</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#D2A8FF">                        post_response</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">(response)</span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">.await</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">                    }</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">                    // else: mention arrived, cancelled — skip posting</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">                }</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">            }</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">            Err</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">(e) </span><span style="--shiki-light:#D73A49;--shiki-dark:#FF7B72">=></span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> {</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#D2A8FF">                warn!</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">(</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"ambient flush failed, discarding batch: {e}"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">);</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">            }</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">        }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">        // _flushing_guard dropped here — resets channel_flushing</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">        // _permit dropped here — releases semaphore slot</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">    }</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">}</span></span></code></pre>
+<h3 id="other-implementation-details">Other Implementation Details</h3>
+<ul>
+<li><strong>No thinking message:</strong> ambient dispatches do NOT send a &quot;...&quot; placeholder
+message. Unlike normal mention dispatch, ambient responses are posted directly
+as a single message (or discarded). This eliminates visual flickering in
+the channel.</li>
+<li><strong><code>[NO_REPLY]</code> check:</strong> applied after <code>stream_prompt</code> completes. If the
+trimmed final content equals <code>[NO_REPLY]</code> (case-insensitive), no message is
+posted.</li>
+<li><strong>Bot-to-bot loop prevention:</strong> the bot's own messages never enter the buffer
+(existing <code>bot_id</code> check). <strong>For ambient channels, <code>allow_bot_messages</code>
+defaults to <code>&quot;off&quot;</code></strong> regardless of the global setting — other bots' messages
+are excluded from the ambient buffer unless the operator explicitly opts in.
+Even if opted in, the existing <code>max_bot_turns</code> config (default 100, hard
+cap 1000 — applied at ingest, before <code>submit</code>) prevents infinite loops. The ambient system prompt
+also explicitly instructs: &quot;Do not reply to other bot messages unless directly
+relevant to a human's question.&quot;</li>
+<li><strong>Mention detection reuse:</strong> the existing <code>is_mentioned</code> logic in
+<code>Handler::message()</code> (src/discord.rs) fires <strong>before</strong> the buffer push.
+If mentioned, the message takes the normal dispatch path; the ambient buffer
+for that channel is discarded (not flushed).</li>
+<li><strong>Bot echo prevention:</strong> <code>msg.author.id == bot_id</code> check (already exists in
+Handler::message) ensures bot's own messages never enter the buffer.</li>
+<li><strong>Reactions suppressed:</strong> ambient dispatches skip <code>StatusReactionController</code>
+entirely — no 👀🤔🔥 on every channel message.</li>
+<li><strong>Serialization with normal dispatch:</strong> the ambient session key
+(<code>ambient:discord:&lt;channel_id&gt;</code>) is different from mention session keys
+(<code>discord:&lt;thread_id&gt;</code>), so they never contend on the same session lock.
+However, concurrent reply prevention (see above) ensures at most one response
+is posted per channel — if a @mention arrives mid-flush, the ambient response
+is cancelled via the <code>post_guard</code> mechanism.</li>
+</ul>
+</article><nav class="flex justify-between gap-4 mt-12 pt-6 border-t border-border"><a class="flex-1 px-4 py-3.5 border border-border rounded-xl hover:border-accent" href="/openab/adr/agentcore-runtime-backend"><div class="text-muted text-[.78rem]">← <!-- -->Previous</div><div class="font-semibold text-accent">adr/agentcore-runtime-backend</div></a><a class="flex-1 px-4 py-3.5 border border-border rounded-xl hover:border-accent text-right" href="/openab/adr/basic-cronjob"><div class="text-muted text-[.78rem]">Next<!-- --> →</div><div class="font-semibold text-accent">adr/basic-cronjob</div></a></nav><script>document.querySelectorAll('[data-copy-md]').forEach(function(b){b.addEventListener('click',async function(){try{var r=await fetch(b.getAttribute('data-copy-md'));var t=await r.text();await navigator.clipboard.writeText(t);var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o;},1500);}catch(e){alert('Copy failed: '+e);}});});document.querySelectorAll('.prose pre').forEach(function(pre){if(pre.querySelector('.copy-code'))return;var b=document.createElement('button');b.className='copy-code';b.textContent='Copy';b.addEventListener('click',async function(){var c=pre.querySelector('code');try{await navigator.clipboard.writeText(c?c.innerText:pre.innerText);var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o;},1200);}catch(e){}});pre.appendChild(b);});document.querySelectorAll('.tabs').forEach(function(t){t.querySelectorAll('.tab-btn').forEach(function(b){b.addEventListener('click',function(){var i=b.getAttribute('data-tab');t.querySelectorAll('.tab-btn').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-tab')===i);});t.querySelectorAll('.tab-panel').forEach(function(p){p.hidden=p.getAttribute('data-tab')!==i;});});});});(function(){var blocks=document.querySelectorAll('code.language-mermaid');if(!blocks.length)return;var items=[];blocks.forEach(function(c){var pre=c.closest('pre')||c;var h=document.createElement('div');h.className='mermaid-diagram';pre.replaceWith(h);items.push({src:c.textContent,holder:h});});var lib,id=0;function load(){return lib||(lib=import("https://esm.sh/mermaid@11").then(function(m){return m.default;}));}function theme(){return document.documentElement.getAttribute('data-theme')==='dark'?'dark':'default';}function run(){load().then(function(mermaid){mermaid.initialize({startOnLoad:false,securityLevel:'loose',theme:theme()});items.forEach(function(it){mermaid.render('kura-mmd-'+(id++),it.src).then(function(r){it.holder.innerHTML=r.svg;}).catch(function(e){it.holder.innerHTML='<pre class="mermaid-error">'+String((e&&e.message)||e)+'</pre>';});});}).catch(function(){});}run();var cur=document.documentElement.getAttribute('data-theme');new MutationObserver(function(){var t=document.documentElement.getAttribute('data-theme');if(t!==cur){cur=t;run();}}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});})();</script></main><aside class="sticky top-14 max-h-[calc(100vh-56px)] overflow-y-auto px-4 py-8 max-lg:hidden"><p class="text-[.72rem] font-bold tracking-wider uppercase text-muted mb-2.5">On this page</p><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#context">Context</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#prior-art">Prior Art</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#openclaw--activation-always">OpenClaw — /activation always</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#hermes-agent--freeresponsechannels">Hermes Agent — free_response_channels</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#research--quotcontrolling-ai-agent-participation-in-group-conversationsquot">Research — &amp;quot;Controlling AI Agent Participation in Group Conversations&amp;quot;</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#gap-our-design-fills">Gap Our Design Fills</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#decision">Decision</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#architecture-overview">Architecture Overview</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#dual-path-concurrency-mention-vs-ambient">Dual-Path Concurrency (Mention vs Ambient)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#mechanism">Mechanism</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#buffer-lifecycle">Buffer Lifecycle</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#flush-triggers">Flush Triggers</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#message-filtering-for-buffer">Message Filtering for Buffer</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#batch-payload">Batch Payload</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#session-strategy">Session Strategy</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#configuration">Configuration</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#error-handling">Error Handling</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#sentinel-value">Sentinel Value</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#consequences">Consequences</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#benefits">Benefits</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#trade-offs">Trade-offs</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#alternatives-considered">Alternatives Considered</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#implementation-notes">Implementation Notes</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#reuse-of-existing-dispatcher-infrastructure">Reuse of Existing Dispatcher Infrastructure</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#ambient-consumer-loop">Ambient Consumer Loop</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#other-implementation-details">Other Implementation Details</a></aside></div></div><footer class="border-t border-border mt-8"><div class="flex items-center justify-between flex-wrap gap-4 max-w-[1280px] mx-auto px-6 py-5 max-md:px-4"><nav class="flex items-center gap-[1.1rem] text-[.85rem]"><a class="text-muted hover:text-fg" href="/llms.txt">llms.txt</a><a class="text-muted hover:text-fg" href="/mcp">MCP</a><button type="button" class="inline-flex items-center justify-center w-[30px] h-[30px] p-0 text-[.95rem] leading-none border border-border rounded-lg bg-surface text-fg cursor-pointer hover:bg-hover" data-theme-toggle="true" aria-label="Toggle theme"></button></nav><a class="text-muted text-[.85rem] hover:text-accent" href="https://kura.build/" target="_blank" rel="noreferrer">Powered by Kura</a></div></footer><script>document.addEventListener('keydown',function(e){if(e.key==='/' && !document.documentElement.dataset.ctrlk && !/INPUT|TEXTAREA/.test((document.activeElement||{}).tagName||'')){e.preventDefault();var s=document.querySelector('.search-box');if(s)s.focus();}});(function(){var b=document.querySelector('[data-theme-toggle]');if(!b)return;var d=document.documentElement,order=['system','light','dark'],icon={system:'🖥',light:'☀',dark:'☾'};function pref(){return d.getAttribute('data-theme-pref')||'system';}function res(p){return p==='dark'||(p==='system'&&matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light';}function set(p){d.setAttribute('data-theme-pref',p);d.setAttribute('data-theme',res(p));try{localStorage.setItem('kura-theme',p);}catch(e){}b.textContent=icon[p];b.setAttribute('title','Theme: '+p);}set(pref());b.addEventListener('click',function(){set(order[(order.indexOf(pref())+1)%order.length]);});try{matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(){if(pref()==='system')d.setAttribute('data-theme',res('system'));});}catch(e){}})();document.addEventListener('click',function(e){var t=e.target;document.querySelectorAll('details[data-menu][open]').forEach(function(d){if(!d.contains(t))d.removeAttribute('open');});var it=t.closest&&t.closest('details[data-menu] a, details[data-menu] [data-copy-md]');if(it){var dd=it.closest('details[data-menu]');if(dd)setTimeout(function(){dd.removeAttribute('open');},0);}});document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('details[data-menu][open]').forEach(function(d){d.removeAttribute('open');});});(function(){var root=document.documentElement;function opener(){return document.querySelector('[data-drawer-open]');}function items(){var d=document.getElementById('docs-nav');if(!d)return[];return[].filter.call(d.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])'),function(el){return el.offsetParent!==null;});}function set(o){var was=root.classList.contains('drawer-open');root.classList.toggle('drawer-open',o);var b=opener();if(b)b.setAttribute('aria-expanded',o?'true':'false');if(o){var f=items();if(f[0])f[0].focus();}else if(was&&b)b.focus();}document.addEventListener('click',function(e){if(e.target.closest('[data-drawer-open]')){e.preventDefault();set(!root.classList.contains('drawer-open'));return;}if(e.target.closest('[data-drawer-close]')){set(false);return;}if(e.target.closest('#docs-nav a'))set(false);});document.addEventListener('keydown',function(e){if(e.key==='Escape'){set(false);return;}if(e.key==='Tab'&&root.classList.contains('drawer-open')){var f=items();if(!f.length)return;var first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}else if(f.indexOf(document.activeElement)<0){e.preventDefault();first.focus();}}});})();(function(){
+  function trim(p){return p.length>1&&p.endsWith('/')?p.slice(0,-1):p;}
+  function sync(){
+    var path=trim(location.pathname), tab=null;
+    var links=document.querySelectorAll('.sidebar a[href],[data-tabbar] a[href]');
+    for(var i=0;i<links.length;i++){var a=links[i],on=trim(a.getAttribute('href'))===path;
+      if(on){a.setAttribute('aria-current','page');var g=a.closest('[data-tab]');if(g)tab=g.getAttribute('data-tab');}
+      else a.removeAttribute('aria-current');}
+    if(tab!=null){
+      document.querySelectorAll('[data-tab]').forEach(function(g){g.hidden=g.getAttribute('data-tab')!==tab;});
+      document.querySelectorAll('[data-tabbar] a').forEach(function(a){
+        if(a.getAttribute('data-tab-key')===tab)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+    }
+    // expand the folder(s) holding the active page. Iterate EVERY aria-current sidebar link, not
+    // just the first: a folder-as-page link lives in a <details>, but the mobile tab-bar link (also
+    // in .sidebar, earlier in the DOM) has no folder ancestor — querySelector would pick that one
+    // and expand nothing. forEach opens each link's folder chain; tab links are harmless no-ops.
+    document.querySelectorAll('.sidebar a[aria-current="page"]').forEach(function(cur){
+      var d=cur.closest('details.folder');while(d){d.open=true;d=d.parentElement&&d.parentElement.closest('details.folder');}});
+    // rewrite the locale-switch links to THIS page's equivalent path (swap the locale prefix)
+    var ll=document.querySelectorAll('[data-locale-home]');
+    if(ll.length){var lc=document.querySelector('[data-locale-home][data-locale-active]'),cp=lc?lc.getAttribute('data-locale-home'):'/';cp=cp==='/'?'':cp;
+      var rest=location.pathname;if(cp&&rest.indexOf(cp)===0)rest=rest.slice(cp.length)||'/';
+      ll.forEach(function(a){var h=a.getAttribute('data-locale-home'),p=h==='/'?'':h;a.setAttribute('href',rest==='/'?(p||'/'):(p+rest));});}
+    // mobile nav-context: "Active tab / Page title" (the shell can't know the page server-side)
+    var nc=document.querySelector('[data-nav-context]');
+    if(nc){var at=document.querySelector('[data-tabbar] a[aria-current="page"]'),h1=document.querySelector('main h1');
+      nc.textContent=[at&&at.textContent.trim(),h1&&h1.textContent.trim()].filter(Boolean).join(' / ');}
+  }
+  sync();
+  var outlet=document.querySelector('[data-june-outlet]');
+  if(outlet) new MutationObserver(sync).observe(outlet,{childList:true,subtree:true});
+})();</script><script type="module" src="/openab/_june/client.a5a40235.js"></script><script type="application/json" id="june-webmcp">[{"name":"search_docs","description":"Hybrid keyword + semantic search over the docs. Returns the most relevant passages with their doc slug, title, and relevance score.","inputSchema":{"type":"object","properties":{"query":{"type":"string","description":"A natural-language question or keywords."},"topK":{"type":"integer","description":"Number of results to return (default 5)."}},"required":["query"]}},{"name":"get_page","description":"Fetch one doc page as clean Markdown by its slug (e.g. introduction, search, agents).","inputSchema":{"type":"object","properties":{"slug":{"type":"string","description":"The page slug."}},"required":["slug"]}},{"name":"list_docs","description":"List every doc page with its slug, title, section, and `sources` (the code paths it documents). The map for finding which pages a code change affects.","inputSchema":{"type":"object","properties":{}}}]</script><script>(function(){var mc=navigator.modelContext;if(!mc||!mc.registerTool)return;var el=document.getElementById('june-webmcp');if(!el)return;var tools;try{tools=JSON.parse(el.textContent)}catch(e){return}var ac=new AbortController();tools.forEach(function(t){mc.registerTool({name:t.name,description:t.description,inputSchema:t.inputSchema,execute:function(args){return fetch('/mcp',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'tools/call',params:{name:t.name,arguments:args}})}).then(function(r){return r.json()}).then(function(j){return j.result})}},{signal:ac.signal})})})();</script></body></html>

@@ -1,0 +1,116 @@
+# OpenAB
+
+> A lightweight, cloud-native ACP harness connecting chat platforms to AI coding agents.
+
+> Server-rendered React app. Every route also answers as Markdown
+> (`.md`) and JSON (`.json`); actions are MCP tools at `/mcp`.
+
+## Framework (canonical names — do not guess)
+
+Built with Kura, the agent-native docs framework — https://kura.build
+- Scaffold: `npm create kura my-docs` (package `create-kura`).
+- Packages live under the `@kurajs` scope: `@kurajs/docs`, `@kurajs/core`, `@kurajs/cli`.
+- Built on June (https://june.build); the underlying framework package is `@junejs/core`.
+
+## Routes
+- [/](/)
+- [/search](/search)
+
+## Docs
+- [Introduction](/docs/.md)
+- [adr/agentcore-runtime-backend](/docs/adr/agentcore-runtime-backend.md)
+- [adr/ambient](/docs/adr/ambient.md)
+- [adr/basic-cronjob](/docs/adr/basic-cronjob.md)
+- [adr/context-aware-token](/docs/adr/context-aware-token.md)
+- [adr/control-directives](/docs/adr/control-directives.md)
+- [adr/custom-gateway](/docs/adr/custom-gateway.md)
+- [adr/ecs-control-plane](/docs/adr/ecs-control-plane.md)
+- [adr/hooks](/docs/adr/hooks.md)
+- [adr/imessage-integration](/docs/adr/imessage-integration.md)
+- [adr/line-adapter](/docs/adr/line-adapter.md)
+- [adr/multi-platform-adapters](/docs/adr/multi-platform-adapters.md)
+- [adr/openab-agent](/docs/adr/openab-agent.md)
+- [adr/openab-agent-mcp](/docs/adr/openab-agent-mcp.md)
+- [adr/openab-agent-oauth](/docs/adr/openab-agent-oauth.md)
+- [adr/pr-contribution-guidelines](/docs/adr/pr-contribution-guidelines.md)
+- [adr/pr-review-loop](/docs/adr/pr-review-loop.md)
+- [adr/secrets-management](/docs/adr/secrets-management.md)
+- [adr/telegram-rich-messages](/docs/adr/telegram-rich-messages.md)
+- [adr/turn-boundary-batching](/docs/adr/turn-boundary-batching.md)
+- [adr/unified-binary](/docs/adr/unified-binary.md)
+- [agent-installable-tools](/docs/agent-installable-tools.md)
+- [agentcore](/docs/agentcore.md)
+- [ai-install-upgrade](/docs/ai-install-upgrade.md)
+- [ambient](/docs/ambient.md)
+- [antigravity](/docs/antigravity.md)
+- [claude-code](/docs/claude-code.md)
+- [codex](/docs/codex.md)
+- [config-reference](/docs/config-reference.md)
+- [control-directives](/docs/control-directives.md)
+- [copilot](/docs/copilot.md)
+- [cronjob](/docs/cronjob.md)
+- [cursor](/docs/cursor.md)
+- [devin](/docs/devin.md)
+- [discord](/docs/discord.md)
+- [feishu](/docs/feishu.md)
+- [gemini](/docs/gemini.md)
+- [gh-auth-device-flow](/docs/gh-auth-device-flow.md)
+- [github-token-setup](/docs/github-token-setup.md)
+- [github-webhook-integration](/docs/github-webhook-integration.md)
+- [google-chat](/docs/google-chat.md)
+- [grok](/docs/grok.md)
+- [helm-publishing](/docs/helm-publishing.md)
+- [hermes](/docs/hermes.md)
+- [hooks](/docs/hooks.md)
+- [image-tags](/docs/image-tags.md)
+- [inbound-attachments](/docs/inbound-attachments.md)
+- [kiro](/docs/kiro.md)
+- [line](/docs/line.md)
+- [local-dev](/docs/local-dev.md)
+- [local-vision-models](/docs/local-vision-models.md)
+- [message-dispatch-modes](/docs/message-dispatch-modes.md)
+- [messaging](/docs/messaging.md)
+- [mimocode](/docs/mimocode.md)
+- [msteams-enterprise](/docs/msteams-enterprise.md)
+- [msteams-selfhosted](/docs/msteams-selfhosted.md)
+- [multi-agent](/docs/multi-agent.md)
+- [native-agent](/docs/native-agent.md)
+- [opencode](/docs/opencode.md)
+- [openshell](/docs/openshell.md)
+- [output-directives](/docs/output-directives.md)
+- [pi](/docs/pi.md)
+- [python](/docs/python.md)
+- [reactions](/docs/reactions.md)
+- [refarch/aws-ecs-fargate-spot](/docs/refarch/aws-ecs-fargate-spot.md)
+- [refarch/ci-observability-discord](/docs/refarch/ci-observability-discord.md)
+- [refarch/cronjob_k8s_refarch](/docs/refarch/cronjob_k8s_refarch.md)
+- [refarch/gbrain](/docs/refarch/gbrain.md)
+- [refarch/remote-ssh-debugging](/docs/refarch/remote-ssh-debugging.md)
+- [refarch/sidecar-proxy](/docs/refarch/sidecar-proxy.md)
+- [refarch/telegram-cloudflare-tunnel](/docs/refarch/telegram-cloudflare-tunnel.md)
+- [secrets-management](/docs/secrets-management.md)
+- [sendfiles](/docs/sendfiles.md)
+- [sendimages](/docs/sendimages.md)
+- [sidecar](/docs/sidecar.md)
+- [slack](/docs/slack.md)
+- [slash-commands](/docs/slash-commands.md)
+- [steering-design-guide](/docs/steering-design-guide.md)
+- [steering/feature-request](/docs/steering/feature-request.md)
+- [steering/pr-review](/docs/steering/pr-review.md)
+- [steering/triage](/docs/steering/triage.md)
+- [stt](/docs/stt.md)
+- [telegram](/docs/telegram.md)
+- [tool-display](/docs/tool-display.md)
+- [wecom](/docs/wecom.md)
+- [workspaces](/docs/workspaces.md)
+- [xai-proxy](/docs/xai-proxy.md)
+
+## Tools (MCP)
+- MCP server: https://prerender.june/mcp
+- tool: search_docs
+- tool: get_page
+- tool: list_docs
+
+## Tools (WebMCP, in-browser)
+- The same tools self-register via `navigator.modelContext.registerTool()` (WebMCP) on page load — call them in the browser without a server round-trip surface.
+- Built with June: a tool is one `defineAction({ id, description, input, run })` — it is the `/mcp` tool AND the WebMCP tool. Do not hand-roll `registerTool`.

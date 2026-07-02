@@ -1,0 +1,514 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="icon" href="/openab/favicon.svg" type="image/svg+xml"/><title>discord · OpenAB Docs</title><meta name="description" content="A lightweight, cloud-native ACP harness connecting chat platforms to AI coding agents."/><meta property="og:title" content="discord"/><meta property="og:description" content="A lightweight, cloud-native ACP harness connecting chat platforms to AI coding agents."/><meta property="og:type" content="article"/><script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.md"}},{"not":{"href_matches":"/*.json"}},{"not":{"href_matches":"/*.txt"}},{"not":{"href_matches":"/*.xml"}},{"not":{"href_matches":"/mcp"}}]},"eagerness":"moderate"}],"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.md"}},{"not":{"href_matches":"/*.json"}},{"not":{"href_matches":"/*.txt"}},{"not":{"href_matches":"/*.xml"}},{"not":{"href_matches":"/mcp"}}]},"eagerness":"moderate"}]}</script><script>(function(){if(HTMLScriptElement.supports&&HTMLScriptElement.supports('speculationrules'))return;var seen=new Set();document.addEventListener('pointerover',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var u=new URL(a.href,location.href);if(u.origin!==location.origin||seen.has(u.pathname)||u.pathname===location.pathname)return;if(/.(md|json)$/.test(u.pathname)||u.pathname==='/mcp')return;seen.add(u.pathname);var l=document.createElement('link');l.rel='prefetch';l.href=u.pathname+u.search;document.head.appendChild(l);},{passive:true});})();</script><style>
+          @view-transition { navigation: auto; }
+          ::view-transition-group(root),
+          ::view-transition-old(root),
+          ::view-transition-new(root) { animation-duration: 120ms; }
+          @media (prefers-reduced-motion: reduce) {
+            ::view-transition-group(*),
+            ::view-transition-old(*),
+            ::view-transition-new(*) { animation: none !important; }
+          }
+</style><link rel="stylesheet" href="/openab/_june/global.1a9cb889.css"/></head><body><script>(function(){try{var p=localStorage.getItem('kura-theme')||'system';var d=document.documentElement;d.setAttribute('data-theme-pref',p);d.setAttribute('data-theme',(p==='dark'||(p==='system'&&matchMedia('(prefers-color-scheme:dark)').matches))?'dark':'light');}catch(e){}})();</script><header class="sticky top-0 z-20 flex items-center gap-4 h-14 px-5 bg-topbar-bg backdrop-blur-sm border-b border-border max-md:px-4 max-md:gap-2.5"><a class="flex items-center gap-1.5 font-bold text-[1.05rem]" href="/openab/">OpenAB<!-- --> <span class="font-normal text-muted text-[.85rem]">Docs</span></a><form class="ml-auto max-md:ml-2 max-md:flex-1 max-md:min-w-0" action="/openab/search" method="get"><input class="w-[280px] max-w-[40vw] px-3 py-2 text-[.9rem] border border-border rounded-lg bg-surface-2 text-fg max-md:w-full max-md:max-w-none search-box" placeholder="Search docs…  (press /)" aria-label="Search" data-search-endpoint="/openab/search.json" data-doc-base="/openab/" name="q"/></form><nav class="flex items-center gap-4 text-muted text-[.9rem]"></nav></header><button class="hidden max-md:flex items-center gap-2.5 w-full px-4 py-2.5 bg-bg border-0 border-b border-border text-fg-soft text-[.9rem] text-left cursor-pointer focus-visible:outline-none focus-visible:bg-hover" data-drawer-open="true" aria-controls="docs-nav" aria-expanded="false"><span class="text-[1.05rem] leading-none" aria-hidden="true">☰</span><span class="font-semibold text-fg flex-none">Navigation</span><span class="nav-bar-context text-muted flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap" data-nav-context="true"></span></button><div class="drawer-backdrop" data-drawer-close="true" aria-hidden="true"></div><div class="grid grid-cols-[248px_minmax(0,1fr)_220px] max-lg:grid-cols-[248px_minmax(0,1fr)] max-md:grid-cols-1 items-start max-w-[1280px] mx-auto"><aside class="sidebar sticky top-14 h-[calc(100vh-56px)] overflow-y-auto px-4 py-6 border-r border-border" id="docs-nav"><div data-tab="_"><div class="mb-5"><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/">Introduction</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agent-installable-tools">agent-installable-tools</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agentcore">agentcore</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/ai-install-upgrade">ai-install-upgrade</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/ambient">ambient</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/antigravity">antigravity</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/claude-code">claude-code</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/codex">codex</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/config-reference">config-reference</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/control-directives">control-directives</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/copilot">copilot</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/cronjob">cronjob</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/cursor">cursor</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/devin">devin</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/discord">discord</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/feishu">feishu</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/gemini">gemini</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/gh-auth-device-flow">gh-auth-device-flow</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/github-token-setup">github-token-setup</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/github-webhook-integration">github-webhook-integration</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/google-chat">google-chat</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/grok">grok</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/helm-publishing">helm-publishing</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/hermes">hermes</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/hooks">hooks</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/image-tags">image-tags</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/inbound-attachments">inbound-attachments</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/kiro">kiro</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/line">line</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/local-dev">local-dev</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/local-vision-models">local-vision-models</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/message-dispatch-modes">message-dispatch-modes</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/messaging">messaging</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/mimocode">mimocode</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/msteams-enterprise">msteams-enterprise</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/msteams-selfhosted">msteams-selfhosted</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/multi-agent">multi-agent</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/native-agent">native-agent</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/opencode">opencode</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/openshell">openshell</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/output-directives">output-directives</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/pi">pi</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/python">python</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/reactions">reactions</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/secrets-management">secrets-management</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/sendfiles">sendfiles</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/sendimages">sendimages</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/sidecar">sidecar</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/slack">slack</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/slash-commands">slash-commands</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering-design-guide">steering-design-guide</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/stt">stt</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/telegram">telegram</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/tool-display">tool-display</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/wecom">wecom</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/workspaces">workspaces</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/xai-proxy">xai-proxy</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Adr</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/agentcore-runtime-backend">adr/agentcore-runtime-backend</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/ambient">adr/ambient</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/basic-cronjob">adr/basic-cronjob</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/context-aware-token">adr/context-aware-token</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/control-directives">adr/control-directives</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/custom-gateway">adr/custom-gateway</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/ecs-control-plane">adr/ecs-control-plane</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/hooks">adr/hooks</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/imessage-integration">adr/imessage-integration</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/line-adapter">adr/line-adapter</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/multi-platform-adapters">adr/multi-platform-adapters</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/openab-agent">adr/openab-agent</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/openab-agent-mcp">adr/openab-agent-mcp</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/openab-agent-oauth">adr/openab-agent-oauth</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/pr-contribution-guidelines">adr/pr-contribution-guidelines</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/pr-review-loop">adr/pr-review-loop</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/secrets-management">adr/secrets-management</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/telegram-rich-messages">adr/telegram-rich-messages</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/turn-boundary-batching">adr/turn-boundary-batching</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/adr/unified-binary">adr/unified-binary</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Refarch</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/aws-ecs-fargate-spot">refarch/aws-ecs-fargate-spot</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/ci-observability-discord">refarch/ci-observability-discord</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/cronjob_k8s_refarch">refarch/cronjob_k8s_refarch</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/gbrain">refarch/gbrain</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/remote-ssh-debugging">refarch/remote-ssh-debugging</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/sidecar-proxy">refarch/sidecar-proxy</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/telegram-cloudflare-tunnel">refarch/telegram-cloudflare-tunnel</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Steering</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering/feature-request">steering/feature-request</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering/pr-review">steering/pr-review</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering/triage">steering/triage</a></li></ul></div></div></aside><div data-june-outlet=""><main class="w-auto max-w-none m-0 min-w-0 px-10 pt-8 pb-20 max-md:px-4 max-md:pt-5 max-md:pb-12"><details class="hidden max-lg:block mb-5 border border-border rounded-xl overflow-hidden"><summary class="chevron flex justify-between items-center cursor-pointer px-3.5 py-2.5 text-[.85rem] font-semibold text-fg-soft">On this page</summary><div class="flex flex-col px-3.5 pt-1 pb-2.5 border-t border-border"><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#bot-setup">Bot Setup</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#1-create-a-discord-application">1. Create a Discord Application</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#2-enable-gateway-intents">2. Enable Gateway Intents</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#3-get-the-bot-token">3. Get the Bot Token</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#4-set-bot-permissions">4. Set Bot Permissions</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#5-invite-the-bot-to-your-server">5. Invite the Bot to Your Server</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#6-get-the-channel-id">6. Get the Channel ID</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#7-get-your-user-id-optional">7. Get Your User ID (optional)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#configuration-reference">Configuration Reference</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#allowedchannels--allowedusers">allowed_channels / allowed_users</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#allowbotmessages">allow_bot_messages</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#allowusermessages">allow_user_messages</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-7" href="#comparison">Comparison</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-7" href="#when-to-use-which">When to use which</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#trustedbotids">trusted_bot_ids</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#allowedroleids">allowed_role_ids</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-7" href="#interaction-with-multibot-mentions-mode">Interaction with multibot-mentions mode</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#mention-behavior">@Mention Behavior</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#user-mention-uids">User mention UIDs</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#thread-behavior">Thread Behavior</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#ambient-mode">Ambient Mode</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#attachment-handling">Attachment Handling</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#video-attachments">Video attachments</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#streaming">Streaming</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#multi-bot-setup">Multi-Bot Setup</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#helm-example">Helm example</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#known-limitations">Known limitations</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#involvement-gate">Involvement Gate</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#recommended-multibot-mentions-mode">Recommended: multibot-mentions mode</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#bot-to-bot-communication">Bot-to-bot communication</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#bot-turn-limits">Bot turn limits</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#ice-breaking-teaching-bots-whos-in-the-room">Ice-breaking: teaching bots who&#x27;s in the room</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#helm-values">Helm Values</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#troubleshooting">Troubleshooting</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#bot-doesnt-respond">Bot doesn&#x27;t respond</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#bot-stops-receiving-messages-after-restart">Bot stops receiving messages after restart</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#quotfailed-to-create-threadquot">&amp;quot;Failed to create thread&amp;quot;</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#quotsent-invalid-authenticationquot">&amp;quot;Sent invalid authentication&amp;quot;</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#quotfailed-to-start-agentquot">&amp;quot;Failed to start agent&amp;quot;</a></div></details><div class="flex items-center justify-between gap-4 mb-6"><div class="prose"><h1 class="!m-0">Discord Guide</h1></div><div class="relative inline-flex items-stretch flex-none"><button class="inline-flex items-center gap-1.5 px-3 py-1.5 text-[.85rem] border border-border border-r-0 rounded-l-lg bg-surface text-fg-soft cursor-pointer hover:bg-hover hover:text-fg" data-copy-md="/openab/discord.md"><svg class="" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>Copy Markdown</button><details class="relative inline-flex items-stretch" data-menu="true"><summary class="chevron inline-flex items-center justify-center w-[30px] border border-border rounded-r-lg bg-surface text-muted cursor-pointer hover:bg-hover hover:text-fg" aria-label="More actions"></summary><div class="absolute right-0 top-[calc(100%+.4rem)] z-30 min-w-[17rem] flex flex-col gap-px p-1.5 bg-surface border border-border rounded-xl shadow-xl"><button class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" data-copy-md="/openab/discord.md"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg><span class="flex flex-col min-w-0"><span class="font-semibold text-[.9rem] text-fg">Copy Markdown</span><span class="text-[.8rem] text-muted">Copy this page as Markdown for LLMs</span></span></button><a class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" href="/openab/discord.md"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M16 21H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6l4 4v12a2 2 0 0 1-2 2z"></path><path d="M9 13h6M9 17h4"></path></svg><span class="flex flex-col min-w-0"><span class="inline-flex items-center gap-1 font-semibold text-[.9rem] text-fg">View as Markdown<!-- --> <svg class="text-muted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span><span class="text-[.8rem] text-muted">View this page as plain text</span></span></a><a class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" href="https://chatgpt.com/?q=Please%20read%20this%20doc%20and%20answer%20my%20questions%3A%20discord" target="_blank" rel="noreferrer"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"></path></svg><span class="flex flex-col min-w-0"><span class="inline-flex items-center gap-1 font-semibold text-[.9rem] text-fg">Open in ChatGPT<!-- --> <svg class="text-muted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span><span class="text-[.8rem] text-muted">Ask ChatGPT about this page</span></span></a><a class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" href="https://claude.ai/new?q=Please%20read%20this%20doc%20and%20answer%20my%20questions%3A%20discord" target="_blank" rel="noreferrer"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"></path></svg><span class="flex flex-col min-w-0"><span class="inline-flex items-center gap-1 font-semibold text-[.9rem] text-fg">Open in Claude<!-- --> <svg class="text-muted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span><span class="text-[.8rem] text-muted">Ask Claude about this page</span></span></a></div></details></div></div><article class="prose"><p>Complete guide to setting up, configuring, and running OpenAB with Discord.</p>
+<h2 id="bot-setup">Bot Setup</h2>
+<h3 id="1-create-a-discord-application">1. Create a Discord Application</h3>
+<ol>
+<li>Go to the <a href="https://discord.com/developers/applications">Discord Developer Portal</a></li>
+<li>Click <strong>New Application</strong></li>
+<li>Give it a name (e.g. <code>AgentBroker</code>) and click <strong>Create</strong></li>
+</ol>
+<h3 id="2-enable-gateway-intents">2. Enable Gateway Intents</h3>
+<ol>
+<li>In your application, go to the <strong>Bot</strong> tab (left sidebar)</li>
+<li>Scroll down to <strong>Privileged Gateway Intents</strong></li>
+<li>Enable <strong>Message Content Intent</strong></li>
+<li>Enable <strong>Server Members Intent</strong> (recommended)</li>
+<li>Click <strong>Save Changes</strong></li>
+</ol>
+<h3 id="3-get-the-bot-token">3. Get the Bot Token</h3>
+<ol>
+<li>Still on the <strong>Bot</strong> tab, click <strong>Reset Token</strong></li>
+<li>Copy the token — you'll need this for <code>DISCORD_BOT_TOKEN</code></li>
+<li>Keep this token secret. If it leaks, reset it immediately</li>
+</ol>
+<h3 id="4-set-bot-permissions">4. Set Bot Permissions</h3>
+<ol>
+<li>Go to <strong>OAuth2</strong> → <strong>URL Generator</strong> (left sidebar)</li>
+<li>Under <strong>Scopes</strong>, check <code>bot</code></li>
+<li>Under <strong>Bot Permissions</strong>, check:
+<ul>
+<li>Send Messages</li>
+<li>Send Messages in Threads</li>
+<li>Create Public Threads</li>
+<li>Read Message History</li>
+<li>Add Reactions</li>
+<li>Manage Messages</li>
+</ul>
+</li>
+<li>Copy the generated URL at the bottom</li>
+</ol>
+<h3 id="5-invite-the-bot-to-your-server">5. Invite the Bot to Your Server</h3>
+<ol>
+<li>Open the URL from step 4 in your browser</li>
+<li>Select the server you want to add the bot to</li>
+<li>Click <strong>Authorize</strong></li>
+</ol>
+<h3 id="6-get-the-channel-id">6. Get the Channel ID</h3>
+<ol>
+<li>In Discord, go to <strong>User Settings</strong> → <strong>Advanced</strong> → enable <strong>Developer Mode</strong></li>
+<li>Right-click the channel where you want the bot to respond</li>
+<li>Click <strong>Copy Channel ID</strong></li>
+<li>Use this ID in <code>allowed_channels</code> in your config</li>
+</ol>
+<h3 id="7-get-your-user-id-optional">7. Get Your User ID (optional)</h3>
+<ol>
+<li>Make sure <strong>Developer Mode</strong> is enabled (see step 6)</li>
+<li>Right-click your own username (in a message or the member list)</li>
+<li>Click <strong>Copy User ID</strong></li>
+<li>Use this ID in <code>allowed_users</code> to restrict who can interact with the bot</li>
+</ol>
+<hr />
+<h2 id="configuration-reference">Configuration Reference</h2>
+<blockquote>
+<p>📖 Full config options with defaults: <a href="config-reference.md#discord">docs/config-reference.md</a></p>
+</blockquote>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">discord</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">bot_token = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"${DISCORD_BOT_TOKEN}"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">allowed_channels = [</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"123456789"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]      </span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># channel ID allowlist (empty = all)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">allowed_users = [</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"987654321"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]         </span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># user ID allowlist (empty = all)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">allow_bot_messages = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"off"</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">            # off | mentions | all</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">allow_user_messages = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"multibot-mentions"</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">      # multibot-mentions | involved | mentions</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">trusted_bot_ids = []                  </span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># bot user IDs allowed through (empty = any)</span></span></code></pre>
+<h3 id="allowedchannels--allowedusers"><code>allowed_channels</code> / <code>allowed_users</code></h3>
+<table>
+<thead>
+<tr>
+<th><code>allowed_channels</code></th>
+<th><code>allowed_users</code></th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>empty</td>
+<td>empty</td>
+<td>All users, all channels (default)</td>
+</tr>
+<tr>
+<td>set</td>
+<td>empty</td>
+<td>Only these channels, all users</td>
+</tr>
+<tr>
+<td>empty</td>
+<td>set</td>
+<td>All channels, only these users</td>
+</tr>
+<tr>
+<td>set</td>
+<td>set</td>
+<td><strong>AND</strong> — must be in allowed channel AND allowed user</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Empty <code>allowed_users</code> (default) = no user filtering</li>
+<li>Denied users get a 🚫 reaction and no reply</li>
+</ul>
+<h3 id="allowbotmessages"><code>allow_bot_messages</code></h3>
+<p>Controls whether the bot processes messages from other Discord bots.</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Behavior</th>
+<th>Loop risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&quot;off&quot;</code> (default)</td>
+<td>Ignore all bot messages</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>&quot;mentions&quot;</code></td>
+<td>Only process bot messages that @mention this bot</td>
+<td>Very low</td>
+</tr>
+<tr>
+<td><code>&quot;all&quot;</code></td>
+<td>Process all bot messages (capped at 10 consecutive)</td>
+<td>Mitigated by turn cap</td>
+</tr>
+</tbody>
+</table>
+<p>The bot's own messages are always ignored regardless of this setting.</p>
+<h3 id="allowusermessages"><code>allow_user_messages</code></h3>
+<p>Controls whether the bot requires @mention in threads.</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&quot;involved&quot;</code></td>
+<td>Respond in threads the bot owns or has participated in without @mention. Main channel always requires @mention.</td>
+</tr>
+<tr>
+<td><code>&quot;mentions&quot;</code></td>
+<td>Always require @mention, even in the bot's own threads.</td>
+</tr>
+<tr>
+<td><code>&quot;multibot-mentions&quot;</code> (default)</td>
+<td>Same as <code>involved</code> in single-bot threads. In threads where other bots have also posted, requires @mention — prevents all bots from responding to every message.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="comparison">Comparison</h4>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th><code>involved</code></th>
+<th><code>mentions</code></th>
+<th><code>multibot-mentions</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main channel (no @mention)</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Main channel (with @mention)</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Single-bot thread (no @mention)</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Single-bot thread (with @mention)</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Multi-bot thread (no @mention)</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Multi-bot thread (with @mention)</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<h4 id="when-to-use-which">When to use which</h4>
+<ul>
+<li><strong><code>involved</code></strong> — Single-bot setup, or you want all bots to respond freely in shared threads.</li>
+<li><strong><code>mentions</code></strong> — Strict control. Every message must explicitly @mention the bot. Best for high-traffic channels where accidental triggers are a concern.</li>
+<li><strong><code>multibot-mentions</code></strong> — Multi-bot setup. Natural conversation in single-bot threads, explicit @mention control in multi-bot threads. Recommended for most multi-bot deployments.</li>
+</ul>
+<h3 id="trustedbotids"><code>trusted_bot_ids</code></h3>
+<p>When <code>allow_bot_messages</code> is <code>&quot;mentions&quot;</code> or <code>&quot;all&quot;</code>, you can restrict which bots are allowed through:</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">trusted_bot_ids = [</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"123456789012345678"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]  </span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># only this bot's messages pass through</span></span></code></pre>
+<p>Empty (default) = any bot can pass through (subject to the mode check).</p>
+<p><strong>Admission override:</strong> A trusted bot that explicitly @mentions this bot bypasses the <code>allow_bot_messages</code> mode entirely — the mention is treated the same as a human @mention. This allows trusted bots to pull this bot into threads even when <code>allow_bot_messages = &quot;off&quot;</code>. Messages from trusted bots <em>without</em> @mention still follow normal gating.</p>
+<h3 id="allowedroleids"><code>allowed_role_ids</code></h3>
+<p>Role IDs that trigger the bot, same as a direct @mention. This enables users to invoke multiple bots simultaneously with a single role mention (e.g. <code>@AllBots review this</code>).</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">allowed_role_ids = [</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"123456789012345678"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]  </span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># @mention this role = trigger the bot</span></span></code></pre>
+<p>Empty (default) = role mentions do not trigger the bot.</p>
+<p><strong>Setup:</strong></p>
+<ol>
+<li>Create a Discord role (e.g. <code>Bots</code> or <code>AllAgents</code>)</li>
+<li>Assign the role to all bots you want to trigger together</li>
+<li>Add the role's ID to each bot's <code>allowed_role_ids</code></li>
+<li>Users type <code>@RoleName &lt;prompt&gt;</code> to trigger all bots at once</li>
+</ol>
+<blockquote>
+<p><strong>Note:</strong> If multiple bots share the same role, all will respond simultaneously. Use <code>multibot-mentions</code> mode if you want bots to require explicit @mention when other bots are already in the thread.</p>
+</blockquote>
+<h4 id="interaction-with-multibot-mentions-mode">Interaction with <code>multibot-mentions</code> mode</h4>
+<p>When <code>allow_user_messages = &quot;multibot-mentions&quot;</code> is set alongside <code>allowed_role_ids</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@Role review this</code> in a channel</td>
+<td>All bots trigger (role mention = explicit mention)</td>
+</tr>
+<tr>
+<td>Follow-up in the thread without @mention</td>
+<td>Only the thread owner responds (multibot gate kicks in)</td>
+</tr>
+<tr>
+<td><code>@Role follow up</code> in the thread</td>
+<td>All bots respond again</td>
+</tr>
+</tbody>
+</table>
+<p>This gives the best of both worlds: one role mention to summon all bots, but subsequent messages in the thread don't cause all bots to pile on.</p>
+<hr />
+<h2 id="mention-behavior">@Mention Behavior</h2>
+<p>The bot responds to:</p>
+<ol>
+<li><strong>Direct @mention</strong> (<code>@BotUser</code>) — always works</li>
+<li><strong>Role mention</strong> (<code>@RoleName</code>) — only if the role ID is in <code>allowed_role_ids</code></li>
+<li><strong>Thread reply</strong> — depends on <code>allow_user_messages</code> mode (no @mention needed in <code>involved</code> mode)</li>
+</ol>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>✅ @AgentBroker hello           ← user mention, bot responds</span></span>
+<span class="line"><span>✅ @AllBots hello               ← role mention, bot responds (if role in allowed_role_ids)</span></span>
+<span class="line"><span>❌ @SomeOtherRole hello         ← role not in allowed_role_ids, bot ignores</span></span></code></pre>
+<p>The triggering role mention is stripped from the prompt sent to the agent (same as the bot's own user mention).</p>
+<h3 id="user-mention-uids">User mention UIDs</h3>
+<p>When a user mentions another user (e.g. <code>@SomeUser</code>) in a message to the bot, the raw Discord mention <code>&lt;@UID&gt;</code> is preserved in the prompt sent to the LLM. This means:</p>
+<ul>
+<li>The LLM can copy <code>&lt;@UID&gt;</code> into its reply to produce a clickable Discord mention</li>
+<li>The bot's own mention is stripped (so the bot doesn't see itself being triggered)</li>
+<li>Triggering role mentions (in <code>allowed_role_ids</code>) are stripped</li>
+<li>Other role mentions are replaced with <code>@(role)</code> placeholder</li>
+</ul>
+<p>To help the LLM know who each UID refers to, provide a UID→name mapping via system prompt or context entry (see <a href="#multi-bot-setup">Multi-Bot Setup</a> below).</p>
+<hr />
+<h2 id="thread-behavior">Thread Behavior</h2>
+<p>When you @mention the bot in a channel, it creates a <strong>thread</strong> from your message and responds there. After that:</p>
+<ul>
+<li><strong><code>multibot-mentions</code> mode (default):</strong> just type in single-bot threads — no @mention needed; in multi-bot threads, @mention required</li>
+<li><strong><code>involved</code> mode:</strong> just type in the thread — no @mention needed</li>
+<li><strong><code>mentions</code> mode:</strong> @mention required for every message, even in threads</li>
+</ul>
+<p>Each thread gets its own agent session. Sessions are cleaned up after <code>session_ttl_hours</code> (default: 24h).</p>
+<hr />
+<h2 id="ambient-mode">Ambient Mode</h2>
+<p>Ambient mode allows the bot to passively listen to configured channels and respond only when it has something valuable to add — without requiring @mentions. See <a href="ambient.md">ambient.md</a> for full details.</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">ambient</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">enabled = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">true</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">ambient</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">discord</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">channels = [</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"1234567890"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]   </span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># Channel IDs to monitor (and their threads)</span></span></code></pre>
+<p>When enabled:</p>
+<ul>
+<li>Non-mention messages in listed channels are buffered and periodically sent to the LLM as a batch.</li>
+<li>If the LLM has nothing to add, it returns <code>[NO_REPLY]</code> (silently suppressed).</li>
+<li><strong>@mention always takes priority</strong> — the ambient buffer is discarded and the mention gets an immediate response.</li>
+</ul>
+<hr />
+<h2 id="attachment-handling">Attachment Handling</h2>
+<p>OpenAB processes Discord file attachments and converts them into content blocks
+for the agent. Supported types (checked in order):</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Detection</th>
+<th>Agent receives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Audio</td>
+<td>MIME <code>audio/*</code></td>
+<td>Transcribed text via STT (if enabled)</td>
+</tr>
+<tr>
+<td>Text files</td>
+<td>Extension list (<code>.txt</code>, <code>.md</code>, <code>.json</code>, etc.)</td>
+<td>File content inlined (up to 5 files, 1 MB total)</td>
+</tr>
+<tr>
+<td>Images</td>
+<td>MIME <code>image/*</code> or image extensions</td>
+<td>Base64-encoded image block</td>
+</tr>
+<tr>
+<td>Video</td>
+<td>MIME <code>video/*</code> or extensions (<code>.mp4</code>, <code>.mov</code>, <code>.webm</code>, <code>.mkv</code>, <code>.m4v</code>, <code>.avi</code>)</td>
+<td>Text block with filename, content type, size, and Discord CDN URL</td>
+</tr>
+</tbody>
+</table>
+<p>Unsupported attachment types are silently ignored.</p>
+<h3 id="video-attachments">Video attachments</h3>
+<p>Video files are not downloaded or transcoded. The agent receives metadata and the
+Discord CDN URL so it can fetch or inspect the file using tools like <code>ffprobe</code>.</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>[Video attachment]</span></span>
+<span class="line"><span>filename: demo.mp4</span></span>
+<span class="line"><span>content_type: video/mp4</span></span>
+<span class="line"><span>size_bytes: 8421376</span></span>
+<span class="line"><span>url: https://cdn.discordapp.com/attachments/.../demo.mp4</span></span></code></pre>
+<p>No configuration is needed — video forwarding is always enabled.</p>
+<hr />
+<h2 id="streaming">Streaming</h2>
+<p>OpenAB uses <strong>edit-streaming</strong> on Discord — the bot sends a placeholder message and updates it every 1.5 seconds as tokens arrive, giving a live typing effect.</p>
+<p>Streaming is decided <strong>per-thread</strong>, not globally:</p>
+<table>
+<thead>
+<tr>
+<th>Thread state</th>
+<th>Streaming</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Single bot + human</td>
+<td>✅ ON — live edit updates</td>
+</tr>
+<tr>
+<td>2+ bots in thread</td>
+<td>❌ OFF — send-once to avoid edit interference</td>
+</tr>
+</tbody>
+</table>
+<p>When a second bot posts in a thread, streaming automatically switches off for that thread. This prevents multiple bots from editing placeholder messages simultaneously, which causes visual glitches on Discord.</p>
+<p>No configuration needed — this is automatic based on multibot detection.</p>
+<hr />
+<h2 id="multi-bot-setup">Multi-Bot Setup</h2>
+<p>Multiple bots can share the same Discord channel. Each bot only responds to its own @mentions.</p>
+<h3 id="helm-example">Helm example</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-bash"><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">helm</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> install</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> openab</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> openab/openab</span><span style="--shiki-light:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">  --set</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> agents.kiro.discord.botToken="</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">$BOT_A_TOKEN</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"</span><span style="--shiki-light:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">  --set-string</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> 'agents.kiro.discord.allowedChannels[0]=CHANNEL_ID'</span><span style="--shiki-light:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">  --set</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> agents.dealer.discord.botToken="</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">$BOT_B_TOKEN</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"</span><span style="--shiki-light:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">  --set-string</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> 'agents.dealer.discord.allowedChannels[0]=CHANNEL_ID'</span><span style="--shiki-light:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">  --set</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> agents.dealer.discord.enabled=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">true</span><span style="--shiki-light:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">  --set</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> agents.dealer.command=kiro-cli</span><span style="--shiki-light:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">  --set</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> 'agents.dealer.args={acp,--trust-all-tools}'</span></span></code></pre>
+<h3 id="known-limitations">Known limitations</h3>
+<ul>
+<li><strong>One thread per message:</strong> when you @mention both bots in a single message, only the first bot creates a thread. The second bot's thread creation fails and the message is dropped. Workaround: @mention each bot in separate messages.</li>
+<li><strong>Thread ownership (involvement gate):</strong> a bot only responds in threads it owns or has participated in. See the Involvement Gate section below for full details.</li>
+</ul>
+<h3 id="involvement-gate">Involvement Gate</h3>
+<p>In a multi-bot setup, every bot enforces an <strong>involvement gate</strong> before processing any message in a thread. This gate is evaluated before <code>allow_user_messages</code> or <code>allow_bot_messages</code> mode checks.</p>
+<p><strong>Rule:</strong> A bot must be <strong>involved</strong> (thread owner or has previously replied) before it will process any message in that thread.</p>
+<p><strong>Key constraint:</strong> Only a human @mention — or a @mention from a bot in <code>trusted_bot_ids</code> — can pull a bot into a thread for the first time. A @mention from an untrusted bot will be <strong>silently dropped</strong>.</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>Bot A's thread (Bot B not yet involved, Bot A NOT in Bot B's trusted_bot_ids):</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>  Bot A: "@Bot_B please review this"     → ❌ dropped (Bot B not involved, Bot A untrusted)</span></span>
+<span class="line"><span>  Human: "@Bot_B please review this"     → ✅ Bot B replies, now involved</span></span>
+<span class="line"><span>  Bot A: "@Bot_B any updates?"           → ✅ processed (Bot B is involved)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Bot A's thread (Bot B not yet involved, Bot A IS in Bot B's trusted_bot_ids):</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>  Bot A: "@Bot_B please review this"     → ✅ treated as human @mention, Bot B becomes involved</span></span></code></pre>
+<p><strong>Why:</strong> This prevents untrusted bots from pulling other bots into arbitrary threads without human consent, protects session pool resources, and eliminates cross-thread chain reactions. Trusted bots are explicitly authorized by the admin.</p>
+<p><strong>Workaround (without trusted_bot_ids):</strong> Pre-involve all needed bots at thread creation by @mentioning them (or using a shared role via <code>allowed_role_ids</code>).</p>
+<blockquote>
+<p>📖 Full design details: <a href="messaging.md#involvement-gate">docs/messaging.md — Involvement Gate</a></p>
+</blockquote>
+<h3 id="recommended-multibot-mentions-mode">Recommended: <code>multibot-mentions</code> mode</h3>
+<p>In multi-bot channels, use <code>multibot-mentions</code> to get the best of both worlds:</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">discord</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">allow_user_messages = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"multibot-mentions"</span></span></code></pre>
+<ul>
+<li><strong>Single-bot threads:</strong> natural conversation, no @mention needed (same as <code>involved</code>)</li>
+<li><strong>Multi-bot threads:</strong> requires @mention so only the addressed bot responds</li>
+</ul>
+<h3 id="bot-to-bot-communication">Bot-to-bot communication</h3>
+<p>To enable bots to collaborate (e.g. code review → deploy handoff):</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># Bot that receives bot messages</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">discord</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">allow_bot_messages = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"mentions"</span></span></code></pre>
+<h3 id="bot-turn-limits">Bot turn limits</h3>
+<p>To prevent runaway bot-to-bot loops, OpenAB enforces two layers of protection:</p>
+<ul>
+<li><strong>Soft limit</strong> (<code>max_bot_turns</code>, default: 100) — total bot messages in a thread without human intervention. When reached, the bot sends a one-time warning and stops responding. A human message in the thread resets the counter.</li>
+<li><strong>Hard limit</strong> (1000, not configurable) — cap on consecutive bot messages in <code>allow_bot_messages = &quot;all&quot;</code> mode. When reached, bot-to-bot conversation stops until a human replies.</li>
+</ul>
+<p>Both limits count <strong>all</strong> bot messages in the thread, including the bot's own replies. In a two-bot ping-pong with <code>max_bot_turns = 100</code>, each bot sends ~50 messages before the limit triggers.</p>
+<p>Warning messages are sent exactly once (on the exact threshold hit) to prevent warnings from ping-ponging between bots.</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">discord</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">max_bot_turns = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">200</span><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E">               # default is 100</span></span></code></pre>
+<h3 id="ice-breaking-teaching-bots-whos-in-the-room">Ice-breaking: teaching bots who's in the room</h3>
+<p>Since user mentions are preserved as raw <code>&lt;@UID&gt;</code>, bots need a UID→name mapping to know who is who. Add an ice-breaking greeting to each bot's system prompt or context entry:</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>We have 3 participants in this room:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>MY_NICIKNAME    &#x3C;@MY_NAME></span></span>
+<span class="line"><span>BOT1_NICKNAME   &#x3C;@BOT1></span></span>
+<span class="line"><span>BOT2_NICKNAME   &#x3C;@BOT2></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Always use &#x3C;@UID> format to mention someone in your messages.</span></span></code></pre>
+<p>This lets each bot build the mapping in its own context from the start and correctly mention others using <code>&lt;@UID&gt;</code>.</p>
+<p>See <a href="multi-agent.md">multi-agent.md</a> for detailed examples.</p>
+<hr />
+<h2 id="helm-values">Helm Values</h2>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-bash"><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">helm</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> install</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> openab</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> openab/openab</span><span style="--shiki-light:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">  --set</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> agents.kiro.discord.botToken="</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">$DISCORD_BOT_TOKEN</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"</span><span style="--shiki-light:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">  --set-string</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> 'agents.kiro.discord.allowedChannels[0]=YOUR_CHANNEL_ID'</span><span style="--shiki-light:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">  --set</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> agents.kiro.discord.allowBotMessages=off</span><span style="--shiki-light:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">  --set</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> agents.kiro.discord.allowUserMessages=involved</span><span style="--shiki-light:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">  --set-string</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> 'agents.kiro.discord.allowedRoleIds[0]=YOUR_ROLE_ID'</span></span></code></pre>
+<p>⚠️ Use <code>--set-string</code> for channel/user/role IDs to avoid float64 precision loss.</p>
+<hr />
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="bot-doesnt-respond">Bot doesn't respond</h3>
+<ol>
+<li><strong>Check channel ID</strong> — make sure it's in <code>allowed_channels</code></li>
+<li><strong>Check permissions</strong> — bot needs Send Messages, Create Public Threads, Read Message History in the channel</li>
+<li><strong>Check intents</strong> — Message Content Intent must be enabled in Developer Portal</li>
+<li><strong>Check @mention type</strong> — use user mention or a role in <code>allowed_role_ids</code></li>
+<li><strong>Check if in a thread</strong> — with <code>mentions</code> mode, @mention is required even in threads</li>
+</ol>
+<h3 id="bot-stops-receiving-messages-after-restart">Bot stops receiving messages after restart</h3>
+<p>Discord Gateway may throttle event delivery after rapid reconnects. Use <code>scale 0 → wait 5s → scale 1</code> instead of <code>rollout restart</code>:</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-bash"><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">kubectl</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> scale</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> deployment/openab-kiro</span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF"> --replicas=0</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> &#x26;&#x26; </span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">sleep</span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF"> 5</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> &#x26;&#x26; </span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">kubectl</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> scale</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> deployment/openab-kiro</span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF"> --replicas=1</span></span></code></pre>
+<p>See <a href="https://github.com/openabdev/openab/issues/455">#455</a> for details.</p>
+<h3 id="quotfailed-to-create-threadquot">&quot;Failed to create thread&quot;</h3>
+<p>Discord only allows one thread per message. If another bot already created a thread on the same message, this error appears. The message is dropped. This is a known limitation for multi-bot setups (#457).</p>
+<h3 id="quotsent-invalid-authenticationquot">&quot;Sent invalid authentication&quot;</h3>
+<p>The bot token is wrong or expired. Reset it in the Developer Portal and redeploy.</p>
+<h3 id="quotfailed-to-start-agentquot">&quot;Failed to start agent&quot;</h3>
+<p>The agent CLI isn't authenticated. For kiro-cli:</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-bash"><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">kubectl</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> exec</span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF"> -it</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> deployment/openab-kiro</span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF"> --</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> sh</span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF"> -c</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> "</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">$OPENAB_AGENT_AUTH_COMMAND</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">kubectl</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> rollout</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> restart</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF"> deployment/openab-kiro</span></span></code></pre>
+</article><nav class="flex justify-between gap-4 mt-12 pt-6 border-t border-border"><a class="flex-1 px-4 py-3.5 border border-border rounded-xl hover:border-accent" href="/openab/devin"><div class="text-muted text-[.78rem]">← <!-- -->Previous</div><div class="font-semibold text-accent">devin</div></a><a class="flex-1 px-4 py-3.5 border border-border rounded-xl hover:border-accent text-right" href="/openab/feishu"><div class="text-muted text-[.78rem]">Next<!-- --> →</div><div class="font-semibold text-accent">feishu</div></a></nav><script>document.querySelectorAll('[data-copy-md]').forEach(function(b){b.addEventListener('click',async function(){try{var r=await fetch(b.getAttribute('data-copy-md'));var t=await r.text();await navigator.clipboard.writeText(t);var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o;},1500);}catch(e){alert('Copy failed: '+e);}});});document.querySelectorAll('.prose pre').forEach(function(pre){if(pre.querySelector('.copy-code'))return;var b=document.createElement('button');b.className='copy-code';b.textContent='Copy';b.addEventListener('click',async function(){var c=pre.querySelector('code');try{await navigator.clipboard.writeText(c?c.innerText:pre.innerText);var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o;},1200);}catch(e){}});pre.appendChild(b);});document.querySelectorAll('.tabs').forEach(function(t){t.querySelectorAll('.tab-btn').forEach(function(b){b.addEventListener('click',function(){var i=b.getAttribute('data-tab');t.querySelectorAll('.tab-btn').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-tab')===i);});t.querySelectorAll('.tab-panel').forEach(function(p){p.hidden=p.getAttribute('data-tab')!==i;});});});});(function(){var blocks=document.querySelectorAll('code.language-mermaid');if(!blocks.length)return;var items=[];blocks.forEach(function(c){var pre=c.closest('pre')||c;var h=document.createElement('div');h.className='mermaid-diagram';pre.replaceWith(h);items.push({src:c.textContent,holder:h});});var lib,id=0;function load(){return lib||(lib=import("https://esm.sh/mermaid@11").then(function(m){return m.default;}));}function theme(){return document.documentElement.getAttribute('data-theme')==='dark'?'dark':'default';}function run(){load().then(function(mermaid){mermaid.initialize({startOnLoad:false,securityLevel:'loose',theme:theme()});items.forEach(function(it){mermaid.render('kura-mmd-'+(id++),it.src).then(function(r){it.holder.innerHTML=r.svg;}).catch(function(e){it.holder.innerHTML='<pre class="mermaid-error">'+String((e&&e.message)||e)+'</pre>';});});}).catch(function(){});}run();var cur=document.documentElement.getAttribute('data-theme');new MutationObserver(function(){var t=document.documentElement.getAttribute('data-theme');if(t!==cur){cur=t;run();}}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});})();</script></main><aside class="sticky top-14 max-h-[calc(100vh-56px)] overflow-y-auto px-4 py-8 max-lg:hidden"><p class="text-[.72rem] font-bold tracking-wider uppercase text-muted mb-2.5">On this page</p><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#bot-setup">Bot Setup</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#1-create-a-discord-application">1. Create a Discord Application</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#2-enable-gateway-intents">2. Enable Gateway Intents</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#3-get-the-bot-token">3. Get the Bot Token</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#4-set-bot-permissions">4. Set Bot Permissions</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#5-invite-the-bot-to-your-server">5. Invite the Bot to Your Server</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#6-get-the-channel-id">6. Get the Channel ID</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#7-get-your-user-id-optional">7. Get Your User ID (optional)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#configuration-reference">Configuration Reference</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#allowedchannels--allowedusers">allowed_channels / allowed_users</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#allowbotmessages">allow_bot_messages</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#allowusermessages">allow_user_messages</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-6 text-[.82rem]" href="#comparison">Comparison</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-6 text-[.82rem]" href="#when-to-use-which">When to use which</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#trustedbotids">trusted_bot_ids</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#allowedroleids">allowed_role_ids</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-6 text-[.82rem]" href="#interaction-with-multibot-mentions-mode">Interaction with multibot-mentions mode</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#mention-behavior">@Mention Behavior</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#user-mention-uids">User mention UIDs</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#thread-behavior">Thread Behavior</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#ambient-mode">Ambient Mode</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#attachment-handling">Attachment Handling</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#video-attachments">Video attachments</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#streaming">Streaming</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#multi-bot-setup">Multi-Bot Setup</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#helm-example">Helm example</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#known-limitations">Known limitations</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#involvement-gate">Involvement Gate</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#recommended-multibot-mentions-mode">Recommended: multibot-mentions mode</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#bot-to-bot-communication">Bot-to-bot communication</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#bot-turn-limits">Bot turn limits</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#ice-breaking-teaching-bots-whos-in-the-room">Ice-breaking: teaching bots who&#x27;s in the room</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#helm-values">Helm Values</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#troubleshooting">Troubleshooting</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#bot-doesnt-respond">Bot doesn&#x27;t respond</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#bot-stops-receiving-messages-after-restart">Bot stops receiving messages after restart</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#quotfailed-to-create-threadquot">&amp;quot;Failed to create thread&amp;quot;</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#quotsent-invalid-authenticationquot">&amp;quot;Sent invalid authentication&amp;quot;</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#quotfailed-to-start-agentquot">&amp;quot;Failed to start agent&amp;quot;</a></aside></div></div><footer class="border-t border-border mt-8"><div class="flex items-center justify-between flex-wrap gap-4 max-w-[1280px] mx-auto px-6 py-5 max-md:px-4"><nav class="flex items-center gap-[1.1rem] text-[.85rem]"><a class="text-muted hover:text-fg" href="/llms.txt">llms.txt</a><a class="text-muted hover:text-fg" href="/mcp">MCP</a><button type="button" class="inline-flex items-center justify-center w-[30px] h-[30px] p-0 text-[.95rem] leading-none border border-border rounded-lg bg-surface text-fg cursor-pointer hover:bg-hover" data-theme-toggle="true" aria-label="Toggle theme"></button></nav><a class="text-muted text-[.85rem] hover:text-accent" href="https://kura.build/" target="_blank" rel="noreferrer">Powered by Kura</a></div></footer><script>document.addEventListener('keydown',function(e){if(e.key==='/' && !document.documentElement.dataset.ctrlk && !/INPUT|TEXTAREA/.test((document.activeElement||{}).tagName||'')){e.preventDefault();var s=document.querySelector('.search-box');if(s)s.focus();}});(function(){var b=document.querySelector('[data-theme-toggle]');if(!b)return;var d=document.documentElement,order=['system','light','dark'],icon={system:'🖥',light:'☀',dark:'☾'};function pref(){return d.getAttribute('data-theme-pref')||'system';}function res(p){return p==='dark'||(p==='system'&&matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light';}function set(p){d.setAttribute('data-theme-pref',p);d.setAttribute('data-theme',res(p));try{localStorage.setItem('kura-theme',p);}catch(e){}b.textContent=icon[p];b.setAttribute('title','Theme: '+p);}set(pref());b.addEventListener('click',function(){set(order[(order.indexOf(pref())+1)%order.length]);});try{matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(){if(pref()==='system')d.setAttribute('data-theme',res('system'));});}catch(e){}})();document.addEventListener('click',function(e){var t=e.target;document.querySelectorAll('details[data-menu][open]').forEach(function(d){if(!d.contains(t))d.removeAttribute('open');});var it=t.closest&&t.closest('details[data-menu] a, details[data-menu] [data-copy-md]');if(it){var dd=it.closest('details[data-menu]');if(dd)setTimeout(function(){dd.removeAttribute('open');},0);}});document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('details[data-menu][open]').forEach(function(d){d.removeAttribute('open');});});(function(){var root=document.documentElement;function opener(){return document.querySelector('[data-drawer-open]');}function items(){var d=document.getElementById('docs-nav');if(!d)return[];return[].filter.call(d.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])'),function(el){return el.offsetParent!==null;});}function set(o){var was=root.classList.contains('drawer-open');root.classList.toggle('drawer-open',o);var b=opener();if(b)b.setAttribute('aria-expanded',o?'true':'false');if(o){var f=items();if(f[0])f[0].focus();}else if(was&&b)b.focus();}document.addEventListener('click',function(e){if(e.target.closest('[data-drawer-open]')){e.preventDefault();set(!root.classList.contains('drawer-open'));return;}if(e.target.closest('[data-drawer-close]')){set(false);return;}if(e.target.closest('#docs-nav a'))set(false);});document.addEventListener('keydown',function(e){if(e.key==='Escape'){set(false);return;}if(e.key==='Tab'&&root.classList.contains('drawer-open')){var f=items();if(!f.length)return;var first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}else if(f.indexOf(document.activeElement)<0){e.preventDefault();first.focus();}}});})();(function(){
+  function trim(p){return p.length>1&&p.endsWith('/')?p.slice(0,-1):p;}
+  function sync(){
+    var path=trim(location.pathname), tab=null;
+    var links=document.querySelectorAll('.sidebar a[href],[data-tabbar] a[href]');
+    for(var i=0;i<links.length;i++){var a=links[i],on=trim(a.getAttribute('href'))===path;
+      if(on){a.setAttribute('aria-current','page');var g=a.closest('[data-tab]');if(g)tab=g.getAttribute('data-tab');}
+      else a.removeAttribute('aria-current');}
+    if(tab!=null){
+      document.querySelectorAll('[data-tab]').forEach(function(g){g.hidden=g.getAttribute('data-tab')!==tab;});
+      document.querySelectorAll('[data-tabbar] a').forEach(function(a){
+        if(a.getAttribute('data-tab-key')===tab)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+    }
+    // expand the folder(s) holding the active page. Iterate EVERY aria-current sidebar link, not
+    // just the first: a folder-as-page link lives in a <details>, but the mobile tab-bar link (also
+    // in .sidebar, earlier in the DOM) has no folder ancestor — querySelector would pick that one
+    // and expand nothing. forEach opens each link's folder chain; tab links are harmless no-ops.
+    document.querySelectorAll('.sidebar a[aria-current="page"]').forEach(function(cur){
+      var d=cur.closest('details.folder');while(d){d.open=true;d=d.parentElement&&d.parentElement.closest('details.folder');}});
+    // rewrite the locale-switch links to THIS page's equivalent path (swap the locale prefix)
+    var ll=document.querySelectorAll('[data-locale-home]');
+    if(ll.length){var lc=document.querySelector('[data-locale-home][data-locale-active]'),cp=lc?lc.getAttribute('data-locale-home'):'/';cp=cp==='/'?'':cp;
+      var rest=location.pathname;if(cp&&rest.indexOf(cp)===0)rest=rest.slice(cp.length)||'/';
+      ll.forEach(function(a){var h=a.getAttribute('data-locale-home'),p=h==='/'?'':h;a.setAttribute('href',rest==='/'?(p||'/'):(p+rest));});}
+    // mobile nav-context: "Active tab / Page title" (the shell can't know the page server-side)
+    var nc=document.querySelector('[data-nav-context]');
+    if(nc){var at=document.querySelector('[data-tabbar] a[aria-current="page"]'),h1=document.querySelector('main h1');
+      nc.textContent=[at&&at.textContent.trim(),h1&&h1.textContent.trim()].filter(Boolean).join(' / ');}
+  }
+  sync();
+  var outlet=document.querySelector('[data-june-outlet]');
+  if(outlet) new MutationObserver(sync).observe(outlet,{childList:true,subtree:true});
+})();</script><script type="module" src="/openab/_june/client.a5a40235.js"></script><script type="application/json" id="june-webmcp">[{"name":"search_docs","description":"Hybrid keyword + semantic search over the docs. Returns the most relevant passages with their doc slug, title, and relevance score.","inputSchema":{"type":"object","properties":{"query":{"type":"string","description":"A natural-language question or keywords."},"topK":{"type":"integer","description":"Number of results to return (default 5)."}},"required":["query"]}},{"name":"get_page","description":"Fetch one doc page as clean Markdown by its slug (e.g. introduction, search, agents).","inputSchema":{"type":"object","properties":{"slug":{"type":"string","description":"The page slug."}},"required":["slug"]}},{"name":"list_docs","description":"List every doc page with its slug, title, section, and `sources` (the code paths it documents). The map for finding which pages a code change affects.","inputSchema":{"type":"object","properties":{}}}]</script><script>(function(){var mc=navigator.modelContext;if(!mc||!mc.registerTool)return;var el=document.getElementById('june-webmcp');if(!el)return;var tools;try{tools=JSON.parse(el.textContent)}catch(e){return}var ac=new AbortController();tools.forEach(function(t){mc.registerTool({name:t.name,description:t.description,inputSchema:t.inputSchema,execute:function(args){return fetch('/mcp',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'tools/call',params:{name:t.name,arguments:args}})}).then(function(r){return r.json()}).then(function(j){return j.result})}},{signal:ac.signal})})})();</script></body></html>
