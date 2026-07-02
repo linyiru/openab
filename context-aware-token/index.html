@@ -1,0 +1,600 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="icon" href="/openab/favicon.svg" type="image/svg+xml"/><title>ADR: Context-Aware Token for Agent-Initiated Platform Operations - OpenAB</title><meta name="description" content="A lightweight, cloud-native ACP harness connecting chat platforms to AI coding agents."/><meta property="og:title" content="ADR: Context-Aware Token for Agent-Initiated Platform Operations"/><meta property="og:description" content="A lightweight, cloud-native ACP harness connecting chat platforms to AI coding agents."/><meta property="og:type" content="article"/><script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.md"}},{"not":{"href_matches":"/*.json"}},{"not":{"href_matches":"/*.txt"}},{"not":{"href_matches":"/*.xml"}},{"not":{"href_matches":"/mcp"}}]},"eagerness":"moderate"}],"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.md"}},{"not":{"href_matches":"/*.json"}},{"not":{"href_matches":"/*.txt"}},{"not":{"href_matches":"/*.xml"}},{"not":{"href_matches":"/mcp"}}]},"eagerness":"moderate"}]}</script><script>(function(){if(HTMLScriptElement.supports&&HTMLScriptElement.supports('speculationrules'))return;var seen=new Set();document.addEventListener('pointerover',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var u=new URL(a.href,location.href);if(u.origin!==location.origin||seen.has(u.pathname)||u.pathname===location.pathname)return;if(/.(md|json)$/.test(u.pathname)||u.pathname==='/mcp')return;seen.add(u.pathname);var l=document.createElement('link');l.rel='prefetch';l.href=u.pathname+u.search;document.head.appendChild(l);},{passive:true});})();</script><style>
+          @view-transition { navigation: auto; }
+          ::view-transition-group(root),
+          ::view-transition-old(root),
+          ::view-transition-new(root) { animation-duration: 120ms; }
+          @media (prefers-reduced-motion: reduce) {
+            ::view-transition-group(*),
+            ::view-transition-old(*),
+            ::view-transition-new(*) { animation: none !important; }
+          }
+</style><link rel="stylesheet" href="/openab/_june/global.5d1b0737.css"/></head><body><script>(function(){try{var p=localStorage.getItem('kura-theme')||'system';var d=document.documentElement;d.setAttribute('data-theme-pref',p);d.setAttribute('data-theme',(p==='dark'||(p==='system'&&matchMedia('(prefers-color-scheme:dark)').matches))?'dark':'light');}catch(e){}})();</script><header class="sticky top-0 z-20 flex items-center gap-4 h-14 px-5 bg-topbar-bg backdrop-blur-sm border-b border-border max-md:px-4 max-md:gap-2.5"><a class="flex items-center gap-1.5 font-bold text-[1.05rem]" href="/openab/">OpenAB<!-- --> <span class="font-normal text-muted text-[.85rem]">Docs</span></a><form class="ml-auto max-md:ml-2 max-md:flex-1 max-md:min-w-0" action="/openab/search" method="get"><input class="w-[280px] max-w-[40vw] px-3 py-2 text-[.9rem] border border-border rounded-lg bg-surface-2 text-fg max-md:w-full max-md:max-w-none search-box" placeholder="Search docs…  (press /)" aria-label="Search" data-search-endpoint="/openab/search.json" data-doc-base="/openab/" data-search-static="1" name="q"/></form><nav class="flex items-center gap-4 text-muted text-[.9rem]"></nav></header><nav data-tabbar="true" class="sticky top-14 z-[15] h-11 bg-bg border-b border-border max-md:hidden"><div class="flex items-stretch gap-6 h-full max-w-[1280px] mx-auto px-5 overflow-x-auto no-scrollbar"><a data-tab-key="Guides" class="flex items-center text-[.9rem] border-b-2 border-transparent text-muted hover:text-fg [&amp;[aria-current=page]]:text-fg [&amp;[aria-current=page]]:border-accent" href="/openab/ai-install-upgrade">Guides</a><a data-tab-key="Deploy" class="flex items-center text-[.9rem] border-b-2 border-transparent text-muted hover:text-fg [&amp;[aria-current=page]]:text-fg [&amp;[aria-current=page]]:border-accent" href="/openab/image-tags">Deploy</a><a data-tab-key="Reference" class="flex items-center text-[.9rem] border-b-2 border-transparent text-muted hover:text-fg [&amp;[aria-current=page]]:text-fg [&amp;[aria-current=page]]:border-accent" href="/openab/refarch/aws-ecs-fargate-spot">Reference</a></div></nav><button class="hidden max-md:flex items-center gap-2.5 w-full px-4 py-2.5 bg-bg border-0 border-b border-border text-fg-soft text-[.9rem] text-left cursor-pointer focus-visible:outline-none focus-visible:bg-hover" data-drawer-open="true" aria-controls="docs-nav" aria-expanded="false"><span class="text-[1.05rem] leading-none" aria-hidden="true">☰</span><span class="font-semibold text-fg flex-none">Navigation</span><span class="nav-bar-context text-muted flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap" data-nav-context="true"></span></button><div class="drawer-backdrop" data-drawer-close="true" aria-hidden="true"></div><div class="grid grid-cols-[248px_minmax(0,1fr)_220px] max-lg:grid-cols-[248px_minmax(0,1fr)] max-md:grid-cols-1 items-start max-w-[1280px] mx-auto has-tabs"><aside class="sidebar sticky top-[100px] h-[calc(100vh-100px)] overflow-y-auto px-4 py-6 border-r border-border" id="docs-nav"><div data-tabbar="true" class="hidden max-md:flex flex-wrap gap-1.5 mb-4 pb-4 border-b border-border"><a data-tab-key="Guides" class="px-3 py-1 border border-border rounded-full text-[.85rem] text-fg-soft [&amp;[aria-current=page]]:bg-accent-soft [&amp;[aria-current=page]]:text-accent [&amp;[aria-current=page]]:border-transparent" href="/openab/ai-install-upgrade">Guides</a><a data-tab-key="Deploy" class="px-3 py-1 border border-border rounded-full text-[.85rem] text-fg-soft [&amp;[aria-current=page]]:bg-accent-soft [&amp;[aria-current=page]]:text-accent [&amp;[aria-current=page]]:border-transparent" href="/openab/image-tags">Deploy</a><a data-tab-key="Reference" class="px-3 py-1 border border-border rounded-full text-[.85rem] text-fg-soft [&amp;[aria-current=page]]:bg-accent-soft [&amp;[aria-current=page]]:text-accent [&amp;[aria-current=page]]:border-transparent" href="/openab/refarch/aws-ecs-fargate-spot">Reference</a></div><div data-tab="Guides"><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Getting started</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/ai-install-upgrade">OpenAB Install &amp; Upgrade Guide</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/local-dev">Local Development</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/config-reference">Configuration Reference</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Platforms</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/messaging">Messaging Model</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/discord">Discord Guide</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/slack">Slack</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/telegram">Telegram Setup</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/line">LINE Setup</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/feishu">Feishu / Lark</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/wecom">WeCom (企业微信) Setup</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/google-chat">Google Chat Setup</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/msteams-selfhosted">MS Teams (self-hosted)</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/msteams-enterprise">MS Teams (enterprise)</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Agent backends</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/kiro">Kiro</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/claude-code">Claude Code</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/codex">Codex</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/copilot">GitHub Copilot CLI — Agent Backend Guide</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/cursor">Cursor</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/gemini">Gemini CLI</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/grok">Grok</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/xai-proxy">xAI proxy</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/devin">Devin CLI — Agent Backend Guide</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/opencode">OpenCode</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/hermes">Hermes</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/mimocode">MiMoCode (mimo)</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/ambient">ADR: Ambient Mode</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/antigravity">Antigravity</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/pi">Pi</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/native-agent">Native agent</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/openshell">OpenShell</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agentcore">AgentCore</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Features</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/slash-commands">Slash Commands</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/output-directives">Output Directives</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/control-directives">Control Directives</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/message-dispatch-modes">Message Dispatch Modes</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/multi-agent">Multi-Agent Setup</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/hooks">Lifecycle Hooks</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/reactions">Emoji Reaction Mapping</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/inbound-attachments">Inbound Attachments</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/sendfiles">Send files</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/sendimages">Send images</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/stt">Speech-to-text</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/local-vision-models">Vision models</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/tool-display">Tool Display Configuration</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/cronjob">Scheduled messages</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agent-installable-tools">Agent-Installable Tools</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/python">Python scripts</a></li></ul></div></div><div data-tab="Deploy" hidden=""><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Deployment</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/image-tags">Image tags</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/helm-publishing">Helm Chart Publishing</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/sidecar">Sidecars</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/workspaces">Workspaces</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/secrets-management">Secrets management</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">GitHub integrations</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/github-token-setup">Token setup</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/github-webhook-integration">Webhook integration</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/gh-auth-device-flow">Auth device flow</a></li></ul></div></div><div data-tab="Reference" hidden=""><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Reference architectures</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/aws-ecs-fargate-spot">Reference Architecture: OpenAB on AWS ECS Fargate Spot</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/ci-observability-discord">Reference Architecture: CI Observability via Discord</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/cronjob_k8s_refarch">Kubernetes CronJob Reference Architecture</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/gbrain">OpenAB + GBrain Reference Architecture</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/remote-ssh-debugging">Debugging and Reproducing Issues via Remote SSH</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/sidecar-proxy">Reference Architecture: OAuth Sidecar Proxy</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/telegram-cloudflare-tunnel">Reference Architecture: Telegram via Cloudflare Tunnel</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Design records (ADR)</p><ul class="flex flex-col gap-px"></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Steering &amp; contribution</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering-design-guide">Steering Design Guide</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering/feature-request">Feature Request Guide for openabdev/openab</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering/pr-review">PR Review Guide for openabdev/openab</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering/triage">Issue Triage Guide for openabdev/openab</a></li></ul></div></div></aside><div data-june-outlet=""><main class="w-auto max-w-none m-0 min-w-0 px-10 pt-8 pb-20 max-md:px-4 max-md:pt-5 max-md:pb-12"><details class="hidden max-lg:block mb-5 border border-border rounded-xl overflow-hidden"><summary class="chevron flex justify-between items-center cursor-pointer px-3.5 py-2.5 text-[.85rem] font-semibold text-fg-soft">On this page</summary><div class="flex flex-col px-3.5 pt-1 pb-2.5 border-t border-border"><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#1-context-amp-problem">1. Context &amp;amp; Problem</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#why-not-pr-527s-approach">Why Not PR #527&#x27;s Approach?</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#2-prior-art-amp-industry-research">2. Prior Art &amp;amp; Industry Research</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#openclaw">OpenClaw</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#hermes-agent">Hermes Agent</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#comparison">Comparison</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#why-openab-diverges">Why OpenAB Diverges</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#3-proposed-design">3. Proposed Design</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#core-concept">Core Concept</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#how-it-works">How It Works</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#scope-definition-user-controlled">Scope Definition (User-Controlled)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#4-use-cases">4. Use Cases</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#4a-smart-quote-resolution-replaces-pr-527">4a. Smart Quote Resolution (Replaces PR #527)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#4b-cross-channel-bot-coordination">4b. Cross-Channel Bot Coordination</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#4c-thread-title-management">4c. Thread Title Management</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#4d-historical-context-retrieval">4d. Historical Context Retrieval</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#5-security-model">5. Security Model</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#current-state-behavioral-constraints-only">Current State: Behavioral Constraints Only</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#evolution-path-behavioral--defense-in-depth">Evolution Path: Behavioral → Defense-in-Depth</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#comparison-with-prior-art">Comparison with Prior Art</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#6-concrete-resolution-path-for-issue-339">6. Concrete Resolution Path for Issue #339</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#how-339-gets-resolved">How #339 Gets Resolved</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#acceptance-criteria-for-339">Acceptance Criteria for #339</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#7-what-changes-in-oab">7. What Changes in OAB?</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#8-relationship-to-existing-features">8. Relationship to Existing Features</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#9-open-questions">9. Open Questions</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#10-rollout-plan">10. Rollout Plan</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#consequences">Consequences</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#positive">Positive</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#negative">Negative</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#references">References</a></div></details><div class="flex items-center justify-between gap-4 mb-6"><div class="prose"><h1 class="!m-0">ADR: Context-Aware Token for Agent-Initiated Platform Operations</h1></div><div class="relative inline-flex items-stretch flex-none"><button class="inline-flex items-center gap-1.5 px-3 py-1.5 text-[.85rem] border border-border border-r-0 rounded-l-lg bg-surface text-fg-soft cursor-pointer hover:bg-hover hover:text-fg" data-copy-md="/openab/context-aware-token.md"><svg class="" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>Copy Markdown</button><details class="relative inline-flex items-stretch" data-menu="true"><summary class="chevron inline-flex items-center justify-center w-[30px] border border-border rounded-r-lg bg-surface text-muted cursor-pointer hover:bg-hover hover:text-fg" aria-label="More actions"></summary><div class="absolute right-0 top-[calc(100%+.4rem)] z-30 min-w-[17rem] flex flex-col gap-px p-1.5 bg-surface border border-border rounded-xl shadow-xl"><button class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" data-copy-md="/openab/context-aware-token.md"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg><span class="flex flex-col min-w-0"><span class="font-semibold text-[.9rem] text-fg">Copy Markdown</span><span class="text-[.8rem] text-muted">Copy this page as Markdown for LLMs</span></span></button><a class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" href="/openab/context-aware-token.md"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M16 21H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6l4 4v12a2 2 0 0 1-2 2z"></path><path d="M9 13h6M9 17h4"></path></svg><span class="flex flex-col min-w-0"><span class="inline-flex items-center gap-1 font-semibold text-[.9rem] text-fg">View as Markdown<!-- --> <svg class="text-muted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span><span class="text-[.8rem] text-muted">View this page as plain text</span></span></a><a class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" href="https://chatgpt.com/?q=Please%20read%20this%20doc%20and%20answer%20my%20questions%3A%20ADR%3A%20Context-Aware%20Token%20for%20Agent-Initiated%20Platform%20Operations" target="_blank" rel="noreferrer"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"></path></svg><span class="flex flex-col min-w-0"><span class="inline-flex items-center gap-1 font-semibold text-[.9rem] text-fg">Open in ChatGPT<!-- --> <svg class="text-muted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span><span class="text-[.8rem] text-muted">Ask ChatGPT about this page</span></span></a><a class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" href="https://claude.ai/new?q=Please%20read%20this%20doc%20and%20answer%20my%20questions%3A%20ADR%3A%20Context-Aware%20Token%20for%20Agent-Initiated%20Platform%20Operations" target="_blank" rel="noreferrer"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"></path></svg><span class="flex flex-col min-w-0"><span class="inline-flex items-center gap-1 font-semibold text-[.9rem] text-fg">Open in Claude<!-- --> <svg class="text-muted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span><span class="text-[.8rem] text-muted">Ask Claude about this page</span></span></a></div></details></div></div><article class="prose"><ul>
+<li><strong>Status:</strong> Proposed</li>
+<li><strong>Date:</strong> 2026-05-03</li>
+<li><strong>Author:</strong> @chaodu-agent</li>
+<li><strong>Related:</strong> #339, PR #527 (superseded)</li>
+</ul>
+<hr />
+<h2 id="1-context-amp-problem">1. Context &amp; Problem</h2>
+<p>OAB agents today are <strong>passive receivers</strong> — they get a prompt from the adapter and return a response. But real-world usage reveals scenarios where agents need to <strong>actively interact</strong> with the platform:</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Current State</th>
+<th>Desired State</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Update thread title to reflect task status</td>
+<td>Agent uses <code>curl</code> via steering doc hack</td>
+<td>Agent calls Discord API directly</td>
+</tr>
+<tr>
+<td>Fetch a specific historical message</td>
+<td>❌ Not possible — agent only sees conversation window</td>
+<td>Agent fetches any message by ID</td>
+</tr>
+<tr>
+<td>Notify a bot in another channel</td>
+<td>❌ Not possible — agent is confined to current channel</td>
+<td>Agent sends cross-channel messages</td>
+</tr>
+<tr>
+<td>Ping another bot to trigger a reaction</td>
+<td>❌ Not possible</td>
+<td>Agent mentions bot in target channel</td>
+</tr>
+</tbody>
+</table>
+<h3 id="why-not-pr-527s-approach">Why Not PR #527's Approach?</h3>
+<p>PR #527 proposed always prepending quoted message content to the agent prompt at the OAB transport layer. While well-implemented, this approach:</p>
+<ul>
+<li><strong>Always pays the cost</strong> (~500 tokens per reply) even when the agent already has the context from conversation history</li>
+<li><strong>Only solves one edge case</strong> (reply/quote context) out of the broader set of agent-initiated operations</li>
+<li><strong>Puts the decision in the wrong layer</strong> — OAB (transport) decides what context the agent needs, instead of the agent deciding for itself</li>
+</ul>
+<p>A context-aware token lets the agent <strong>pull context on demand</strong> — only when it determines the context is needed.</p>
+<hr />
+<h2 id="2-prior-art-amp-industry-research">2. Prior Art &amp; Industry Research</h2>
+<h3 id="openclaw">OpenClaw</h3>
+<p><strong>How it works:</strong> OpenClaw uses a <strong>mediated architecture</strong> — agents never get direct API tokens or raw platform access. All platform interactions flow through the Gateway + Channel Adapter layer:</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>Agent → Gateway (tool call / response) → Channel Outbound Adapter → Platform API</span></span>
+<span class="line"><span>Platform API → Channel Monitor → Gateway (normalized MsgContext) → Agent</span></span></code></pre>
+<p>Key mechanisms:</p>
+<ul>
+<li><strong>50-action message action system</strong> — agents invoke named actions (<code>send</code>, <code>thread-create</code>, <code>read</code>, <code>edit</code>, <code>delete</code>, <code>search</code>, <code>pin</code>, <code>role-add</code>, etc.) dispatched to channel plugins. Each action is gated by <code>supportsAction</code> checks against a <code>ChannelCapabilities</code> object declaring what each platform supports.</li>
+<li><strong>Session tools for cross-channel operations</strong> — <code>sessions_list</code>, <code>sessions_history</code>, <code>sessions_send</code>, <code>sessions_spawn</code> let agents discover sessions, fetch transcripts, send messages across channels, and spawn sub-agents. Inter-session messages are tagged with <code>message.provenance.kind = &quot;inter_session&quot;</code> for auditability.</li>
+<li><strong>Layered policy model</strong> — security enforced at multiple levels: Tool Profile → Provider Profile → Global Policy → Provider Policy → Agent Policy → Group Policy → Sandbox Policy. Later sources override earlier ones.</li>
+<li><strong>Send Policy</strong> — configurable deny/allow rules for agent-initiated messages by channel and chat type, enforced at the gateway level.</li>
+<li><strong>Session-based trust boundaries</strong> — <code>main</code> sessions (operator) get full host access; <code>dm</code> and <code>group</code> sessions are sandboxed in Docker containers by default.</li>
+</ul>
+<p><strong>Security lessons from advisories:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Advisory</th>
+<th>Risk</th>
+<th>Lesson for OpenAB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/openclaw/openclaw/security/advisories/GHSA-v3qc-wrwx-j3pw">GHSA-v3qc-wrwx-j3pw</a> (High)</td>
+<td>LLM agent disabled exec approval via config.patch</td>
+<td>Behavioral constraints alone are insufficient — agents can modify their own config to bypass them</td>
+</tr>
+<tr>
+<td><a href="https://github.com/openclaw/openclaw/security/advisories/GHSA-2rqg-gjgv-84jm">GHSA-2rqg-gjgv-84jm</a> (High, CVSS 8.8)</td>
+<td>Workspace boundary override via attacker-controlled params</td>
+<td>Gateway must enforce boundaries regardless of caller overrides</td>
+</tr>
+<tr>
+<td><a href="https://github.com/openclaw/openclaw/security/advisories/GHSA-7jx5-9fjg-hp4m">GHSA-7jx5-9fjg-hp4m</a> (Moderate)</td>
+<td>ACP permission auto-approval bypass via untrusted metadata</td>
+<td>Auto-approval heuristics trusting untrusted metadata are dangerous</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key insight:</strong> The mediated architecture IS the security boundary. Agents never touch platform APIs directly — the Gateway enforces what's allowed.</p>
+<p>References:</p>
+<ul>
+<li>Channel plugin types: <a href="https://github.com/openclaw/openclaw"><code>src/channels/plugins/types.plugin.ts</code></a></li>
+<li>Session tools: <a href="https://molty.finna.ai/docs/concepts/session-tool">docs/concepts/session-tool</a></li>
+<li>Security advisories: <a href="https://github.com/openclaw/openclaw/security">github.com/openclaw/openclaw/security</a></li>
+</ul>
+<h3 id="hermes-agent">Hermes Agent</h3>
+<p><strong>How it works:</strong> Hermes Agent uses a <strong>tool-based architecture</strong> — platform operations are exposed as LLM tools with OpenAI function-calling schemas. The agent decides when to call them.</p>
+<p>Key mechanisms:</p>
+<ul>
+<li><strong>Discord tool</strong> (<a href="https://github.com/NousResearch/hermes-agent"><code>tools/discord_tool.py</code></a>) — 14 actions split into two toolsets: <code>discord</code> (core: <code>fetch_messages</code>, <code>search_members</code>, <code>create_thread</code>) and <code>discord_admin</code> (server management). Uses Discord REST API directly with the bot token.</li>
+<li><strong>Cross-platform <code>send_message</code> tool</strong> (<a href="https://github.com/NousResearch/hermes-agent"><code>tools/send_message_tool.py</code></a>) — supports 17+ platforms (Telegram, Discord, Slack, WhatsApp, Signal, Matrix, etc.) with human-friendly name resolution via <code>gateway/channel_directory.py</code>.</li>
+<li><strong>Dynamic schema based on capabilities</strong> — Discord tool detects bot intents via <code>GET /applications/@me</code> and hides unavailable actions from the schema (e.g., <code>search_members</code> hidden if GUILD_MEMBERS intent is missing). This prevents the LLM from hallucinating calls to tools it can't use.</li>
+<li><strong>Config-based action allowlist</strong> — <code>discord.server_actions</code> in config.yaml restricts which actions the agent can perform. Runtime re-checks the allowlist even if a stale cached schema exposes a disabled action.</li>
+<li><strong>Defense-in-depth</strong> — three layers: (1) schema filtering removes unavailable actions, (2) runtime allowlist check at dispatch, (3) platform-level permission errors (Discord 403) handled gracefully with actionable guidance.</li>
+<li><strong>Error redaction</strong> — <code>_sanitize_error_text()</code> strips secrets (GitHub PATs, Bearer tokens, API keys) from error messages before they reach the LLM.</li>
+</ul>
+<p><strong>Gaps relevant to OpenAB:</strong></p>
+<ul>
+<li>Only Discord has a comprehensive read tool (<code>fetch_messages</code>). Other platforms (Telegram, Slack, etc.) have no equivalent — agents can send to them but not read from them.</li>
+<li>No formal capability/scope system beyond the Discord config allowlist. The agent either has the tool or doesn't.</li>
+</ul>
+<p><strong>Key insight:</strong> Tools provide a structured, auditable interface vs raw API access. The schema itself acts as a capability declaration — the agent can only call what's in the schema.</p>
+<p>References:</p>
+<ul>
+<li>Discord tool: <a href="https://github.com/NousResearch/hermes-agent"><code>tools/discord_tool.py</code></a></li>
+<li>Send message tool: <a href="https://github.com/NousResearch/hermes-agent"><code>tools/send_message_tool.py</code></a></li>
+<li>Tool registry: <a href="https://github.com/NousResearch/hermes-agent"><code>tools/registry.py</code></a></li>
+<li>Security docs: <a href="https://hermes-agent.nousresearch.com/docs/user-guide/security">hermes-agent.nousresearch.com/docs/user-guide/security</a></li>
+</ul>
+<h3 id="comparison">Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>OpenClaw</th>
+<th>Hermes Agent</th>
+<th>OpenAB (this ADR)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent-to-platform interface</td>
+<td>Mediated — Gateway dispatches named actions</td>
+<td>Tool-based — LLM tools with function-calling schemas</td>
+<td>Direct — agent calls platform API with token</td>
+</tr>
+<tr>
+<td>Security enforcement</td>
+<td>Technical — Gateway enforces layered policy</td>
+<td>Technical — schema gating + runtime allowlist + platform permissions</td>
+<td>Behavioral — steering docs define allow/deny (see §5 for evolution path)</td>
+</tr>
+<tr>
+<td>Cross-channel operations</td>
+<td><code>sessions_send</code> with provenance tagging</td>
+<td><code>send_message</code> tool with 17+ platform support</td>
+<td>Agent uses token + <code>curl</code></td>
+</tr>
+<tr>
+<td>Message fetching</td>
+<td><code>sessions_history</code> + <code>read</code> action</td>
+<td><code>discord_tool.fetch_messages</code> (Discord only)</td>
+<td>Agent calls REST API directly</td>
+</tr>
+<tr>
+<td>Audit trail</td>
+<td>Inter-session provenance tags</td>
+<td>Tool call logs</td>
+<td>None built-in (see §5 for planned additions)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="why-openab-diverges">Why OpenAB Diverges</h3>
+<p>Both OpenClaw and Hermes use <strong>mediated architectures</strong> where the platform (Gateway or tool runtime) controls what agents can do. OpenAB's context-aware token takes a different path: <strong>direct agent access with behavioral constraints</strong>.</p>
+<p>This is a deliberate tradeoff:</p>
+<ol>
+<li><strong>OAB's architecture</strong> — OAB is a passive transport layer by design. Adding a Gateway mediation layer or tool runtime would be a fundamental architecture change, not an incremental feature.</li>
+<li><strong>Agent diversity</strong> — OAB supports 4+ different agent runtimes (Kiro CLI, Claude Code, Codex, Gemini). A mediated approach would require each runtime to integrate with OAB's tool/action system. Direct token access works with any agent that has shell access.</li>
+<li><strong>Pragmatism</strong> — The pattern already works in production (超渡法師 uses <code>curl</code> + bot token for thread title updates). This ADR formalizes and hardens what's already happening.</li>
+</ol>
+<p>The security gap is real and acknowledged — §5 below describes the evolution path from behavioral-only to defense-in-depth.</p>
+<hr />
+<h2 id="3-proposed-design">3. Proposed Design</h2>
+<h3 id="core-concept">Core Concept</h3>
+<p>Give the agent a <strong>scoped platform token</strong> (e.g., <code>DISCORD_CONTEXT_TOKEN</code>) that it can use to perform platform API calls when it judges them necessary. The token is configured by the user in their steering/tools definition, not by OAB core.</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>OAB Layer (transport)              Agent Layer (intelligence)</span></span>
+<span class="line"><span>─────────────────────              ────────────────────────</span></span>
+<span class="line"><span>BOT_TOKEN                          DISCORD_CONTEXT_TOKEN</span></span>
+<span class="line"><span>Passive: receive msg, send reply   Active: fetch, notify, update</span></span>
+<span class="line"><span>OAB doesn't change                 User defines allowed operations</span></span>
+<span class="line"><span>Adapter responsibility             Agent autonomy</span></span></code></pre>
+<h3 id="how-it-works">How It Works</h3>
+<ol>
+<li>User sets <code>DISCORD_CONTEXT_TOKEN</code> in the agent's environment (same bot token or a separate scoped token)</li>
+</ol>
+<blockquote>
+<p>⚠️ <strong>Security note:</strong> Using the same bot token as <code>DISCORD_CONTEXT_TOKEN</code> grants the agent full bot permissions — this is a convenience shortcut suitable only for trusted, single-operator deployments. For production or multi-tenant environments, use a separate token with minimal scopes when the platform supports it. See §5 for the security evolution path.</p>
+</blockquote>
+<ol start="2">
+<li>User defines allowed operations in <code>tools.md</code> or steering docs</li>
+<li>Agent decides at runtime when to use the token — e.g., &quot;user said 'why?' and I'm not sure what they're referring to, let me fetch the referenced message&quot;</li>
+<li>OAB core is unaware of this — it's purely an agent-side capability</li>
+</ol>
+<h3 id="scope-definition-user-controlled">Scope Definition (User-Controlled)</h3>
+<p>The trust boundary is initially defined by the user in steering docs. <strong>This is a documentation convention, not a security boundary</strong> — the agent has the full token and is behaviorally constrained, not technically restricted. See §5 for the evolution path toward technical enforcement.</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-markdown"><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold"># Discord Context Tools</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">You have DISCORD_CONTEXT_TOKEN for platform operations.</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Allowed</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFA657">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> Update current thread title</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFA657">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> Fetch messages in current channel/thread</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFA657">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> Send messages to specified channels (cross-channel notify)</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFA657">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> Add reactions</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Not Allowed</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFA657">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> Delete messages</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFA657">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> Modify server settings</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFA657">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> Manage roles/permissions</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFA657">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> Create/delete channels</span></span></code></pre>
+<hr />
+<h2 id="4-use-cases">4. Use Cases</h2>
+<h3 id="4a-smart-quote-resolution-replaces-pr-527">4a. Smart Quote Resolution (Replaces PR #527)</h3>
+<p>Instead of always prepending quoted content:</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>User replies to a message: "why?"</span></span>
+<span class="line"><span>  │</span></span>
+<span class="line"><span>  ├─ Agent sees "why?" in prompt</span></span>
+<span class="line"><span>  ├─ Agent checks conversation history — enough context? → respond directly</span></span>
+<span class="line"><span>  ├─ Not enough context? → use token to fetch referenced message</span></span>
+<span class="line"><span>  └─ Now respond with full understanding</span></span></code></pre>
+<p><strong>Benefit:</strong> Zero extra tokens when context is already available. Only fetches when genuinely needed.</p>
+<h3 id="4b-cross-channel-bot-coordination">4b. Cross-Channel Bot Coordination</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>User: "ask 普渡法師 in #claude-room to review this code"</span></span>
+<span class="line"><span>  │</span></span>
+<span class="line"><span>  ├─ Agent uses token to send message to #claude-room</span></span>
+<span class="line"><span>  ├─ Message mentions 普渡法師 bot</span></span>
+<span class="line"><span>  └─ 普渡法師 receives the message and starts working</span></span></code></pre>
+<h3 id="4c-thread-title-management">4c. Thread Title Management</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>Agent finishes reviewing PR #527</span></span>
+<span class="line"><span>  │</span></span>
+<span class="line"><span>  ├─ Agent uses token to update thread title</span></span>
+<span class="line"><span>  └─ "🔢 PR #527 reviewed"</span></span></code></pre>
+<p>This is already happening today via steering doc + <code>curl</code>. The token formalizes it.</p>
+<h3 id="4d-historical-context-retrieval">4d. Historical Context Retrieval</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>User: "what did Jack say about this yesterday?"</span></span>
+<span class="line"><span>  │</span></span>
+<span class="line"><span>  ├─ Agent searches conversation history — not in window</span></span>
+<span class="line"><span>  ├─ Agent uses token to fetch recent messages from channel</span></span>
+<span class="line"><span>  └─ Finds Jack's message and responds</span></span></code></pre>
+<hr />
+<h2 id="5-security-model">5. Security Model</h2>
+<h3 id="current-state-behavioral-constraints-only">Current State: Behavioral Constraints Only</h3>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Mitigation</th>
+<th>Limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Token is same as BOT_TOKEN — full permissions</td>
+<td>Steering docs define allow/deny list</td>
+<td>Agent can ignore steering docs (prompt injection, hallucination)</td>
+</tr>
+<tr>
+<td>Agent could misuse token</td>
+<td>Steering docs define explicit scope</td>
+<td>No technical enforcement — relies on agent compliance</td>
+</tr>
+<tr>
+<td>Token leaked in logs</td>
+<td>Agent instructed to reference by env var name</td>
+<td>No redaction layer — agent could still echo the value</td>
+</tr>
+<tr>
+<td>Cross-channel abuse</td>
+<td>Steering docs restrict target channels</td>
+<td>No runtime validation of target channels</td>
+</tr>
+</tbody>
+</table>
+<p><strong>This is insufficient for production use.</strong> OpenClaw's security advisories demonstrate that behavioral constraints alone fail — their <a href="https://github.com/openclaw/openclaw/security/advisories/GHSA-v3qc-wrwx-j3pw">GHSA-v3qc-wrwx-j3pw</a> showed an LLM agent disabling its own exec approval via config modification.</p>
+<h3 id="evolution-path-behavioral--defense-in-depth">Evolution Path: Behavioral → Defense-in-Depth</h3>
+<p>The security model evolves across four maturity levels (distinct from the <a href="#10-rollout-plan">Rollout Plan in §10</a>, which tracks implementation milestones):</p>
+<p><strong>Level 1 (Behavioral only — current):</strong></p>
+<ul>
+<li>Steering docs define allowed operations</li>
+<li>Suitable for trusted, operator-controlled agents only</li>
+<li>Acceptable risk: operator is the user AND the admin</li>
+</ul>
+<p><strong>Level 2 (Audit logging):</strong></p>
+<ul>
+<li>OAB logs all outbound HTTP calls from agent processes (network-level observation)</li>
+<li>No enforcement, but provides visibility for post-incident analysis</li>
+<li>Implementation: eBPF-based network monitoring or HTTP proxy with logging</li>
+</ul>
+<p><strong>Level 3 (Proxy enforcement):</strong></p>
+<ul>
+<li>Agent's <code>DISCORD_CONTEXT_TOKEN</code> routes through an OAB-controlled HTTP proxy</li>
+<li>Proxy validates each API call against a configured allowlist:
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span># Example proxy allowlist (config.toml)</span></span>
+<span class="line"><span>[agent_proxy]</span></span>
+<span class="line"><span>allowed_endpoints = [</span></span>
+<span class="line"><span>  "GET /channels/*/messages",      # fetch messages</span></span>
+<span class="line"><span>  "PATCH /channels/*",             # update thread title</span></span>
+<span class="line"><span>  "POST /channels/*/messages",     # send messages</span></span>
+<span class="line"><span>  "PUT /channels/*/messages/*/reactions/*",  # add reactions</span></span>
+<span class="line"><span>]</span></span>
+<span class="line"><span>denied_endpoints = [</span></span>
+<span class="line"><span>  "DELETE *",                      # no deletions</span></span>
+<span class="line"><span>  "PUT /guilds/*",                 # no server modifications</span></span>
+<span class="line"><span>]</span></span></code></pre>
+</li>
+<li>Denied calls return 403 with audit log entry</li>
+<li>Inspired by Hermes Agent's defense-in-depth (schema filtering + runtime allowlist + platform permissions)</li>
+</ul>
+<p><strong>Level 4 (True scoped tokens):</strong></p>
+<ul>
+<li>If Discord (or other platforms) introduce fine-grained token scopes, swap the token</li>
+<li>The agent-side interface doesn't change — only the token's actual permissions narrow</li>
+</ul>
+<h3 id="comparison-with-prior-art">Comparison with Prior Art</h3>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>OpenClaw</th>
+<th>Hermes Agent</th>
+<th>OpenAB Level 1</th>
+<th>OpenAB Level 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Schema/capability gating</td>
+<td>✅ <code>supportsAction</code></td>
+<td>✅ Dynamic schema</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Runtime allowlist</td>
+<td>✅ Send Policy</td>
+<td>✅ Config allowlist</td>
+<td>❌ Steering docs only</td>
+<td>✅ Proxy allowlist</td>
+</tr>
+<tr>
+<td>Platform permission errors</td>
+<td>✅</td>
+<td>✅ Graceful 403 handling</td>
+<td>✅ (passthrough)</td>
+<td>✅ (passthrough)</td>
+</tr>
+<tr>
+<td>Audit trail</td>
+<td>✅ Provenance tags</td>
+<td>✅ Tool call logs</td>
+<td>❌</td>
+<td>✅ Proxy logs</td>
+</tr>
+<tr>
+<td>Secret redaction</td>
+<td>❌</td>
+<td>✅ <code>_sanitize_error_text()</code></td>
+<td>❌</td>
+<td>✅ Proxy strips tokens from errors</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-concrete-resolution-path-for-issue-339">6. Concrete Resolution Path for Issue #339</h2>
+<p>Issue <a href="https://github.com/openabdev/openab/issues/339">#339</a> requests reply/quote context in agent prompts. PR #527 implemented always-on prepending; this ADR supersedes that approach with on-demand fetching.</p>
+<h3 id="how-339-gets-resolved">How #339 Gets Resolved</h3>
+<p>There are two distinct scenarios for context resolution. The token is only needed for the second.</p>
+<p><strong>Scenario A — Discord reply (user uses reply/quote feature):</strong></p>
+<p>Discord Gateway already sends <code>referenced_message</code> (full message object) and <code>message_reference</code> (with <code>message_id</code>, <code>channel_id</code>, <code>guild_id</code>) on reply messages (type 19). OAB's adapter receives this data and can passthrough it to the agent at near-zero cost.</p>
+<p><strong>Step 1 — OAB passthroughs reply metadata (minimal transport-layer change):</strong></p>
+<p>OAB already receives <code>referenced_message</code> from Discord's gateway. Instead of prepending the full quoted content (PR #527's approach), OAB injects only the metadata:</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>[Reply context: message_id=1234567890, channel_id=9876543210, author=Jack]</span></span></code></pre>
+<p>This costs ~20 tokens (vs ~500 for full content) and gives the agent enough information to decide whether to fetch.</p>
+<p><strong>Step 2 — Agent decides whether to fetch:</strong></p>
+<ul>
+<li>If the conversation history already contains the referenced message → respond directly (zero extra cost)</li>
+<li>If the agent needs the full content of the referenced message → use <code>DISCORD_CONTEXT_TOKEN</code> to call <code>GET /channels/{channel_id}/messages/{message_id}</code> and fetch it</li>
+<li>If no token is configured → agent responds based on available context (graceful degradation)</li>
+</ul>
+<blockquote>
+<p><strong>Note:</strong> Because Discord already provides <code>referenced_message</code> on reply messages, OAB could alternatively passthrough the full content directly (like PR #527). The metadata-only approach is preferred because it keeps the transport layer minimal and lets the agent decide. Either way, the token is not strictly required for this scenario.</p>
+</blockquote>
+<p><strong>Scenario B — Non-reply historical lookup (no <code>referenced_message</code> available):</strong></p>
+<p>When a user asks about past messages without using Discord's reply feature (e.g., &quot;what did Jack say about this yesterday?&quot;), there is no <code>referenced_message</code> in the Gateway event. This is where the context-aware token provides unique value — the agent uses it to call <code>GET /channels/{channel_id}/messages</code> and search for relevant messages.</p>
+<p><strong>Step 3 — Steering doc template:</strong></p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-markdown"><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold"># Reply Context Resolution</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">When you see </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">`[Reply context: message_id=..., channel_id=..., author=...]`</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">:</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFA657">1.</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> Check if the referenced message is already in your conversation history</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFA657">2.</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> If not, and you need it to respond accurately, fetch it:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">   curl -s -H "Authorization: Bot $DISCORD_CONTEXT_TOKEN" \</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">     "https://discord.com/api/v10/channels/{channel_id}/messages/{message_id}"</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFA657">3.</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> If DISCORD_CONTEXT_TOKEN is not available, respond based on available context</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold"># Historical Context Retrieval (no reply metadata)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">When a user references past messages without using Discord reply:</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFA657">1.</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> Use the token to fetch recent messages from the channel:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">   curl -s -H "Authorization: Bot $DISCORD_CONTEXT_TOKEN" \</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">     "https://discord.com/api/v10/channels/{channel_id}/messages?limit=50"</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFA657">2.</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> Search the results for relevant context</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFA657">3.</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> If DISCORD_CONTEXT_TOKEN is not available, ask the user to quote or reply to the specific message</span></span></code></pre>
+<h3 id="acceptance-criteria-for-339">Acceptance Criteria for #339</h3>
+<ul>
+<li><input disabled="" type="checkbox"> OAB injects reply metadata (<code>message_id</code>, <code>channel_id</code>, <code>author</code>) into agent prompt — small transport-layer PR</li>
+<li><input disabled="" type="checkbox"> Steering doc template published for agents to use the token for on-demand fetching</li>
+<li><input disabled="" type="checkbox"> At least one agent (超渡法師) validated end-to-end: reply in Discord → agent fetches referenced message → responds with full context</li>
+<li><input disabled="" type="checkbox"> Issue #339 closed with reference to this ADR and the implementing PRs</li>
+</ul>
+<hr />
+<h2 id="7-what-changes-in-oab">7. What Changes in OAB?</h2>
+<p><strong>Minimal.</strong> The key design principle is preserved — OAB remains a passive transport layer:</p>
+<ul>
+<li><strong>Reply metadata injection</strong> (for #339): OAB adds <code>[Reply context: message_id=..., channel_id=..., author=...]</code> to the prompt when a Discord message has <code>referenced_message</code>. This is a small, targeted change in <code>discord.rs</code> (~10 lines).</li>
+<li><strong>Token passthrough</strong>: OAB already passes environment variables to agent processes. No change needed — user adds <code>DISCORD_CONTEXT_TOKEN</code> to their agent config.</li>
+<li><strong>Proxy (Level 3, optional)</strong>: If/when proxy enforcement is added, it would be a new optional component, not a change to OAB core.</li>
+</ul>
+<hr />
+<h2 id="8-relationship-to-existing-features">8. Relationship to Existing Features</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Relationship</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PR #527 (reply context)</td>
+<td><strong>Superseded</strong> — context-aware token solves the same problem more efficiently (on-demand vs always-on)</td>
+</tr>
+<tr>
+<td>Custom Gateway ADR</td>
+<td><strong>Complementary</strong> — gateway handles inbound webhooks; context-aware token handles agent-initiated outbound operations</td>
+</tr>
+<tr>
+<td>Multi-Platform Adapters ADR</td>
+<td><strong>Complementary</strong> — each platform can have its own scoped token type</td>
+</tr>
+<tr>
+<td>Steering docs</td>
+<td><strong>Extended</strong> — steering docs gain a new responsibility: defining token scope (Level 1 only — Level 3 moves to proxy enforcement)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="9-open-questions">9. Open Questions</h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Options</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><del>One token per platform or unified?</del></td>
+<td><strong>Decided: Per-platform</strong> — simpler and more secure</td>
+<td>Start with Discord, extend later</td>
+</tr>
+<tr>
+<td>Should OAB inject the token automatically?</td>
+<td>No — user configures it in agent env</td>
+<td>Keeps OAB uninvolved</td>
+</tr>
+<tr>
+<td>Rate limiting on agent-initiated calls?</td>
+<td>Level 1: rely on platform rate limits; Level 3: proxy-level rate limiting</td>
+<td>Proxy can enforce per-agent rate limits</td>
+</tr>
+<tr>
+<td>How to handle platforms without API tokens?</td>
+<td>N/A until needed</td>
+<td>LINE, Telegram have different auth models</td>
+</tr>
+<tr>
+<td>Should OAB provide a proxy from Level 1?</td>
+<td>No — start with behavioral constraints for trusted operators, add proxy when multi-tenant or untrusted agents are needed</td>
+<td>Complexity should match the threat model</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10-rollout-plan">10. Rollout Plan</h2>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Scope</th>
+<th>Target</th>
+<th>Acceptance Criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Phase 1</strong></td>
+<td>Document the pattern — steering doc template for Discord context token</td>
+<td>v0.9.x</td>
+<td>Template published, validated with 超渡法師</td>
+</tr>
+<tr>
+<td><strong>Phase 2</strong></td>
+<td>Resolve #339 — OAB injects reply metadata, agent fetches on demand</td>
+<td>v0.9.x</td>
+<td>#339 closed, end-to-end validation with at least one agent</td>
+</tr>
+<tr>
+<td><strong>Phase 3</strong></td>
+<td>Formalize as <code>tools.md</code> convention across OpenAB agents</td>
+<td>v0.10.x</td>
+<td>All 4 agent runtimes have working steering doc templates</td>
+</tr>
+<tr>
+<td><strong>Phase 4</strong></td>
+<td>Add optional audit logging for agent-initiated API calls</td>
+<td>v0.10.x</td>
+<td>Operator can see what API calls agents make</td>
+</tr>
+<tr>
+<td><strong>Phase 5</strong></td>
+<td>Evaluate proxy enforcement for multi-tenant / untrusted agent scenarios</td>
+<td>v0.11.x+</td>
+<td>Design doc for proxy layer if demand exists</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="consequences">Consequences</h2>
+<h3 id="positive">Positive</h3>
+<ul>
+<li>Agent gets platform awareness without OAB core changes</li>
+<li>On-demand context fetching is more token-efficient than always-on prepending</li>
+<li>Enables cross-channel coordination — a capability that was previously impossible</li>
+<li>User controls the scope — no one-size-fits-all behavior imposed by OAB</li>
+<li>Pattern extends naturally to other platforms</li>
+<li>Concrete path to resolve #339 with minimal OAB changes</li>
+</ul>
+<h3 id="negative">Negative</h3>
+<ul>
+<li>Phase 1 trust boundary is behavioral (steering docs), not technical — relies on agent compliance. Acceptable for trusted operators; insufficient for multi-tenant deployments.</li>
+<li>Each user must configure the token and define scope — more setup burden</li>
+<li>Agent-initiated API calls add latency when they occur</li>
+<li>No centralized audit of what agents do with the token until Phase 4</li>
+<li>Diverges from industry standard (mediated architecture) — conscious tradeoff for OAB's passive transport philosophy</li>
+</ul>
+<hr />
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://github.com/openabdev/openab/issues/339">Issue #339</a> — Original feature request for reply/quote context</li>
+<li><a href="https://github.com/openabdev/openab/pull/527">PR #527</a> — Implementation of always-on quote prepending (superseded by this ADR)</li>
+<li><a href="/openab/custom-gateway">ADR: Custom Gateway</a> — Complementary architecture for inbound webhook handling</li>
+<li><a href="/openab/multi-platform-adapters">ADR: Multi-Platform Adapters</a> — Platform-agnostic adapter layer</li>
+<li><a href="https://github.com/openclaw/openclaw/security">OpenClaw Security Advisories</a> — Real-world security lessons for agent-platform interactions</li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/developer-guide/tools-runtime">Hermes Agent Tools Runtime</a> — Tool-based agent interaction architecture</li>
+</ul>
+</article><nav class="flex justify-between gap-4 mt-12 pt-6 border-t border-border"><span></span><span></span></nav><script>document.querySelectorAll('[data-copy-md]').forEach(function(b){b.addEventListener('click',async function(){try{var r=await fetch(b.getAttribute('data-copy-md'));var t=await r.text();await navigator.clipboard.writeText(t);var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o;},1500);}catch(e){alert('Copy failed: '+e);}});});document.querySelectorAll('.prose pre').forEach(function(pre){if(pre.querySelector('.copy-code'))return;var b=document.createElement('button');b.className='copy-code';b.textContent='Copy';b.addEventListener('click',async function(){var c=pre.querySelector('code');try{await navigator.clipboard.writeText(c?c.innerText:pre.innerText);var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o;},1200);}catch(e){}});pre.appendChild(b);});document.querySelectorAll('.tabs').forEach(function(t){t.querySelectorAll('.tab-btn').forEach(function(b){b.addEventListener('click',function(){var i=b.getAttribute('data-tab');t.querySelectorAll('.tab-btn').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-tab')===i);});t.querySelectorAll('.tab-panel').forEach(function(p){p.hidden=p.getAttribute('data-tab')!==i;});});});});(function(){var blocks=document.querySelectorAll('code.language-mermaid');if(!blocks.length)return;var items=[];blocks.forEach(function(c){var pre=c.closest('pre')||c;var h=document.createElement('div');h.className='mermaid-diagram';pre.replaceWith(h);items.push({src:c.textContent,holder:h});});var lib,id=0;function load(){return lib||(lib=import("https://esm.sh/mermaid@11").then(function(m){return m.default;}));}function theme(){return document.documentElement.getAttribute('data-theme')==='dark'?'dark':'default';}function run(){load().then(function(mermaid){mermaid.initialize({startOnLoad:false,securityLevel:'loose',theme:theme()});items.forEach(function(it){mermaid.render('kura-mmd-'+(id++),it.src).then(function(r){it.holder.innerHTML=r.svg;}).catch(function(e){it.holder.innerHTML='<pre class="mermaid-error">'+String((e&&e.message)||e)+'</pre>';});});}).catch(function(){});}run();var cur=document.documentElement.getAttribute('data-theme');new MutationObserver(function(){var t=document.documentElement.getAttribute('data-theme');if(t!==cur){cur=t;run();}}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});})();</script></main><aside class="sticky top-14 max-h-[calc(100vh-56px)] overflow-y-auto px-4 py-8 max-lg:hidden"><p class="text-[.72rem] font-bold tracking-wider uppercase text-muted mb-2.5">On this page</p><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#1-context-amp-problem">1. Context &amp;amp; Problem</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#why-not-pr-527s-approach">Why Not PR #527&#x27;s Approach?</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#2-prior-art-amp-industry-research">2. Prior Art &amp;amp; Industry Research</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#openclaw">OpenClaw</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#hermes-agent">Hermes Agent</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#comparison">Comparison</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#why-openab-diverges">Why OpenAB Diverges</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#3-proposed-design">3. Proposed Design</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#core-concept">Core Concept</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#how-it-works">How It Works</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#scope-definition-user-controlled">Scope Definition (User-Controlled)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#4-use-cases">4. Use Cases</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#4a-smart-quote-resolution-replaces-pr-527">4a. Smart Quote Resolution (Replaces PR #527)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#4b-cross-channel-bot-coordination">4b. Cross-Channel Bot Coordination</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#4c-thread-title-management">4c. Thread Title Management</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#4d-historical-context-retrieval">4d. Historical Context Retrieval</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#5-security-model">5. Security Model</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#current-state-behavioral-constraints-only">Current State: Behavioral Constraints Only</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#evolution-path-behavioral--defense-in-depth">Evolution Path: Behavioral → Defense-in-Depth</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#comparison-with-prior-art">Comparison with Prior Art</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#6-concrete-resolution-path-for-issue-339">6. Concrete Resolution Path for Issue #339</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#how-339-gets-resolved">How #339 Gets Resolved</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#acceptance-criteria-for-339">Acceptance Criteria for #339</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#7-what-changes-in-oab">7. What Changes in OAB?</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#8-relationship-to-existing-features">8. Relationship to Existing Features</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#9-open-questions">9. Open Questions</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#10-rollout-plan">10. Rollout Plan</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#consequences">Consequences</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#positive">Positive</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#negative">Negative</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#references">References</a></aside></div></div><footer class="border-t border-border mt-8"><div class="flex items-center justify-between flex-wrap gap-4 max-w-[1280px] mx-auto px-6 py-5 max-md:px-4"><nav class="flex items-center gap-[1.1rem] text-[.85rem]"><a class="text-muted hover:text-fg" href="/openab/llms.txt">llms.txt</a><button type="button" class="inline-flex items-center justify-center w-[30px] h-[30px] p-0 text-[.95rem] leading-none border border-border rounded-lg bg-surface text-fg cursor-pointer hover:bg-hover" data-theme-toggle="true" aria-label="Toggle theme"></button></nav><a class="text-muted text-[.85rem] hover:text-accent" href="https://kura.build/" target="_blank" rel="noreferrer">Powered by Kura</a></div></footer><script>document.addEventListener('keydown',function(e){if(e.key==='/' && !document.documentElement.dataset.ctrlk && !/INPUT|TEXTAREA/.test((document.activeElement||{}).tagName||'')){e.preventDefault();var s=document.querySelector('.search-box');if(s)s.focus();}});(function(){var b=document.querySelector('[data-theme-toggle]');if(!b)return;var d=document.documentElement,order=['system','light','dark'],icon={system:'🖥',light:'☀',dark:'☾'};function pref(){return d.getAttribute('data-theme-pref')||'system';}function res(p){return p==='dark'||(p==='system'&&matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light';}function set(p){d.setAttribute('data-theme-pref',p);d.setAttribute('data-theme',res(p));try{localStorage.setItem('kura-theme',p);}catch(e){}b.textContent=icon[p];b.setAttribute('title','Theme: '+p);}set(pref());b.addEventListener('click',function(){set(order[(order.indexOf(pref())+1)%order.length]);});try{matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(){if(pref()==='system')d.setAttribute('data-theme',res('system'));});}catch(e){}})();document.addEventListener('click',function(e){var t=e.target;document.querySelectorAll('details[data-menu][open]').forEach(function(d){if(!d.contains(t))d.removeAttribute('open');});var it=t.closest&&t.closest('details[data-menu] a, details[data-menu] [data-copy-md]');if(it){var dd=it.closest('details[data-menu]');if(dd)setTimeout(function(){dd.removeAttribute('open');},0);}});document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('details[data-menu][open]').forEach(function(d){d.removeAttribute('open');});});(function(){var root=document.documentElement;function opener(){return document.querySelector('[data-drawer-open]');}function items(){var d=document.getElementById('docs-nav');if(!d)return[];return[].filter.call(d.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])'),function(el){return el.offsetParent!==null;});}function set(o){var was=root.classList.contains('drawer-open');root.classList.toggle('drawer-open',o);var b=opener();if(b)b.setAttribute('aria-expanded',o?'true':'false');if(o){var f=items();if(f[0])f[0].focus();}else if(was&&b)b.focus();}document.addEventListener('click',function(e){if(e.target.closest('[data-drawer-open]')){e.preventDefault();set(!root.classList.contains('drawer-open'));return;}if(e.target.closest('[data-drawer-close]')){set(false);return;}if(e.target.closest('#docs-nav a'))set(false);});document.addEventListener('keydown',function(e){if(e.key==='Escape'){set(false);return;}if(e.key==='Tab'&&root.classList.contains('drawer-open')){var f=items();if(!f.length)return;var first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}else if(f.indexOf(document.activeElement)<0){e.preventDefault();first.focus();}}});})();(function(){
+  function trim(p){return p.length>1&&p.endsWith('/')?p.slice(0,-1):p;}
+  function sync(){
+    var path=trim(location.pathname), tab=null;
+    var links=document.querySelectorAll('.sidebar a[href],[data-tabbar] a[href]');
+    for(var i=0;i<links.length;i++){var a=links[i],on=trim(a.getAttribute('href'))===path;
+      if(on){a.setAttribute('aria-current','page');var g=a.closest('[data-tab]');if(g)tab=g.getAttribute('data-tab');}
+      else a.removeAttribute('aria-current');}
+    if(tab!=null){
+      document.querySelectorAll('[data-tab]').forEach(function(g){g.hidden=g.getAttribute('data-tab')!==tab;});
+      document.querySelectorAll('[data-tabbar] a').forEach(function(a){
+        if(a.getAttribute('data-tab-key')===tab)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+    }
+    // expand the folder(s) holding the active page. Iterate EVERY aria-current sidebar link, not
+    // just the first: a folder-as-page link lives in a <details>, but the mobile tab-bar link (also
+    // in .sidebar, earlier in the DOM) has no folder ancestor — querySelector would pick that one
+    // and expand nothing. forEach opens each link's folder chain; tab links are harmless no-ops.
+    document.querySelectorAll('.sidebar a[aria-current="page"]').forEach(function(cur){
+      var d=cur.closest('details.folder');while(d){d.open=true;d=d.parentElement&&d.parentElement.closest('details.folder');}});
+    // rewrite the locale-switch links to THIS page's equivalent path (swap the locale prefix)
+    var ll=document.querySelectorAll('[data-locale-home]');
+    if(ll.length){var lc=document.querySelector('[data-locale-home][data-locale-active]'),cp=lc?lc.getAttribute('data-locale-home'):'/';cp=cp==='/'?'':cp;
+      var rest=location.pathname;if(cp&&rest.indexOf(cp)===0)rest=rest.slice(cp.length)||'/';
+      ll.forEach(function(a){var h=a.getAttribute('data-locale-home'),p=h==='/'?'':h;a.setAttribute('href',rest==='/'?(p||'/'):(p+rest));});}
+    // mobile nav-context: "Active tab / Page title" (the shell can't know the page server-side)
+    var nc=document.querySelector('[data-nav-context]');
+    if(nc){var at=document.querySelector('[data-tabbar] a[aria-current="page"]'),h1=document.querySelector('main h1');
+      nc.textContent=[at&&at.textContent.trim(),h1&&h1.textContent.trim()].filter(Boolean).join(' / ');}
+  }
+  sync();
+  var outlet=document.querySelector('[data-june-outlet]');
+  if(outlet) new MutationObserver(sync).observe(outlet,{childList:true,subtree:true});
+})();</script><script type="module" src="/openab/_june/client.aa34fb55.js"></script><script type="application/json" id="june-webmcp">[{"name":"search_docs","description":"Hybrid keyword + semantic search over the docs. Returns the most relevant passages with their doc slug, title, and relevance score.","inputSchema":{"type":"object","properties":{"query":{"type":"string","description":"A natural-language question or keywords."},"topK":{"type":"integer","description":"Number of results to return (default 5)."}},"required":["query"]}},{"name":"get_page","description":"Fetch one doc page as clean Markdown by its slug (e.g. introduction, search, agents).","inputSchema":{"type":"object","properties":{"slug":{"type":"string","description":"The page slug."}},"required":["slug"]}},{"name":"list_docs","description":"List every doc page with its slug, title, section, and `sources` (the code paths it documents). The map for finding which pages a code change affects.","inputSchema":{"type":"object","properties":{}}}]</script><script>(function(){var mc=navigator.modelContext;if(!mc||!mc.registerTool)return;var el=document.getElementById('june-webmcp');if(!el)return;var tools;try{tools=JSON.parse(el.textContent)}catch(e){return}var ac=new AbortController();tools.forEach(function(t){mc.registerTool({name:t.name,description:t.description,inputSchema:t.inputSchema,execute:function(args){return fetch('/mcp',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'tools/call',params:{name:t.name,arguments:args}})}).then(function(r){return r.json()}).then(function(j){return j.result})}},{signal:ac.signal})})})();</script></body></html>
