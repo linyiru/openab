@@ -47,12 +47,14 @@ if (raw.sections) cfg.sections = raw.sections;
 if (raw.highlight) cfg.highlight = raw.highlight;
 if (raw.i18n) cfg.i18n = rename(raw.i18n, { default_locale: "defaultLocale" });
 if (raw.deploy) cfg.deploy = rename(raw.deploy, { base_path: "basePath" });
-// content.sources (mount as-is) only when there's no [nav] — a nav reorganizes the content itself.
-if (!raw.nav && raw.content?.sources) {
-  cfg.content = {
-    sources: raw.content.sources.map((s) => ({ ...s, dir: path.isAbsolute(s.dir) ? s.dir : "../" + s.dir })),
-  };
-}
+// Mount the repo's docs/ VERBATIM, in place — flat slugs, files never moved. Defaults to ../docs
+// (convention); override with [[content.sources]]. The build dir is one level under the repo root,
+// so a repo-relative dir gets a "../" prefix.
+const sources = raw.content?.sources ?? [{ dir: "docs", mount: "" }];
+cfg.content = { sources: sources.map((s) => ({ ...s, dir: path.isAbsolute(s.dir) ? s.dir : "../" + s.dir })) };
+// [nav] (virtual navigation) maps 1:1 to config.nav — group flat slugs into tabs + sidebar groups
+// with no folder moves and no slug prefixes. Passed straight through.
+if (raw.nav) cfg.nav = raw.nav;
 
 // --- writers ------------------------------------------------------------------
 const write = (rel, content) => {
@@ -94,68 +96,29 @@ const landing = () => write("content/docs/index.md",
   `${siteDesc ? siteDesc + "\n\n" : ""}Use the sidebar or search (\`/\`) to browse the docs. Every page is also available as ` +
   `Markdown (append \`.md\`) and JSON, and via an MCP tool at \`/mcp\`.\n`);
 
-if (!raw.nav) {
-  // No nav → mount-as-is (a flat, auto-derived sidebar). content.sources already set above.
-  landing();
-  console.log(`kura-scaffold: ${buildDir} (mount) site=${siteName} deploy=${cfg.deploy?.target} basePath=${cfg.deploy?.basePath}`);
-} else {
-  // [nav] → reorganize docs/ into a folder tree with tabs. Titles: a page's { title } override,
-  // else its de-boilerplated H1, else the slug. docs/ stays untouched (we read + copy).
-  const docsRoot = path.join(repoRoot, "docs");
-  const readDoc = (rel) => fs.readFileSync(path.join(docsRoot, rel), "utf8");
-  // Copy one source doc into content/docs/<group>/<name>.md. Titles come from each doc's H1 (June
-  // derives it — nothing injected), so this copies VERBATIM. Only an explicit { slug, title } nav
-  // override writes a title, and only when the source has no front-matter of its own to respect.
-  const emit = (group, srcRel, override) => {
-    const body = readDoc(srcRel);
-    const name = path.basename(srcRel).replace(/\.md$/, "");
-    const dest = `content/docs/${group}/${name}.md`;
-    if (override && !body.startsWith("---")) write(dest, `---\ntitle: ${JSON.stringify(override)}\n---\n\n${body.trimEnd()}\n`);
-    else write(dest, body);
-    return name;
-  };
+// The ONLY generated content: a landing page (also seeds the content collection for `june gen`).
+// The docs themselves are mounted VERBATIM from ../docs — nothing copied, moved, or injected. The
+// sidebar tabs/groups come from config.nav (virtual grouping over the flat slugs).
+landing();
 
-  const groups = raw.nav.groups || {};
-  const used = new Set();
-  const tabDefs = [];
-  for (const tab of raw.nav.tabs || []) {
-    const tabGroups = [];
-    for (const g of tab.groups || []) {
-      const gc = groups[g] || {};
-      let pageSlugs;
-      if (gc.pages) {
-        // explicit list: entries are "slug" or { slug, title }; a slug may include a docs/ subpath.
-        pageSlugs = gc.pages.map((p) => {
-          const slug = typeof p === "string" ? p : p.slug;
-          used.add(slug);
-          return emit(g, slug + ".md", typeof p === "object" ? p.title : undefined);
-        });
-      } else if (fs.existsSync(path.join(docsRoot, g)) && fs.statSync(path.join(docsRoot, g)).isDirectory()) {
-        // title-only group → auto-fill from the docs/<g>/ subfolder (alphabetical).
-        pageSlugs = fs.readdirSync(path.join(docsRoot, g)).filter((f) => f.endsWith(".md")).sort()
-          .map((f) => { used.add(`${g}/${f.replace(/\.md$/, "")}`); return emit(g, `${g}/${f}`); });
-      } else {
-        console.warn(`kura-scaffold: group "${g}" has no pages and no docs/${g}/ folder — skipped`);
-        continue;
-      }
-      write(`content/docs/${g}/meta.json`, JSON.stringify({ title: gc.title || g, pages: pageSlugs }, null, 2) + "\n");
-      tabGroups.push(g);
-    }
-    tabDefs.push({ title: tab.title, pages: tabGroups });
-  }
-  write("content/docs/meta.json", JSON.stringify({ tabs: tabDefs }, null, 2) + "\n");
-  landing();
-
-  // Never silently drop a doc: report any docs/*.md (or subfolder file) not placed by the nav.
-  const onDisk = [];
-  const walk = (dir, pre = "") => {
-    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-      if (e.isDirectory()) walk(path.join(dir, e.name), pre + e.name + "/");
-      else if (e.name.endsWith(".md")) onDisk.push(pre + e.name.replace(/\.md$/, ""));
-    }
-  };
-  walk(docsRoot);
-  const missing = onDisk.filter((s) => !used.has(s));
-  console.log(`kura-scaffold: ${buildDir} (nav) tabs=${tabDefs.map((t) => t.title).join("/")} pages=${used.size}`);
-  if (missing.length) console.warn(`kura-scaffold: ⚠ ${missing.length} ungrouped docs (add them to [nav]): ${missing.join(", ")}`);
+// Never silently drop a doc: warn about any docs/*.md not placed in a [nav] group (flat slugs whose
+// group isn't listed, and subfolder files whose folder isn't a group). Titles come from each H1.
+const tabs = raw.nav?.tabs ?? [];
+const groups = raw.nav?.groups ?? {};
+const placed = new Set();
+for (const gid of tabs.flatMap((t) => t.groups ?? [])) {
+  const g = groups[gid] ?? {};
+  if (g.pages) for (const p of g.pages) placed.add(typeof p === "string" ? p : p.slug);
+  else placed.add(gid + "/"); // subfolder auto-fill: mark the whole prefix as covered
 }
+const onDisk = [];
+const walk = (dir, pre = "") => {
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (e.isDirectory()) walk(path.join(dir, e.name), pre + e.name + "/");
+    else if (e.name.endsWith(".md")) onDisk.push(pre + e.name.replace(/\.md$/, ""));
+  }
+};
+walk(path.join(repoRoot, "docs"));
+const missing = onDisk.filter((s) => !placed.has(s) && ![...placed].some((p) => p.endsWith("/") && s.startsWith(p)));
+console.log(`kura-scaffold: ${buildDir} (virtual nav) tabs=${tabs.map((t) => t.title).join("/") || "—"} mounted=${onDisk.length}`);
+if (missing.length) console.warn(`kura-scaffold: ⚠ ${missing.length} ungrouped docs (add to [nav]): ${missing.join(", ")}`);
