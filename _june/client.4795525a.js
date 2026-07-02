@@ -10156,7 +10156,7 @@ function startJuneClient(options) {
 	const routerRoot = document.querySelector("[data-june-root]");
 	if (!routerRoot) return;
 	if (routerRoot.getAttribute("data-june-router") === "flight") {
-		import("./client-router-flight-574ad271.js").then(({ startFlightRouter }) => startFlightRouter());
+		import("./client-router-flight-e1d80de9.js").then(({ startFlightRouter }) => startFlightRouter());
 		return;
 	}
 	startClientRouter(rehydrate);
@@ -10878,10 +10878,28 @@ function setup(opts) {
 	if (trigger?.dataset.ctrlkReady) return;
 	const endpoint = opts.endpoint ?? trigger?.dataset.searchEndpoint ?? "/search.json";
 	const docBase = (opts.docBase ?? trigger?.dataset.docBase ?? "/docs/").replace(/\/?$/, "/");
+	const isStatic = opts.static ?? trigger?.dataset.searchStatic === "1";
+	const locale = trigger?.dataset.locale || void 0;
+	let loadingHandle = null;
+	const getHandle = () => loadingHandle ??= (async () => {
+		const [{ createSearch }, res] = await Promise.all([import("./search-3dca2f4b.js"), fetch(endpoint, { headers: { accept: "application/json" } })]);
+		if (!res.ok) throw new Error(`search index ${res.status}`);
+		return createSearch({ entries: (await res.json()).index ?? [] });
+	})();
 	let tokens = [];
 	const ctrl = createCtrlk({
 		debounce: 120,
 		async search(query, signal) {
+			if (isStatic) {
+				const h = await getHandle();
+				const hits = await h.search(query, {
+					topK: 12,
+					mode: "keyword",
+					locale
+				});
+				tokens = h.tokensOf(query, locale);
+				return hits.map(toItem(docBase));
+			}
 			const url = `${endpoint}?q=${encodeURIComponent(query)}&mode=keyword`;
 			const res = await fetch(url, {
 				signal,
