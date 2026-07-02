@@ -1,9 +1,10 @@
 name: docs
 
 # Build the Kura docs site (docs-site/, which mounts the repo's own docs/) and publish the
-# prerendered static output to the gh-pages branch under /docs. `keep_files: true` means it never
-# touches anything else already on gh-pages (e.g. the Helm chart repo's index.yaml) — the docs live
-# at https://<owner>.github.io/openab/docs/, side by side with the chart repo at the root.
+# prerendered static output to the gh-pages ROOT — so the docs index.html is the site homepage.
+# `keep_files: true` means it never deletes anything else already on gh-pages: the Helm chart repo's
+# index.yaml (a different file) is preserved and keeps serving at /openab/index.yaml. The Helm
+# release (helm/chart-releaser-action) only ever commits index.yaml, so the two coexist.
 
 on:
   push:
@@ -42,6 +43,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: docs-site/dist/static
-          destination_dir: docs
-          keep_files: true # preserve everything else already on gh-pages (Helm index.yaml, …)
+          # published to gh-pages root (no destination_dir) → docs index.html is the homepage
+          keep_files: true # preserve everything else already on gh-pages (Helm index.yaml, charts, …)
           commit_message: "docs: publish Kura site (${{ github.sha }})"

@@ -13,8 +13,9 @@ export default defineKura({
   // OpenAB's docs are plain prose, not MDX — CommonMark renders them verbatim and avoids MDX's
   // footgun where a stray `{…}` or `<tag>` fails the page.
   markdown: "commonmark",
-  // Mount the docs at the site root (no /docs prefix), and build a static site for GitHub Pages.
-  // basePath = the project subpath the site is served under: https://<user>.github.io/openab/docs/.
+  // Mount the docs at the site root, and build a static site for GitHub Pages. The site is published
+  // to the gh-pages ROOT so the docs index.html IS the homepage (https://<user>.github.io/openab/) —
+  // coexisting with the Helm chart repo's index.yaml (a different file) at the same root.
   basePath: "",
-  deploy: { target: "github-pages", basePath: "/openab/docs" },
+  deploy: { target: "github-pages", basePath: "/openab" },
 });
