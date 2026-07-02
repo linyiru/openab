@@ -1,7 +1,3 @@
----
-title: "Control Directives"
----
-
 # Control Directives
 
 ## Overview

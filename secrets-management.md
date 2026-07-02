@@ -1,7 +1,3 @@
----
-title: "Secrets Management"
----
-
 # ADR: Secrets Management
 
 - **Status:** Proposed

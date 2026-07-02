@@ -1,7 +1,3 @@
----
-title: "MiMoCode"
----
-
 # MiMoCode (mimo)
 
 MiMoCode is a fork of OpenCode. It supports ACP over stdio and can be used as an OpenAB agent backend.

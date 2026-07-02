@@ -1,7 +1,3 @@
----
-title: "Custom Gateway for Webhook-Based Platform Integration"
----
-
 # ADR: Custom Gateway for Webhook-Based Platform Integration
 
 - **Status:** Superseded

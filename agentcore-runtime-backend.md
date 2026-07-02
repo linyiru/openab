@@ -1,7 +1,3 @@
----
-title: "AgentCore Runtime Backend"
----
-
 # ADR: AgentCore Runtime Backend
 
 - **Status:** Proposed

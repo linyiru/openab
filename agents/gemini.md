@@ -1,7 +1,3 @@
----
-title: "Gemini"
----
-
 # Gemini CLI
 
 Gemini CLI supports ACP natively via the `--acp` flag — no adapter needed.

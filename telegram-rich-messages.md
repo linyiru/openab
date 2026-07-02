@@ -1,7 +1,3 @@
----
-title: "Telegram Rich Messages Support"
----
-
 # ADR: Telegram Rich Messages Support
 
 **Status:** Accepted  

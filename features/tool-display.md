@@ -1,7 +1,3 @@
----
-title: "Tool Display Configuration"
----
-
 # Tool Display Configuration
 
 Control how tool calls are rendered in chat messages during agent responses.

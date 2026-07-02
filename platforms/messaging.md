@@ -1,7 +1,3 @@
----
-title: "Messaging Model"
----
-
 # Messaging Model
 
 This document explains the five messaging patterns in OpenAB, each building on the previous one:

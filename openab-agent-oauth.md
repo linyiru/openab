@@ -1,7 +1,3 @@
----
-title: "openab-agent — Multi-Vendor LLM-Provider OAuth & Credential Storage"
----
-
 # ADR: openab-agent — Multi-Vendor LLM-Provider OAuth & Credential Storage
 
 - **Status:** Proposed

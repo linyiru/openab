@@ -1,7 +1,3 @@
----
-title: "OpenAB PR Review Loop"
----
-
 # ADR: OpenAB PR Review Loop
 
 **Status:** Amended  

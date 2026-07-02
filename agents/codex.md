@@ -1,7 +1,3 @@
----
-title: "Codex"
----
-
 # Codex
 
 Codex uses the [@zed-industries/codex-acp](https://github.com/zed-industries/codex-acp) adapter for ACP support.

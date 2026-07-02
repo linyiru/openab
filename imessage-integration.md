@@ -1,7 +1,3 @@
----
-title: "iMessage Integration via macOS Gateway"
----
-
 # ADR: iMessage Integration via macOS Gateway
 
 - **Status:** Proposed

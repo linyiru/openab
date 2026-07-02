@@ -1,7 +1,3 @@
----
-title: "OpenAB Install & Upgrade"
----
-
 # OpenAB Install & Upgrade Guide
 
 > **[AI Instruction]** Follow this guide to install or upgrade an OpenAB Helm deployment. Execute each section in order. If any step fails, follow the ROLLBACK section. Do not skip the backup (for upgrades).

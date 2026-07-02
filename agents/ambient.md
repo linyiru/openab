@@ -1,7 +1,3 @@
----
-title: "Ambient Mode"
----
-
 # Ambient Mode
 
 Ambient mode allows your bot to passively listen to all messages in configured channels and autonomously decide whether to respond. Unlike the default @mention mode, the bot observes the full conversation flow and only speaks up when it has something valuable to add.

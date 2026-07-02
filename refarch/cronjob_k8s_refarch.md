@@ -1,7 +1,3 @@
----
-title: "Kubernetes CronJob Reference Architecture"
----
-
 # Kubernetes CronJob Reference Architecture
 
 This document is a reference architecture for how we set up the project-screening CronJob around `codex exec`, GitHub Projects, and Discord delivery.

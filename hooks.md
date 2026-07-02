@@ -1,7 +1,3 @@
----
-title: "Lifecycle Hooks"
----
-
 # ADR: Lifecycle Hooks
 
 - **Status:** Accepted

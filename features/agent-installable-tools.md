@@ -1,7 +1,3 @@
----
-title: "Agent-Installable Tools"
----
-
 # Agent-Installable Tools
 
 ## How to Install Extra Tools

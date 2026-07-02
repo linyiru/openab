@@ -1,7 +1,3 @@
----
-title: "Issue Triage Guide for openabdev/openab"
----
-
 # Issue Triage Guide for openabdev/openab
 
 ## Steps

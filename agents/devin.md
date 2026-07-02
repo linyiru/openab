@@ -1,7 +1,3 @@
----
-title: "Devin"
----
-
 # Devin CLI — Agent Backend Guide
 
 How to run OpenAB with [Devin CLI](https://docs.devin.ai/cli) as the agent backend.

@@ -1,7 +1,3 @@
----
-title: "Turn-Boundary Message Batching"
----
-
 # ADR: Turn-Boundary Message Batching
 
 - **Status:** Proposed

@@ -1,7 +1,3 @@
----
-title: "Control Directives"
----
-
 # ADR: Control Directives
 
 - **Status:** Proposed

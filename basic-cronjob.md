@@ -1,7 +1,3 @@
----
-title: "Basic CronJob Support"
----
-
 # ADR: Basic CronJob Support (Config-Driven Scheduled Messages)
 
 - **Status:** Proposed

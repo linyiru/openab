@@ -1,7 +1,3 @@
----
-title: "Separate Binaries with Opt-In Unified Build"
----
-
 # ADR: Separate Binaries with Opt-In Unified Build
 
 - **Status:** Accepted

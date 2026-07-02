@@ -1,7 +1,3 @@
----
-title: "Multi-Agent"
----
-
 # Multi-Agent Setup
 
 You can run multiple agents in a single Helm release. Each agent key in the `agents` map creates its own Deployment, ConfigMap, Secret, and PVC.

@@ -1,7 +1,3 @@
----
-title: "openab-agent — MCP Client Support"
----
-
 # ADR: openab-agent — MCP Client Support
 
 ## 1. Context & Motivation

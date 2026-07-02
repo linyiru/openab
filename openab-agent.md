@@ -1,7 +1,3 @@
----
-title: "openab-agent — Native Rust Coding Agent with Built-in ACP"
----
-
 # ADR: openab-agent — Native Rust Coding Agent with Built-in ACP
 
 - **Status:** Proposed

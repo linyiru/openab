@@ -1,7 +1,3 @@
----
-title: "Slash Commands"
----
-
 # Slash Commands
 
 OpenAB registers Discord slash commands for session control and agent management. Most work in both guild threads and DMs — the exception is `/auth`, which is **DM-only** for security (see [`/auth`](#auth) below).

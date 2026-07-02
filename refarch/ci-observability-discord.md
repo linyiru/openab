@@ -1,7 +1,3 @@
----
-title: "Reference Architecture: CI Observability via Discord"
----
-
 # Reference Architecture: CI Observability via Discord
 
 > **This doc is meant to be used with Kiro or any coding CLI.** Prompt your AI agent with something like:

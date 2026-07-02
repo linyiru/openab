@@ -1,7 +1,3 @@
----
-title: "Discord"
----
-
 # Discord Guide
 
 Complete guide to setting up, configuring, and running OpenAB with Discord.

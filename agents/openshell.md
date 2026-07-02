@@ -1,7 +1,3 @@
----
-title: "OpenShell"
----
-
 # OpenShell
 
 > ⚠️ **NOT RECOMMENDED (June 2026)**

@@ -1,7 +1,3 @@
----
-title: "Ambient Mode"
----
-
 # ADR: Ambient Mode
 
 - **Status:** Proposed

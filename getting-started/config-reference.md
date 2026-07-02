@@ -1,7 +1,3 @@
----
-title: "Configuration Reference"
----
-
 # Configuration Reference
 
 OpenAB is configured via a TOML file (default: `config.toml`). Environment variables can be interpolated using `${VAR_NAME}` syntax.

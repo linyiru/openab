@@ -1,7 +1,3 @@
----
-title: "Claude Code"
----
-
 # Claude Code
 
 Claude Code uses the [@agentclientprotocol/claude-agent-acp](https://github.com/agentclientprotocol/claude-agent-acp) adapter for ACP support.

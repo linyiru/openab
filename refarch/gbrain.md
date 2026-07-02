@@ -1,7 +1,3 @@
----
-title: "OpenAB + GBrain Reference Architecture"
----
-
 # OpenAB + GBrain Reference Architecture
 
 Shared persistent memory for OpenAB multi-agent deployments.

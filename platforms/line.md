@@ -1,7 +1,3 @@
----
-title: "LINE"
----
-
 # LINE Setup
 
 > **Unified Mode (v0.9.0+):** The OAB binary now embeds the line adapter directly. Set `LINE_CHANNEL_SECRET` as an env var — no separate gateway container or `[gateway]` config needed. See [Telegram docs](telegram.md#unified-mode-recommended) for the pattern.

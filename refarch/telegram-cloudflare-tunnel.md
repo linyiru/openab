@@ -1,7 +1,3 @@
----
-title: "Reference Architecture: Telegram via Cloudflare Tunnel"
----
-
 # Reference Architecture: Telegram via Cloudflare Tunnel
 
 Deploy OpenAB on K3s with Telegram webhooks through a Cloudflare Tunnel — no public IP, no ingress controller, no TLS certificates required.

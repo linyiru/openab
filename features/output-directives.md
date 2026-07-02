@@ -1,7 +1,3 @@
----
-title: "Output Directives"
----
-
 # Output Directives
 
 ## Overview

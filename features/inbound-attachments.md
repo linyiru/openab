@@ -1,7 +1,3 @@
----
-title: "Inbound Attachments"
----
-
 # Inbound Attachments
 
 How OAB handles images, audio, and files sent by users across all platforms.

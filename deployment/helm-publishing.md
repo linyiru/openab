@@ -1,7 +1,3 @@
----
-title: "Helm Chart Publishing"
----
-
 # Helm Chart Publishing
 
 OpenAB publishes the Helm chart to two channels automatically via the `Release Charts` workflow (`.github/workflows/release.yml`).

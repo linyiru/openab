@@ -1,7 +1,3 @@
----
-title: "LINE Messaging API Adapter"
----
-
 # ADR: LINE Messaging API Adapter
 
 - **Status:** Accepted

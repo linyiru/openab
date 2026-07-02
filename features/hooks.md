@@ -1,7 +1,3 @@
----
-title: "Lifecycle Hooks"
----
-
 # Lifecycle Hooks
 
 OpenAB supports lifecycle hooks that run at specific points during the container lifecycle. All lifecycle phases are configured in `config.toml` under the `[hooks]` table.

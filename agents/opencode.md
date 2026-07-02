@@ -1,7 +1,3 @@
----
-title: "OpenCode"
----
-
 # OpenCode
 
 OpenCode supports ACP natively via the `acp` subcommand — no adapter needed.

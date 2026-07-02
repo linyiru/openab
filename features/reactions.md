@@ -1,7 +1,3 @@
----
-title: "Emoji Reaction Mapping"
----
-
 # Emoji Reaction Mapping
 
 Map emoji reactions to text commands. When a user reacts with a configured emoji on a message, OAB treats it as if the user sent the corresponding text message through the normal dispatch pipeline.

@@ -1,7 +1,3 @@
----
-title: "ECS Control Plane"
----
-
 # ADR: ECS Control Plane (CRD + Operator Pattern on ECS)
 
 - **Status:** Proposed

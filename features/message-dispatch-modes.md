@@ -1,7 +1,3 @@
----
-title: "Message Dispatch Modes"
----
-
 # Message Dispatch Modes
 
 OpenAB supports three message dispatch modes that control how incoming messages are batched before being sent to the AI agent as an ACP turn.

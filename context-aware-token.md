@@ -1,7 +1,3 @@
----
-title: "Context-Aware Token for Agent-Initiated Platform Operations"
----
-
 # ADR: Context-Aware Token for Agent-Initiated Platform Operations
 
 - **Status:** Proposed

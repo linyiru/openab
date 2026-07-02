@@ -1,7 +1,3 @@
----
-title: "GitHub Copilot"
----
-
 # GitHub Copilot CLI — Agent Backend Guide
 
 How to run OpenAB with [GitHub Copilot CLI](https://github.com/github/copilot-cli) as the agent backend.

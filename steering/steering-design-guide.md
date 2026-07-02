@@ -1,7 +1,3 @@
----
-title: "Steering Design"
----
-
 # Steering Design Guide
 
 ## Problem

@@ -1,7 +1,3 @@
----
-title: "PR Contribution Guidelines"
----
-
 # ADR: PR Contribution Guidelines
 
 - **Status:** Accepted

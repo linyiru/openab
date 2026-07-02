@@ -1,7 +1,3 @@
----
-title: "Telegram"
----
-
 # Telegram Setup
 
 Connect a Telegram bot to OpenAB.

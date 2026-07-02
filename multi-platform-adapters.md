@@ -1,7 +1,3 @@
----
-title: "Multi"
----
-
 # ADR: Multi-Platform Adapter Architecture
 
 - **Status:** Partially Implemented — Phase 1+3 landed via #259 (Slack adapter)
