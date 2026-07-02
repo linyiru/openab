@@ -13,7 +13,84 @@ description = "A lightweight, cloud-native ACP harness connecting chat platforms
 target    = "github-pages"
 base_path = "/openab"
 
-# Docs-as-code: render the repo's own docs/ — no duplication.
-[[content.sources]]
-dir   = "docs"
-mount = ""
+# ── Navigation ────────────────────────────────────────────────────────────────
+# Tabs group folders; each group lists its pages by docs/ slug (order = sidebar order). Page titles
+# come from each file's first H1 (de-boilerplated) — so pages are just bare slugs; add
+# { slug, title } only when you want a shorter sidebar label than the H1. docs/ is never modified;
+# the workflow reorganizes a copy at build time. Groups with only a title auto-fill from a docs/
+# subfolder of the same name (refarch/, adr/).
+
+[[nav.tabs]]
+title  = "Guides"
+groups = ["getting-started", "platforms", "agents", "features"]
+
+[[nav.tabs]]
+title  = "Deploy"
+groups = ["deployment", "integrations"]
+
+[[nav.tabs]]
+title  = "Reference"
+groups = ["refarch", "adr", "steering"]
+
+[nav.groups.getting-started]
+title = "Getting started"
+pages = ["ai-install-upgrade", "local-dev", "config-reference"]
+
+[nav.groups.platforms]
+title = "Platforms"
+pages = [
+  "messaging", "discord", { slug = "slack", title = "Slack" }, "telegram", "line", "feishu",
+  "wecom", "google-chat",
+  { slug = "msteams-selfhosted", title = "MS Teams (self-hosted)" },
+  { slug = "msteams-enterprise", title = "MS Teams (enterprise)" },
+]
+
+[nav.groups.agents]
+title = "Agent backends"
+pages = [
+  { slug = "kiro", title = "Kiro" }, "claude-code", "codex", "copilot",
+  { slug = "cursor", title = "Cursor" }, "gemini", { slug = "grok", title = "Grok" },
+  { slug = "xai-proxy", title = "xAI proxy" }, "devin", "opencode",
+  { slug = "hermes", title = "Hermes" }, "mimocode", "ambient",
+  { slug = "antigravity", title = "Antigravity" }, { slug = "pi", title = "Pi" },
+  { slug = "native-agent", title = "Native agent" }, "openshell",
+  { slug = "agentcore", title = "AgentCore" },
+]
+
+[nav.groups.features]
+title = "Features"
+pages = [
+  "slash-commands", "output-directives", "control-directives", "message-dispatch-modes",
+  "multi-agent", "hooks", "reactions", "inbound-attachments",
+  { slug = "sendfiles", title = "Send files" }, { slug = "sendimages", title = "Send images" },
+  { slug = "stt", title = "Speech-to-text" }, { slug = "local-vision-models", title = "Vision models" },
+  "tool-display", { slug = "cronjob", title = "Scheduled messages" }, "agent-installable-tools",
+  { slug = "python", title = "Python scripts" },
+]
+
+[nav.groups.deployment]
+title = "Deployment"
+pages = [
+  { slug = "image-tags", title = "Image tags" }, "helm-publishing",
+  { slug = "sidecar", title = "Sidecars" }, "workspaces",
+  { slug = "secrets-management", title = "Secrets management" },
+]
+
+[nav.groups.integrations]
+title = "GitHub integrations"
+pages = [
+  { slug = "github-token-setup", title = "Token setup" },
+  { slug = "github-webhook-integration", title = "Webhook integration" },
+  { slug = "gh-auth-device-flow", title = "Auth device flow" },
+]
+
+# refarch/ and adr/ are docs/ subfolders → auto-filled (title-only groups).
+[nav.groups.refarch]
+title = "Reference architectures"
+
+[nav.groups.adr]
+title = "Design records (ADR)"
+
+[nav.groups.steering]
+title = "Steering & contribution"
+pages = ["steering-design-guide", "steering/feature-request", "steering/pr-review", "steering/triage"]
