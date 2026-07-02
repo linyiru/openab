@@ -14,7 +14,7 @@ if (!repoRoot || !buildDir) {
 }
 
 // Pinned so a broken `latest` can never silently break a deploy (overridable via env).
-const KURA_DOCS = process.env.KURA_DOCS_VERSION || "^0.0.38";
+const KURA_DOCS = process.env.KURA_DOCS_VERSION || "^0.0.39";
 const KURA_CLI = process.env.KURA_CLI_VERSION || "^0.0.25";
 
 const tomlPath = path.join(repoRoot, "kura.toml");
@@ -103,22 +103,15 @@ if (!raw.nav) {
   // else its de-boilerplated H1, else the slug. docs/ stays untouched (we read + copy).
   const docsRoot = path.join(repoRoot, "docs");
   const readDoc = (rel) => fs.readFileSync(path.join(docsRoot, rel), "utf8");
-  const h1Of = (body) => (body.split("\n").find((l) => /^#\s+/.test(l)) || "").replace(/^#\s+/, "").trim();
-  const cleanTitle = (h1) => {
-    let t = (h1 || "").replace(/^ADR:\s*/i, "");
-    t = t.replace(/\s*\([^)]*\)\s*$/, "");                                        // trailing "(…)"
-    t = t.replace(/\s*[—–-]\s*[^—–-]*\b(Guide|Backend|Adapter|Pattern)\b.*$/i, ""); // dash boilerplate
-    t = t.replace(/\s+(Setup Guide|Setup|Guide|CLI)\s*$/i, "");                    // trailing boilerplate word
-    return t.trim();
-  };
-  // Copy one source doc into content/docs/<group>/<name>.md, injecting a title (unless the source
-  // already ships its own front-matter). Returns the destination slug segment.
+  // Copy one source doc into content/docs/<group>/<name>.md. Titles come from each doc's H1 (June
+  // derives it — nothing injected), so this copies VERBATIM. Only an explicit { slug, title } nav
+  // override writes a title, and only when the source has no front-matter of its own to respect.
   const emit = (group, srcRel, override) => {
     const body = readDoc(srcRel);
     const name = path.basename(srcRel).replace(/\.md$/, "");
     const dest = `content/docs/${group}/${name}.md`;
-    if (body.startsWith("---")) write(dest, body); // respect an authored front-matter block
-    else write(dest, `---\ntitle: ${JSON.stringify(override || cleanTitle(h1Of(body)) || name)}\n---\n\n${body.trimEnd()}\n`);
+    if (override && !body.startsWith("---")) write(dest, `---\ntitle: ${JSON.stringify(override)}\n---\n\n${body.trimEnd()}\n`);
+    else write(dest, body);
     return name;
   };
 
