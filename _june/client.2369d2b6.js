@@ -10156,7 +10156,7 @@ function startJuneClient(options) {
 	const routerRoot = document.querySelector("[data-june-root]");
 	if (!routerRoot) return;
 	if (routerRoot.getAttribute("data-june-router") === "flight") {
-		import("./client-router-flight-e1d80de9.js").then(({ startFlightRouter }) => startFlightRouter());
+		import("./client-router-flight-35964cda.js").then(({ startFlightRouter }) => startFlightRouter());
 		return;
 	}
 	startClientRouter(rehydrate);
@@ -10882,19 +10882,21 @@ function setup(opts) {
 	const locale = trigger?.dataset.locale || void 0;
 	let loadingHandle = null;
 	const getHandle = () => loadingHandle ??= (async () => {
-		const [{ createSearch }, res] = await Promise.all([import("./search-3dca2f4b.js"), fetch(endpoint, { headers: { accept: "application/json" } })]);
+		const [{ createSearch }, res] = await Promise.all([import("./search-cbfd3c21.js"), fetch(endpoint, { headers: { accept: "application/json" } })]);
 		if (!res.ok) throw new Error(`search index ${res.status}`);
 		return createSearch({ entries: (await res.json()).index ?? [] });
 	})();
 	let tokens = [];
 	const ctrl = createCtrlk({
-		debounce: 120,
+		debounce: isStatic ? 30 : 120,
 		async search(query, signal) {
 			if (isStatic) {
 				const h = await getHandle();
 				const hits = await h.search(query, {
 					topK: 12,
 					mode: "keyword",
+					prefix: true,
+					navBoost: true,
 					locale
 				});
 				tokens = h.tokensOf(query, locale);

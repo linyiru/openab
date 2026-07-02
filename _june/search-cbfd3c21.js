@@ -350,22 +350,39 @@ var Bm25 = class Bm25 {
 	search(query, opts = {}) {
 		const n = this.ids.length;
 		if (!n) return [];
-		const terms = [...new Set(this.tokenizerFor(opts.lang)(query))];
-		if (!terms.length) return [];
+		const tokens = this.tokenizerFor(opts.lang)(query);
+		if (!tokens.length) return [];
 		const avgdl = this.totalLen / n;
 		const scores = /* @__PURE__ */ new Map();
-		for (const t of terms) {
-			const p = this.postings.get(t);
-			if (!p) continue;
+		const eachDoc = (p, accumulate) => {
 			const df = p.length / 2;
 			const idf = Math.log((n - df + .5) / (df + .5) + 1);
 			for (let i = 0; i < p.length; i += 2) {
 				const docId = p[i];
-				const freq = p[i + 1];
 				const dl = this.docLen[docId];
-				const score = idf * (freq * (this.k1 + 1)) / (freq + this.k1 * (1 - this.b + this.b * dl / avgdl));
-				scores.set(docId, (scores.get(docId) ?? 0) + score);
+				accumulate(docId, idf * (p[i + 1] * (this.k1 + 1)) / (p[i + 1] + this.k1 * (1 - this.b + this.b * dl / avgdl)));
 			}
+		};
+		const last = tokens[tokens.length - 1];
+		const usePrefix = !!opts.prefixLast && last.length >= (opts.minPrefix ?? 2);
+		const exact = new Set(usePrefix ? tokens.slice(0, -1) : tokens);
+		for (const t of exact) {
+			const p = this.postings.get(t);
+			if (p) eachDoc(p, (docId, s) => scores.set(docId, (scores.get(docId) ?? 0) + s));
+		}
+		if (usePrefix) {
+			const group = /* @__PURE__ */ new Map();
+			let expanded = 0;
+			const cap = opts.maxExpand ?? 128;
+			for (const [term, p] of this.postings) {
+				if (!term.startsWith(last)) continue;
+				eachDoc(p, (docId, s) => {
+					const c = group.get(docId);
+					if (c === void 0 || s > c) group.set(docId, s);
+				});
+				if (++expanded >= cap) break;
+			}
+			for (const [docId, s] of group) scores.set(docId, (scores.get(docId) ?? 0) + s);
 		}
 		const topK = Math.max(0, Math.floor(opts.topK ?? 10));
 		return [...scores.entries()].sort((a, b) => b[1] - a[1]).slice(0, topK).map(([docId, score]) => ({
@@ -660,13 +677,25 @@ function snippetAround(body, tokens) {
 	const start = at > 60 ? at - 40 : 0;
 	return body.slice(start, start + 160).trim();
 }
-function keywordSearch(index, query, limit, fetchK = limit * 4, locale) {
+function keywordSearch(index, query, limit, fetchK = limit * 4, locale, prefixLast, navBoost) {
 	const queryTokens = index.tokensOf(query, locale);
+	const navPrefix = navBoost && prefixLast && queryTokens.length === 1 && queryTokens[0].length >= 2 ? queryTokens[0] : null;
+	const firstTok = (text) => {
+		return index.tokensOf(text ?? "", locale)[0] ?? "";
+	};
+	const boostOf = (d) => {
+		if (!navPrefix) return 0;
+		if ((d.slug.split(/[/-]/)[0] ?? "").startsWith(navPrefix) || firstTok(d.title).startsWith(navPrefix)) return 1e3;
+		if (d.heading && firstTok(d.heading).startsWith(navPrefix)) return 500;
+		return 0;
+	};
 	const best = /* @__PURE__ */ new Map();
 	for (const h of index.search(query, {
 		topK: fetchK,
-		lang: locale
+		lang: locale,
+		prefixLast
 	})) {
+		const rank = h.score + boostOf(h.data);
 		const hit = {
 			slug: h.data.slug,
 			title: h.data.title,
@@ -684,13 +713,13 @@ function keywordSearch(index, query, limit, fetchK = limit * 4, locale) {
 		if (!prev) {
 			best.set(key, {
 				hit,
-				score: h.score
+				score: rank
 			});
 			continue;
 		}
-		if (h.score > prev.score || !!locale && h.data.locale === locale && prev.hit.locale !== locale && h.score >= prev.score) best.set(key, {
+		if (rank > prev.score || !!locale && h.data.locale === locale && prev.hit.locale !== locale && rank >= prev.score) best.set(key, {
 			hit,
-			score: h.score
+			score: rank
 		});
 	}
 	return [...best.values()].sort((a, b) => b.score - a.score).slice(0, limit).map((e) => e.hit);
@@ -744,7 +773,7 @@ function createSearch(opts) {
 			getKb: async () => null,
 			search: async (query, o) => {
 				const topK = o?.topK ?? 8;
-				return capPerPage(keywordSearch(idx(), query, topK * 3, void 0, o?.locale), o?.maxPerPage ?? 3).slice(0, topK);
+				return capPerPage(keywordSearch(idx(), query, topK * 3, void 0, o?.locale, o?.prefix, o?.navBoost), o?.maxPerPage ?? 3).slice(0, topK);
 			},
 			tokensOf: (query, locale) => idx().tokensOf(query, locale)
 		};
@@ -763,7 +792,7 @@ function createSearch(opts) {
 		const topK = o?.topK ?? 8;
 		const maxPerPage = o?.maxPerPage ?? 3;
 		const depth = topK * 4;
-		if (o?.mode === "keyword") return capPerPage(keywordSearch(getKeyword(), query, topK * 3, depth, o?.locale), maxPerPage).slice(0, topK);
+		if (o?.mode === "keyword") return capPerPage(keywordSearch(getKeyword(), query, topK * 3, depth, o?.locale, o?.prefix, o?.navBoost), maxPerPage).slice(0, topK);
 		const semantic = collapseSemantic(await (await getKb()).searchText(query, { topK: depth }), o?.locale);
 		return capPerPage(rrfScored([{ hits: keywordSearch(getKeyword(), query, depth, depth, o?.locale) }, { hits: semantic }], (h) => `${h.slug}#${h.headingId ?? ""}`, { topK: topK * 3 }).map(({ item, score }) => ({
 			...item,
