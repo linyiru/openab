@@ -34,7 +34,13 @@ const rename = (obj, map) => {
 };
 
 const cfg = {};
-if (raw.site) cfg.site = rename(raw.site, { title_template: "titleTemplate" });
+if (raw.site) {
+  cfg.site = rename(raw.site, { title_template: "titleTemplate" });
+  // Default the HTML <title> to "{page title} - {site name}" (the page title itself defaults to the
+  // doc's H1). Overridable via [site] title_template; the homepage stays just the site name (Kura
+  // skips the template when the page title equals site.name).
+  if (!cfg.site.titleTemplate && cfg.site.name) cfg.site.titleTemplate = `%s - ${cfg.site.name}`;
+}
 if (raw.markdown) cfg.markdown = raw.markdown;
 if (raw.base_path !== undefined) cfg.basePath = raw.base_path;
 if (raw.sections) cfg.sections = raw.sections;

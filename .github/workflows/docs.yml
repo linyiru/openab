@@ -42,10 +42,21 @@ jobs:
           bun install
           bun run build
 
-      - name: Publish to gh-pages root (docs homepage; keeps Helm index.yaml)
+      # Clean-replace the docs each deploy (no stale paths pile up), but carry the Helm chart repo's
+      # files INTO the publish dir first so they survive: chart-releaser only writes index.yaml to
+      # gh-pages (the chart .tgz live on GitHub Releases), so preserving index.yaml (+ README) keeps
+      # `helm repo add … https://<owner>.github.io/openab` working alongside the docs at the root.
+      - name: Carry over the Helm chart repo files from gh-pages
+        run: |
+          git fetch origin gh-pages --depth 1 2>/dev/null || true
+          for f in index.yaml README.md; do
+            git show "origin/gh-pages:$f" > ".kura-build/dist/static/$f" 2>/dev/null && echo "kept $f" || rm -f ".kura-build/dist/static/$f"
+          done
+
+      - name: Publish to gh-pages root (docs homepage; Helm index.yaml preserved)
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: .kura-build/dist/static
-          keep_files: true
+          keep_files: false # clean replace — carried-over index.yaml (above) is what preserves Helm
           commit_message: "docs: publish Kura site (${{ github.sha }})"
