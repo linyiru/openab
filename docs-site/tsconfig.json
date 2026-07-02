@@ -1,0 +1,4 @@
+{
+  "extends": "@kurajs/docs/tsconfig.kura.json",
+  "include": ["app", "kura.config.ts"]
+}
