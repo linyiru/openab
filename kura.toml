@@ -1,5 +1,6 @@
-# OpenAB docs site — the ONLY config you write. The GitHub Actions workflow scaffolds the rest
-# (package.json, app/global.css, tsconfig, landing page) at build time and publishes a static site.
+# OpenAB docs site — the ONLY config you write. The Kura CLI (>=0.0.26) reads this file natively:
+# it mounts docs/ and generates the rest (app/global.css, tsconfig, landing page, routes) at build
+# time. The GitHub Actions workflow just supplies deps + publishes the static site.
 
 markdown  = "commonmark"   # OpenAB's docs are plain prose, not MDX
 base_path  = ""            # mount the docs at the site root (no /docs prefix)
