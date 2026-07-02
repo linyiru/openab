@@ -1,0 +1,19 @@
+# OpenAB docs site — the ONLY config you write. The GitHub Actions workflow scaffolds the rest
+# (package.json, app/global.css, tsconfig, landing page) at build time and publishes a static site.
+
+markdown  = "commonmark"   # OpenAB's docs are plain prose, not MDX
+base_path  = ""            # mount the docs at the site root (no /docs prefix)
+
+[site]
+name        = "OpenAB"
+description = "A lightweight, cloud-native ACP harness connecting chat platforms to AI coding agents."
+
+# Publish to gh-pages root (docs index.html = homepage), under the project subpath.
+[deploy]
+target    = "github-pages"
+base_path = "/openab"
+
+# Docs-as-code: render the repo's own docs/ — no duplication.
+[[content.sources]]
+dir   = "docs"
+mount = ""
