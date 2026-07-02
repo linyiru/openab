@@ -2,11 +2,10 @@ name: docs
 
 # Convention over configuration: the repo carries ONE config file (kura.toml) + its docs/. This
 # workflow scaffolds an ephemeral Kura app from kura.toml (.github/kura-scaffold.mjs), builds a
-# static site, and deploys it via GitHub Pages' **Actions** pipeline (upload-pages-artifact +
-# deploy-pages) — NOT the legacy "deploy from a branch" build, which chokes on the wide flat root
-# (185+ entries). The Helm chart repo's index.yaml (written to the gh-pages branch by
-# helm/chart-releaser-action) is bundled INTO the artifact, so `helm repo add … /openab` keeps
-# working at /openab/index.yaml, side by side with the docs homepage.
+# static site, and publishes it to the gh-pages ROOT so the docs index.html is the site homepage.
+# `keep_files: false` clean-replaces the docs, but the Helm chart repo's index.yaml (a different
+# file, written to gh-pages by helm/chart-releaser-action) is carried back in first, so
+# `helm repo add … /openab` keeps working at /openab/index.yaml alongside the docs homepage.
 # (In a real setup, kura-scaffold.mjs would live inside a published `uses: kurajs/pages@v1` action.)
 
 on:
@@ -20,17 +19,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write # deploy to GitHub Pages
-  id-token: write # OIDC for deploy-pages
+  contents: write # peaceiris pushes the built site to the gh-pages branch
 
-# Serialize Pages deploys; don't cancel an in-flight one (a half-deploy is worse than a queued one).
 concurrency:
-  group: pages
+  group: docs-pages
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -46,33 +42,17 @@ jobs:
           bun install
           bun run build
 
-      # Stage the Pages artifact with a NARROW root: the docs (185+ flat entries) go under /docs/;
-      # the root holds only a redirect + the Helm chart repo files. (GitHub Pages' publish backend
-      # times out on a very wide root, so we keep the root small while docs stay flat under /docs.)
-      - name: Stage the Pages artifact (docs under /docs, Helm at root, homepage redirect)
+      - name: Carry over the Helm chart repo files from gh-pages
         run: |
-          mkdir -p site/docs
-          cp -R .kura-build/dist/static/. site/docs/
-          touch site/.nojekyll
-          # /openab/ → redirect to the docs homepage
-          printf '<!doctype html><meta charset=utf-8><title>OpenAB</title><meta http-equiv=refresh content="0; url=./docs/"><link rel=canonical href="./docs/"><a href="./docs/">OpenAB docs</a>\n' > site/index.html
-          # Helm chart repo files (chart-releaser writes index.yaml to gh-pages; .tgz live on Releases)
           git fetch origin gh-pages --depth 1 2>/dev/null || true
           for f in index.yaml README.md; do
-            git show "origin/gh-pages:$f" > "site/$f" 2>/dev/null && echo "bundled $f" || true
+            git show "origin/gh-pages:$f" > ".kura-build/dist/static/$f" 2>/dev/null && echo "kept $f" || rm -f ".kura-build/dist/static/$f"
           done
-          echo "root entries: $(ls -A site | wc -l)"
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Publish to gh-pages root (docs homepage; Helm index.yaml preserved)
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: site
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
-    steps:
-      - id: deploy
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .kura-build/dist/static
+          keep_files: false
+          commit_message: "docs: publish Kura site (${{ github.sha }})"

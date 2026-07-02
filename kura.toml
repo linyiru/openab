@@ -11,7 +11,7 @@ description = "A lightweight, cloud-native ACP harness connecting chat platforms
 # Publish to gh-pages root (docs index.html = homepage), under the project subpath.
 [deploy]
 target    = "github-pages"
-base_path = "/openab/docs"
+base_path = "/openab"
 
 # ── Navigation ────────────────────────────────────────────────────────────────
 # Tabs group folders; each group lists its pages by docs/ slug (order = sidebar order). Page titles
