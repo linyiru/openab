@@ -14,7 +14,7 @@ if (!repoRoot || !buildDir) {
 }
 
 // Pinned so a broken `latest` can never silently break a deploy (overridable via env).
-const KURA_DOCS = process.env.KURA_DOCS_VERSION || "^0.0.39";
+const KURA_DOCS = process.env.KURA_DOCS_VERSION || "^0.0.40";
 const KURA_CLI = process.env.KURA_CLI_VERSION || "^0.0.25";
 
 const tomlPath = path.join(repoRoot, "kura.toml");
