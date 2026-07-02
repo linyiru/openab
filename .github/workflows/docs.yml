@@ -1,13 +1,10 @@
 name: docs
 
-# Docs-as-code, convention over configuration: the repo commits ONLY kura.toml (+ its docs/). The
-# Kura CLI reads kura.toml natively (>=0.0.26) — it parses the config, mounts docs/, and generates
-# everything else (app/global.css, tsconfig, a landing page, the .june routes). This workflow just
-# supplies the npm deps the CLI can't install for itself, builds a static site, and publishes it to
-# the gh-pages ROOT so the docs index.html is the site homepage. `keep_files: false` clean-replaces
-# the docs, but the Helm chart repo's index.yaml (written to gh-pages by helm/chart-releaser-action)
-# is carried back in first, so `helm repo add … /openab` keeps working at /openab/index.yaml.
-# (In a real setup, the deps + this whole job collapse into a published `uses: kurajs/pages@v1`.)
+# Docs-as-code: the repo carries ONE config file (kura.toml) + this workflow. The kurajs/pages action
+# builds a searchable, agent-native static site from docs/. openab is special: its gh-pages ROOT also
+# hosts a Helm chart repo (index.yaml, written there by helm/chart-releaser-action), so we build with
+# the action (deploy: false) and publish ourselves, carrying index.yaml back in so `helm repo add …
+# /openab` keeps working at /openab/index.yaml next to the docs homepage.
 
 on:
   push:
@@ -31,43 +28,24 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - uses: oven-sh/setup-bun@v2
+      - id: kura
+        uses: kurajs/pages@v1
         with:
-          bun-version: 1.3.14
+          deploy: false # openab publishes itself (below) to carry the Helm files alongside the docs
 
-      # The ONE thing the CLI can't do for itself: install its own runtime deps. Everything else
-      # (config, docs mount, app/tsconfig/landing, routes) the CLI derives from kura.toml.
-      - name: Supply deps, then build the static site from kura.toml
-        run: |
-          cat > package.json <<'JSON'
-          {
-            "name": "openab-docs", "private": true, "type": "module",
-            "scripts": { "build": "kura build --no-embed" },
-            "dependencies": { "@kurajs/docs": ">=0.0.42 <0.1.0", "react": "^19.2.0", "react-dom": "^19.2.0" },
-            "devDependencies": {
-              "@kurajs/cli": ">=0.0.26 <0.1.0", "@tailwindcss/node": "^4.3.1", "@tailwindcss/oxide": "^4.3.1",
-              "@tailwindcss/typography": "^0.5.20", "@types/react": "^19.2.0",
-              "tailwindcss": "^4.3.1", "typescript": "^5.9.0"
-            }
-          }
-          JSON
-          bun install
-          bun run build
-
-      # Clean-replace the docs, but carry the Helm chart repo's files INTO the publish dir first so
-      # they survive: chart-releaser only writes index.yaml to gh-pages (the chart .tgz live on
-      # Releases), so preserving index.yaml (+ README) keeps the Helm repo working alongside the docs.
+      # chart-releaser only writes index.yaml to gh-pages (the chart .tgz live on Releases), so carry
+      # index.yaml (+ README) into the publish dir to keep the Helm repo working next to the docs.
       - name: Carry over the Helm chart repo files from gh-pages
         run: |
           git fetch origin gh-pages --depth 1 2>/dev/null || true
           for f in index.yaml README.md; do
-            git show "origin/gh-pages:$f" > "dist/static/$f" 2>/dev/null && echo "kept $f" || rm -f "dist/static/$f"
+            git show "origin/gh-pages:$f" > "${{ steps.kura.outputs.dir }}/$f" 2>/dev/null && echo "kept $f" || true
           done
 
       - name: Publish to gh-pages root (docs homepage; Helm index.yaml preserved)
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: dist/static
+          publish_dir: ${{ steps.kura.outputs.dir }}
           keep_files: false
           commit_message: "docs: publish Kura site (${{ github.sha }})"
