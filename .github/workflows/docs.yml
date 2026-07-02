@@ -46,19 +46,26 @@ jobs:
           bun install
           bun run build
 
-      # Bundle the Helm chart repo's files (index.yaml + README) into the artifact so they serve
-      # alongside the docs. chart-releaser only writes index.yaml to the gh-pages branch (the chart
-      # .tgz live on GitHub Releases), so fetching those two keeps the Helm repo working.
-      - name: Bundle the Helm chart repo files
+      # Stage the Pages artifact with a NARROW root: the docs (185+ flat entries) go under /docs/;
+      # the root holds only a redirect + the Helm chart repo files. (GitHub Pages' publish backend
+      # times out on a very wide root, so we keep the root small while docs stay flat under /docs.)
+      - name: Stage the Pages artifact (docs under /docs, Helm at root, homepage redirect)
         run: |
+          mkdir -p site/docs
+          cp -R .kura-build/dist/static/. site/docs/
+          touch site/.nojekyll
+          # /openab/ → redirect to the docs homepage
+          printf '<!doctype html><meta charset=utf-8><title>OpenAB</title><meta http-equiv=refresh content="0; url=./docs/"><link rel=canonical href="./docs/"><a href="./docs/">OpenAB docs</a>\n' > site/index.html
+          # Helm chart repo files (chart-releaser writes index.yaml to gh-pages; .tgz live on Releases)
           git fetch origin gh-pages --depth 1 2>/dev/null || true
           for f in index.yaml README.md; do
-            git show "origin/gh-pages:$f" > ".kura-build/dist/static/$f" 2>/dev/null && echo "bundled $f" || true
+            git show "origin/gh-pages:$f" > "site/$f" 2>/dev/null && echo "bundled $f" || true
           done
+          echo "root entries: $(ls -A site | wc -l)"
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .kura-build/dist/static
+          path: site
 
   deploy:
     needs: build
