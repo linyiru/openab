@@ -1,0 +1,1013 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="icon" href="/openab/favicon.svg" type="image/svg+xml"/><title>openab-agent — MCP Client Support</title><meta name="description" content="A lightweight, cloud-native ACP harness connecting chat platforms to AI coding agents."/><meta property="og:title" content="openab-agent — MCP Client Support"/><meta property="og:description" content="A lightweight, cloud-native ACP harness connecting chat platforms to AI coding agents."/><meta property="og:type" content="article"/><script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.md"}},{"not":{"href_matches":"/*.json"}},{"not":{"href_matches":"/*.txt"}},{"not":{"href_matches":"/*.xml"}},{"not":{"href_matches":"/mcp"}}]},"eagerness":"moderate"}],"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.md"}},{"not":{"href_matches":"/*.json"}},{"not":{"href_matches":"/*.txt"}},{"not":{"href_matches":"/*.xml"}},{"not":{"href_matches":"/mcp"}}]},"eagerness":"moderate"}]}</script><script>(function(){if(HTMLScriptElement.supports&&HTMLScriptElement.supports('speculationrules'))return;var seen=new Set();document.addEventListener('pointerover',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var u=new URL(a.href,location.href);if(u.origin!==location.origin||seen.has(u.pathname)||u.pathname===location.pathname)return;if(/.(md|json)$/.test(u.pathname)||u.pathname==='/mcp')return;seen.add(u.pathname);var l=document.createElement('link');l.rel='prefetch';l.href=u.pathname+u.search;document.head.appendChild(l);},{passive:true});})();</script><style>
+          @view-transition { navigation: auto; }
+          ::view-transition-group(root),
+          ::view-transition-old(root),
+          ::view-transition-new(root) { animation-duration: 120ms; }
+          @media (prefers-reduced-motion: reduce) {
+            ::view-transition-group(*),
+            ::view-transition-old(*),
+            ::view-transition-new(*) { animation: none !important; }
+          }
+</style><link rel="stylesheet" href="/openab/_june/global.5d1b0737.css"/></head><body><script>(function(){try{var p=localStorage.getItem('kura-theme')||'system';var d=document.documentElement;d.setAttribute('data-theme-pref',p);d.setAttribute('data-theme',(p==='dark'||(p==='system'&&matchMedia('(prefers-color-scheme:dark)').matches))?'dark':'light');}catch(e){}})();</script><header class="sticky top-0 z-20 flex items-center gap-4 h-14 px-5 bg-topbar-bg backdrop-blur-sm border-b border-border max-md:px-4 max-md:gap-2.5"><a class="flex items-center gap-1.5 font-bold text-[1.05rem]" href="/openab/">OpenAB<!-- --> <span class="font-normal text-muted text-[.85rem]">Docs</span></a><form class="ml-auto max-md:ml-2 max-md:flex-1 max-md:min-w-0" action="/openab/search" method="get"><input class="w-[280px] max-w-[40vw] px-3 py-2 text-[.9rem] border border-border rounded-lg bg-surface-2 text-fg max-md:w-full max-md:max-w-none search-box" placeholder="Search docs…  (press /)" aria-label="Search" data-search-endpoint="/openab/search.json" data-doc-base="/openab/" name="q"/></form><nav class="flex items-center gap-4 text-muted text-[.9rem]"></nav></header><nav data-tabbar="true" class="sticky top-14 z-[15] h-11 bg-bg border-b border-border max-md:hidden"><div class="flex items-stretch gap-6 h-full max-w-[1280px] mx-auto px-5 overflow-x-auto no-scrollbar"><a data-tab-key="Guides" class="flex items-center text-[.9rem] border-b-2 border-transparent text-muted hover:text-fg [&amp;[aria-current=page]]:text-fg [&amp;[aria-current=page]]:border-accent" href="/openab/getting-started/ai-install-upgrade">Guides</a><a data-tab-key="Deploy" class="flex items-center text-[.9rem] border-b-2 border-transparent text-muted hover:text-fg [&amp;[aria-current=page]]:text-fg [&amp;[aria-current=page]]:border-accent" href="/openab/deployment/image-tags">Deploy</a><a data-tab-key="Reference" class="flex items-center text-[.9rem] border-b-2 border-transparent text-muted hover:text-fg [&amp;[aria-current=page]]:text-fg [&amp;[aria-current=page]]:border-accent" href="/openab/refarch/aws-ecs-fargate-spot">Reference</a></div></nav><button class="hidden max-md:flex items-center gap-2.5 w-full px-4 py-2.5 bg-bg border-0 border-b border-border text-fg-soft text-[.9rem] text-left cursor-pointer focus-visible:outline-none focus-visible:bg-hover" data-drawer-open="true" aria-controls="docs-nav" aria-expanded="false"><span class="text-[1.05rem] leading-none" aria-hidden="true">☰</span><span class="font-semibold text-fg flex-none">Navigation</span><span class="nav-bar-context text-muted flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap" data-nav-context="true"></span></button><div class="drawer-backdrop" data-drawer-close="true" aria-hidden="true"></div><div class="grid grid-cols-[248px_minmax(0,1fr)_220px] max-lg:grid-cols-[248px_minmax(0,1fr)] max-md:grid-cols-1 items-start max-w-[1280px] mx-auto has-tabs"><aside class="sidebar sticky top-[100px] h-[calc(100vh-100px)] overflow-y-auto px-4 py-6 border-r border-border" id="docs-nav"><div data-tabbar="true" class="hidden max-md:flex flex-wrap gap-1.5 mb-4 pb-4 border-b border-border"><a data-tab-key="Guides" class="px-3 py-1 border border-border rounded-full text-[.85rem] text-fg-soft [&amp;[aria-current=page]]:bg-accent-soft [&amp;[aria-current=page]]:text-accent [&amp;[aria-current=page]]:border-transparent" href="/openab/getting-started/ai-install-upgrade">Guides</a><a data-tab-key="Deploy" class="px-3 py-1 border border-border rounded-full text-[.85rem] text-fg-soft [&amp;[aria-current=page]]:bg-accent-soft [&amp;[aria-current=page]]:text-accent [&amp;[aria-current=page]]:border-transparent" href="/openab/deployment/image-tags">Deploy</a><a data-tab-key="Reference" class="px-3 py-1 border border-border rounded-full text-[.85rem] text-fg-soft [&amp;[aria-current=page]]:bg-accent-soft [&amp;[aria-current=page]]:text-accent [&amp;[aria-current=page]]:border-transparent" href="/openab/refarch/aws-ecs-fargate-spot">Reference</a></div><div data-tab="Guides"><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Getting started</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/getting-started/ai-install-upgrade">OpenAB Install &amp; Upgrade</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/getting-started/local-dev">Local Development</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/getting-started/config-reference">Configuration Reference</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Platforms</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/platforms/messaging">Messaging Model</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/platforms/discord">Discord</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/platforms/slack">Slack</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/platforms/telegram">Telegram</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/platforms/line">LINE</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/platforms/feishu">Feishu / Lark</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/platforms/wecom">WeCom (企业微信)</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/platforms/google-chat">Google Chat</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/platforms/msteams-selfhosted">MS Teams (self-hosted)</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/platforms/msteams-enterprise">MS Teams (enterprise)</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Agent backends</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agents/kiro">Kiro</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agents/claude-code">Claude Code</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agents/codex">Codex</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agents/copilot">GitHub Copilot</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agents/cursor">Cursor</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agents/gemini">Gemini</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agents/grok">Grok</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agents/xai-proxy">xAI proxy</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agents/devin">Devin</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agents/opencode">OpenCode</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agents/hermes">Hermes</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agents/mimocode">MiMoCode</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agents/ambient">Ambient Mode</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agents/antigravity">Antigravity</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agents/pi">Pi</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agents/native-agent">Native agent</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agents/openshell">OpenShell</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/agents/agentcore">AgentCore</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Features</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/features/slash-commands">Slash Commands</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/features/output-directives">Output Directives</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/features/control-directives">Control Directives</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/features/message-dispatch-modes">Message Dispatch Modes</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/features/multi-agent">Multi-Agent</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/features/hooks">Lifecycle Hooks</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/features/reactions">Emoji Reaction Mapping</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/features/inbound-attachments">Inbound Attachments</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/features/sendfiles">Send files</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/features/sendimages">Send images</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/features/stt">Speech-to-text</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/features/local-vision-models">Vision models</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/features/tool-display">Tool Display Configuration</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/features/cronjob">Scheduled messages</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/features/agent-installable-tools">Agent-Installable Tools</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/features/python">Python scripts</a></li></ul></div></div><div data-tab="Deploy" hidden=""><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Deployment</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/deployment/image-tags">Image tags</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/deployment/helm-publishing">Helm Chart Publishing</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/deployment/sidecar">Sidecars</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/deployment/workspaces">Workspaces</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/deployment/secrets-management">Secrets management</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">GitHub integrations</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/integrations/github-token-setup">Token setup</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/integrations/github-webhook-integration">Webhook integration</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/integrations/gh-auth-device-flow">Auth device flow</a></li></ul></div></div><div data-tab="Reference" hidden=""><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Reference architectures</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/aws-ecs-fargate-spot">Reference Architecture: OpenAB on AWS ECS Fargate Spot</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/ci-observability-discord">Reference Architecture: CI Observability via Discord</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/cronjob_k8s_refarch">Kubernetes CronJob Reference Architecture</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/gbrain">OpenAB + GBrain Reference Architecture</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/remote-ssh-debugging">Debugging and Reproducing Issues via Remote SSH</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/sidecar-proxy">Reference Architecture: OAuth Sidecar Proxy</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/refarch/telegram-cloudflare-tunnel">Reference Architecture: Telegram via Cloudflare Tunnel</a></li></ul></div><div class="mb-5"><p class="mb-1.5 ml-2 text-sm font-semibold text-fg">Steering &amp; contribution</p><ul class="flex flex-col gap-px"><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering/steering-design-guide">Steering Design</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering/feature-request">Feature Request Guide for openabdev/openab</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering/pr-review">PR Review Guide for openabdev/openab</a></li><li><a class="flex items-center gap-1.5 leading-6 px-2 py-1.5 rounded-md text-sm text-fg-soft hover:bg-hover" href="/openab/steering/triage">Issue Triage Guide for openabdev/openab</a></li></ul></div></div></aside><div data-june-outlet=""><main class="w-auto max-w-none m-0 min-w-0 px-10 pt-8 pb-20 max-md:px-4 max-md:pt-5 max-md:pb-12"><details class="hidden max-lg:block mb-5 border border-border rounded-xl overflow-hidden"><summary class="chevron flex justify-between items-center cursor-pointer px-3.5 py-2.5 text-[.85rem] font-semibold text-fg-soft">On this page</summary><div class="flex flex-col px-3.5 pt-1 pb-2.5 border-t border-border"><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#1-context-amp-motivation">1. Context &amp;amp; Motivation</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#11-why-mcp-for-openab-agent">1.1 Why MCP for openab-agent</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#12-why-now">1.2 Why now</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#13-prior-internal-attempts">1.3 Prior internal attempts</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#2-goals-amp-non-goals">2. Goals &amp;amp; Non-Goals</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#in-scope">In scope</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#out-of-scope">Out of scope</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#3-prior-art-survey">3. Prior Art Survey</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#31-hermes-agent-mandatory-reference">3.1 Hermes Agent (mandatory reference)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#32-opencode-anomalycoopencode-formerly-sstopencode">3.2 opencode (anomalyco/opencode, formerly sst/opencode)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#33-pi-mcp-adapter">3.3 pi-mcp-adapter</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#34-goose-block--aaif-goose">3.4 Goose (block / aaif-goose)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#35-openhands-all-hands-ai">3.5 OpenHands (All-Hands-AI)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#36-comparison-matrix">3.6 Comparison matrix</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#37-skills-vs-mcp--industry-research">3.7 Skills vs MCP — industry research</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#38-transport-landscape-amp-saas-mcp-server-adoption">3.8 Transport landscape &amp;amp; SaaS MCP server adoption</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-7" href="#local-stdio-servers-representative-sample">Local stdio servers (representative sample)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-7" href="#vendor-hosted-saas-servers--all-streamable-http">Vendor-hosted SaaS servers — all Streamable HTTP</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#4-design-decision">4. Design Decision</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#41-architectural-alternatives-compared">4.1 Architectural alternatives compared</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#42-why-c-honors-openab-agent-design-principles">4.2 Why C honors openab-agent design principles</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#43-symmetry-with-skills-pr-955">4.3 Symmetry with Skills (PR #955)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#5-detailed-design">5. Detailed Design</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#51-tool-surface-4--1">5.1 Tool surface (4 + 1)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#52-the-mcp-meta-tool-schema">5.2 The mcp meta-tool schema</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#53-agent-loop-interaction">5.3 Agent loop interaction</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#54-module-layout">5.4 Module layout</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-7" href="#541-runtime-activation-amp-isolation-choices">5.4.1 Runtime activation &amp;amp; isolation choices</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-7" href="#542-discovery-slice--bounded-catalogue--idle-semantics-f1">5.4.2 Discovery slice — bounded catalogue + idle semantics (F1)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#55-rmcp-dependency-amp-features">5.5 rmcp dependency &amp;amp; features</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#56-config-schema">5.6 Config schema</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#57-lifecycle">5.7 Lifecycle</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#58-config-refresh-model">5.8 Config refresh model</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#59-error-isolation-amp-circuit-breaker">5.9 Error isolation &amp;amp; circuit breaker</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#6-oauth">6. OAuth</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#61-shared-tokenstore">6.1 Shared TokenStore</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#62-built-in-providers-phase-2">6.2 Built-in providers (Phase 2)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#63-custom-provider-extension-point">6.3 Custom provider extension point</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#64-agent-guided-oauth-flow-default">6.4 Agent-guided OAuth flow (default)</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#7-memory-impact-analysis">7. Memory Impact Analysis</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#8-cli-surface">8. CLI Surface</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#9-rollout-plan">9. Rollout Plan</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#10-open-questions">10. Open Questions</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent" href="#11-references">11. References</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#internal">Internal</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#external--projects">External — projects</a><a class="py-1.5 text-muted text-[.85rem] hover:text-accent pl-3.5" href="#external--specs-amp-research">External — specs &amp;amp; research</a></div></details><div class="flex items-center justify-between gap-4 mb-6"><div class="prose"><h1 class="!m-0">ADR: openab-agent — MCP Client Support</h1></div><div class="relative inline-flex items-stretch flex-none"><button class="inline-flex items-center gap-1.5 px-3 py-1.5 text-[.85rem] border border-border border-r-0 rounded-l-lg bg-surface text-fg-soft cursor-pointer hover:bg-hover hover:text-fg" data-copy-md="/openab/openab-agent-mcp.md"><svg class="" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>Copy Markdown</button><details class="relative inline-flex items-stretch" data-menu="true"><summary class="chevron inline-flex items-center justify-center w-[30px] border border-border rounded-r-lg bg-surface text-muted cursor-pointer hover:bg-hover hover:text-fg" aria-label="More actions"></summary><div class="absolute right-0 top-[calc(100%+.4rem)] z-30 min-w-[17rem] flex flex-col gap-px p-1.5 bg-surface border border-border rounded-xl shadow-xl"><button class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" data-copy-md="/openab/openab-agent-mcp.md"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg><span class="flex flex-col min-w-0"><span class="font-semibold text-[.9rem] text-fg">Copy Markdown</span><span class="text-[.8rem] text-muted">Copy this page as Markdown for LLMs</span></span></button><a class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" href="/openab/openab-agent-mcp.md"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M16 21H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6l4 4v12a2 2 0 0 1-2 2z"></path><path d="M9 13h6M9 17h4"></path></svg><span class="flex flex-col min-w-0"><span class="inline-flex items-center gap-1 font-semibold text-[.9rem] text-fg">View as Markdown<!-- --> <svg class="text-muted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span><span class="text-[.8rem] text-muted">View this page as plain text</span></span></a><a class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" href="https://chatgpt.com/?q=Please%20read%20this%20doc%20and%20answer%20my%20questions%3A%20openab-agent%20%E2%80%94%20MCP%20Client%20Support" target="_blank" rel="noreferrer"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"></path></svg><span class="flex flex-col min-w-0"><span class="inline-flex items-center gap-1 font-semibold text-[.9rem] text-fg">Open in ChatGPT<!-- --> <svg class="text-muted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span><span class="text-[.8rem] text-muted">Ask ChatGPT about this page</span></span></a><a class="flex items-start gap-2.5 w-full px-2.5 py-2 rounded-lg bg-transparent border-0 text-fg-soft text-left cursor-pointer hover:bg-hover" href="https://claude.ai/new?q=Please%20read%20this%20doc%20and%20answer%20my%20questions%3A%20openab-agent%20%E2%80%94%20MCP%20Client%20Support" target="_blank" rel="noreferrer"><svg class="flex-none mt-0.5 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"></path></svg><span class="flex flex-col min-w-0"><span class="inline-flex items-center gap-1 font-semibold text-[.9rem] text-fg">Open in Claude<!-- --> <svg class="text-muted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span><span class="text-[.8rem] text-muted">Ask Claude about this page</span></span></a></div></details></div></div><article class="prose"><h2 id="1-context-amp-motivation">1. Context &amp; Motivation</h2>
+<p><code>openab-agent</code> is the native Rust coding agent shipped with OpenAB (Cargo workspace member <code>openab-agent/</code>, introduced 2026-05-26 via PR #924, targeted at the v0.8.4-beta series). Its <code>docs/adr/openab-agent.md</code> charter commits to a small surface: 4 built-in tools (<code>read</code>, <code>write</code>, <code>edit</code>, <code>bash</code>), a ~500-token system prompt, no LLM SDK dependency, multi-model via thin HTTP. PR #955 added <code>Skills</code> support (<code>openab-agent/src/skills.rs</code>, 224 LOC, zero new crate dependencies) as the first extension mechanism — descriptor-only injection plus on-demand load via the existing <code>read</code> tool.</p>
+<p>The agent currently has <strong>no MCP (Model Context Protocol) client</strong>. This ADR proposes one.</p>
+<h3 id="11-why-mcp-for-openab-agent">1.1 Why MCP for openab-agent</h3>
+<ul>
+<li><strong>Ecosystem leverage.</strong> Every Postgres/GitHub/Figma/Jira/Slack integration users will ask for already exists as an MCP server (mcpbundles.com tracks ~9k tools across ~1.4k providers as of 2026-Q2). Re-implementing each as a Skill or built-in tool is duplicative.</li>
+<li><strong>Parity with peer agents.</strong> Claude Code, Codex CLI, Cursor, Cline, Goose, opencode, OpenHands, Kiro, Junie, Roo Code all ship MCP clients. Users coming from any of these expect <code>mcpServers</code> config to &quot;just work&quot;.</li>
+<li><strong>Skills cannot replace MCP.</strong> Per Anthropic's framing — <strong>Skills = procedural (how to do); MCP = connectivity (where data/tools live)</strong>. Skills wrap CLI tools; MCP handles network, auth, streaming, server-side state.</li>
+</ul>
+<h3 id="12-why-now">1.2 Why now</h3>
+<p>Skills landed in PR #955. The repo's design pattern for &quot;first-tier-but-tiny&quot; extension is now established. MCP is the natural next layer.</p>
+<h3 id="13-prior-internal-attempts">1.3 Prior internal attempts</h3>
+<p>Four MCP PRs to upstream <code>openabdev/openab</code> have closed without merging:</p>
+<table>
+<thead>
+<tr>
+<th>PR</th>
+<th>Title</th>
+<th>State</th>
+<th>Scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>#329, #330</td>
+<td><code>feat(mcp): inject per-user MCP servers from Discord profiles into ACP sessions</code></td>
+<td>CLOSED</td>
+<td>Broker forward</td>
+</tr>
+<tr>
+<td>#345</td>
+<td><code>feat: inject per-user MCP servers into ACP sessions</code></td>
+<td>CLOSED</td>
+<td>Broker forward</td>
+</tr>
+<tr>
+<td>#903</td>
+<td><code>feat(agent): forward configured MCP servers</code></td>
+<td>CLOSED</td>
+<td>Broker forward</td>
+</tr>
+</tbody>
+</table>
+<p>All four targeted the broker layer — pass MCP server config through to the backing CLI (Claude Code / Codex / Cursor) and let that CLI handle MCP. <strong>None addressed native MCP support inside <code>openab-agent</code> itself.</strong> This ADR is scoped to the native agent.</p>
+<p>Issue #753 remains open and is broker-side (<code>[agent].inherit_cloud_mcp_servers</code> opt-out). This ADR does not change broker behavior.</p>
+<hr />
+<h2 id="2-goals-amp-non-goals">2. Goals &amp; Non-Goals</h2>
+<h3 id="in-scope">In scope</h3>
+<ul>
+<li>MCP <strong>client</strong> support inside <code>openab-agent</code></li>
+<li>Transports: stdio (local servers — Anthropic reference, npm/pypi community) and Streamable HTTP (vendor-hosted SaaS — Atlassian, Figma, Linear, Notion, Sentry, etc.). HTTP+SSE intentionally omitted — superseded by MCP spec 2025-11-25 and actively sunset by vendors (Atlassian deadline 2026-06-30). See §3.8 for landscape.</li>
+<li>OAuth login flow for MCP servers requiring it</li>
+<li>Per-session lifecycle with idle eviction</li>
+<li>Per-session config refresh — new ACP session re-reads <code>mcpServers</code> from disk (no file watcher, no mid-session reload; openab spawns short-lived sessions per thread so process restart is rarely needed)</li>
+<li>Progressive-disclosure tool surface (single meta-tool, not flat fan-out)</li>
+<li>Reuse of existing <code>src/auth.rs</code> PKCE / TokenStore where possible</li>
+</ul>
+<h3 id="out-of-scope">Out of scope</h3>
+<ul>
+<li>MCP <strong>server</strong> functionality (host only)</li>
+<li>WASM / cdylib plugin runtime</li>
+<li>Sidecar / out-of-process MCP bridge</li>
+<li>Per-thread MCP isolation (broker concern, not agent)</li>
+<li>Replacing Skills (Skills and MCP coexist)</li>
+</ul>
+<hr />
+<h2 id="3-prior-art-survey">3. Prior Art Survey</h2>
+<p>Per <code>docs/adr/pr-contribution-guidelines.md</code>, OpenClaw and Hermes Agent are the mandatory references for architectural PRs. OpenClaw was evaluated and found <strong>not applicable to this ADR</strong>: it is a multi-channel messaging gateway (chat platforms ↔ MCP), not a coding agent. Its substantial MCP code (~2,900 LOC across <code>src/agents/mcp-*</code>, <code>src/config/mcp-*</code>, <code>src/mcp/</code>) addresses channel bridging rather than agent-side tool calling. The closer comparison for a coding-agent MCP client is <strong>opencode (§3.2)</strong>, included in addition to Hermes Agent.</p>
+<p>Five projects are surveyed below. Each contributes a design pattern the chosen architecture borrows from:</p>
+<table>
+<thead>
+<tr>
+<th>§</th>
+<th>Project</th>
+<th>Borrowed pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.1</td>
+<td>Hermes Agent</td>
+<td>Circuit breaker (per-server fail threshold + cooldown)</td>
+</tr>
+<tr>
+<td>3.2</td>
+<td>opencode</td>
+<td>Per-server status enum + RFC 7591 dynamic OAuth</td>
+</tr>
+<tr>
+<td>3.3</td>
+<td>pi-mcp-adapter</td>
+<td>Single <code>mcp</code> meta-tool with action dispatch (progressive disclosure)</td>
+</tr>
+<tr>
+<td>3.4</td>
+<td>Goose</td>
+<td>MCP-as-primary-extension validation in a Rust codebase</td>
+</tr>
+<tr>
+<td>3.5</td>
+<td>OpenHands</td>
+<td><code>filter_tools_regex</code> per-server tool scoping</td>
+</tr>
+</tbody>
+</table>
+<h3 id="31-hermes-agent-mandatory-reference">3.1 Hermes Agent (mandatory reference)</h3>
+<ul>
+<li>Repo: <a href="https://github.com/NousResearch/hermes-agent">https://github.com/NousResearch/hermes-agent</a> (Python, Apache 2.0)</li>
+<li>MCP module: ~5,175 LOC across 3 files (<code>mcp_tool.py</code> + 2 OAuth modules)</li>
+<li>SDK: official <code>mcp==1.26.0</code></li>
+<li>Transports: stdio + Streamable HTTP + SSE</li>
+<li>Tool naming: <code>mcp_{server}_{tool}</code> (single-underscore separators, no <code>__</code> boundary marker)</li>
+<li>Lifecycle: per-server long-lived <code>asyncio.Task</code> on dedicated background event loop</li>
+<li>Lazy loading: eager connect, but background-thread discovery with 0.75s join — non-blocking</li>
+<li>Hot reload: mtime-poll on <code>~/.hermes/config.yaml</code> + <code>/reload-mcp</code> slash command</li>
+<li>OAuth: mtime-based disk-watch for cross-process token refresh</li>
+<li><strong>Notable</strong>: ships a real circuit breaker — threshold 3 failures / 60s cooldown / half-open probe state. The only project surveyed that does so.</li>
+</ul>
+<h3 id="32-opencode-anomalycoopencode-formerly-sstopencode">3.2 opencode (anomalyco/opencode, formerly sst/opencode)</h3>
+<ul>
+<li>Repo: <a href="https://github.com/anomalyco/opencode">https://github.com/anomalyco/opencode</a> (TypeScript, MIT) — <code>sst/opencode</code> 301-redirects here after org transfer</li>
+<li><strong>Closest coding-agent comparison to openab-agent</strong></li>
+<li>MCP module: ~1,664 LOC across 5 files (<code>mcp/</code>, <code>auth.ts</code>, OAuth provider/callback, config)</li>
+<li>SDK: <code>@modelcontextprotocol/sdk@1.27.1</code></li>
+<li>Transports: stdio + Streamable HTTP + SSE</li>
+<li>Tool naming: <code>{sanitized_client}_{sanitized_tool}</code> (single underscore)</li>
+<li>Lifecycle: shared singleton service via Effect <code>Layer</code>; one <code>Client</code> per server</li>
+<li>Lazy loading: eager connect with <code>concurrency: &quot;unbounded&quot;</code>; per-server status union prevents one bad server from crashing others</li>
+<li>Hot reload: subscribes to MCP spec's <code>notifications/tools/list_changed</code>; <strong>no file watcher</strong> for config — config change still requires restart</li>
+<li>OAuth: RFC 7591 dynamic client registration, callback <code>http://127.0.0.1:19876/mcp/oauth/callback</code>, EffectFlock cross-process locking on token store</li>
+<li><strong>Known issues</strong> (cited as architectural cautionary tales): #11868 (113 GB virtual-memory leak, Windows v1.1.21), #7261 (heap not released + MCP orphan processes, v1.1.6), #13041 (per-session MCP+LSP duplication across concurrent sessions) — all rooted in child-process lifecycle, not protocol code</li>
+</ul>
+<h3 id="33-pi-mcp-adapter">3.3 pi-mcp-adapter</h3>
+<ul>
+<li>Repo: <a href="https://github.com/nicobailon/pi-mcp-adapter">https://github.com/nicobailon/pi-mcp-adapter</a> (TypeScript, MIT)</li>
+<li>An out-of-tree extension for the Pi coding agent (<code>pi.extensions</code>) — Pi itself has <strong>no native MCP</strong></li>
+<li>MCP module: ~3,661 LOC (server-manager, proxy-modes, direct-tools, OAuth)</li>
+<li>SDK: <code>@modelcontextprotocol/sdk@^1.25.1</code> + <code>@modelcontextprotocol/ext-apps@^1.2.2</code></li>
+<li>Transports: stdio + Streamable HTTP + SSE</li>
+<li><strong>Notable — the reason this is cited</strong>: ships a <strong>single <code>mcp</code> meta-tool</strong> with sub-actions (<code>connect</code>, <code>describe</code>, <code>search</code>, <code>list</code>, <code>call</code>, <code>status</code>). All MCP capability is exposed through this one tool. Lazy connect happens inside <code>lazyConnect()</code> on first action that needs it. This is the <strong>progressive-disclosure pattern</strong> this ADR adopts.</li>
+</ul>
+<h3 id="34-goose-block--aaif-goose">3.4 Goose (block / aaif-goose)</h3>
+<ul>
+<li>Repo: <a href="https://github.com/block/goose">https://github.com/block/goose</a> → <a href="https://github.com/aaif-goose/goose">https://github.com/aaif-goose/goose</a> (Rust, Apache 2.0)</li>
+<li><strong>Most relevant precedent: a Rust coding agent built around MCP</strong></li>
+<li>Launched Jan 2025 with MCP as the <em>only</em> extension surface (no first-party plugin API to retrofit)</li>
+<li>Hand-rolled <code>mcp-client</code> crate (predated official Rust SDK)</li>
+<li>Per-session <code>Agent</code> owns an <code>ExtensionManager</code> that spawns MCP servers (stdio/SSE) as child processes</li>
+<li>Tools flattened into one namespace; extension name used as prefix to avoid collisions</li>
+<li>Supports <code>tools/list_changed</code> for hot reload</li>
+<li>Precedent for a Rust agent shipping MCP as the primary extension surface without WASM / cdylib / sidecar plumbing.</li>
+</ul>
+<h3 id="35-openhands-all-hands-ai">3.5 OpenHands (All-Hands-AI)</h3>
+<ul>
+<li>Repo: <a href="https://github.com/OpenHands/OpenHands">https://github.com/OpenHands/OpenHands</a> (Python, MIT)</li>
+<li>SDK: FastMCP (jlowin/fastmcp), not the reference SDK</li>
+<li><strong>Notable</strong>: per-agent <code>filter_tools_regex</code> config — subset a server's tools without modifying the server. OAuth tokens cached under <code>~/.fastmcp/oauth-mcp-client-cache/</code> with auto-refresh; explicit &quot;incompatible with headless&quot; caveat for browser-based auth.</li>
+<li>Cited for OAuth + tool-surface scoping patterns where Hermes/opencode/Pi are weaker.</li>
+</ul>
+<h3 id="36-comparison-matrix">3.6 Comparison matrix</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Hermes</th>
+<th>opencode</th>
+<th>pi-mcp-adapter</th>
+<th>Goose</th>
+<th>OpenHands</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Language</td>
+<td>Python</td>
+<td>TS</td>
+<td>TS</td>
+<td>Rust</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>SDK</td>
+<td>mcp 1.26</td>
+<td>sdk 1.27</td>
+<td>sdk 1.25</td>
+<td>hand-rolled</td>
+<td>FastMCP</td>
+</tr>
+<tr>
+<td>Transports</td>
+<td>stdio+HTTP+SSE</td>
+<td>stdio+HTTP+SSE</td>
+<td>stdio+HTTP+SSE</td>
+<td>stdio+SSE</td>
+<td>stdio+HTTP</td>
+</tr>
+<tr>
+<td>Tool naming</td>
+<td><code>mcp_s_t</code></td>
+<td><code>s_t</code></td>
+<td>configurable</td>
+<td>ext-prefix</td>
+<td>filter</td>
+</tr>
+<tr>
+<td>Lifecycle</td>
+<td>per-srv task</td>
+<td>shared singleton</td>
+<td>per-ext + idle 10m</td>
+<td>per-session ExtensionMgr</td>
+<td>per-agent</td>
+</tr>
+<tr>
+<td>Lazy connect</td>
+<td>no</td>
+<td>no</td>
+<td>✅ meta</td>
+<td>no (eager)</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Hot reload</td>
+<td>mtime+cmd</td>
+<td><code>tools/list_changed</code></td>
+<td>session boundary</td>
+<td><code>tools/list_changed</code></td>
+<td>no</td>
+</tr>
+<tr>
+<td>OAuth</td>
+<td>mtime disk-watch</td>
+<td>RFC7591 + Flock</td>
+<td>PKCE+auto</td>
+<td>?</td>
+<td>FastMCP cache</td>
+</tr>
+<tr>
+<td>Circuit breaker</td>
+<td>✅ 3/60s</td>
+<td>no</td>
+<td>partial</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td>LOC</td>
+<td>~5,175</td>
+<td>~1,664</td>
+<td>~3,661</td>
+<td>unmeasured</td>
+<td>unmeasured</td>
+</tr>
+</tbody>
+</table>
+<h3 id="37-skills-vs-mcp--industry-research">3.7 Skills vs MCP — industry research</h3>
+<p>Anthropic positions the two as <strong>complementary</strong>, not competing. The 2025-2026 consensus across practitioner blogs (Simon Willison, Anthropic engineering, StackOne) converged on:</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>  Skills                                    MCP</span></span>
+<span class="line"><span>  ──────                                    ────</span></span>
+<span class="line"><span>  Procedural knowledge                      Live connectivity</span></span>
+<span class="line"><span>  Markdown + YAML frontmatter               Protocol spec + SDK</span></span>
+<span class="line"><span>  ~100 tokens/skill in prompt               10K-17K tokens/server in prompt</span></span>
+<span class="line"><span>  Body lazy-loaded via read tool            All tool schemas eagerly loaded</span></span>
+<span class="line"><span>  Local file                                Server (process or HTTP endpoint)</span></span>
+<span class="line"><span>  No auth, no lifecycle                     OAuth, lifecycle, transports</span></span>
+<span class="line"><span>  Open standard (Dec 2025)                  Linux Foundation steward (late 2025)</span></span></code></pre>
+<p><strong>Adoption</strong>: no major OSS coding agent has rejected MCP in favor of Skills-only (or vice versa). All 11 surveyed agents (Claude Code, Codex CLI, Gemini CLI, Cursor, Cline, Goose, opencode, Junie, Kiro, Roo, GitHub Copilot agent-mode) support both.</p>
+<p><strong>Cost data</strong>: large MCP server collections have been documented consuming substantial context budget — StackOne benchmarks Sonnet 4.6 at 42% tool-selection accuracy on the unmodified MCP surface vs 80% with their Code Mode wrapper, motivating the spec-level fix in MCP SEP-1576 (&quot;Mitigating Token Bloat in MCP&quot;) which proposes progressive disclosure (<strong>not yet ratified</strong>).</p>
+<p><strong>Implication for this ADR</strong>: progressive disclosure is not optional for openab-agent. The agent's design principle commits to a ~500-token system prompt; a naïve flat MCP integration would 30× that budget. Skills' descriptor-only injection pattern is the precedent.</p>
+<h3 id="38-transport-landscape-amp-saas-mcp-server-adoption">3.8 Transport landscape &amp; SaaS MCP server adoption</h3>
+<p>MCP defines three transport profiles. Their 2026-Q2 status:</p>
+<table>
+<thead>
+<tr>
+<th>Transport</th>
+<th>Spec status</th>
+<th>Where it lives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>stdio</strong></td>
+<td>Stable</td>
+<td>Local child process — Anthropic reference servers, npm/pypi community packages</td>
+</tr>
+<tr>
+<td><strong>Streamable HTTP</strong></td>
+<td>Current (MCP spec 2025-11-25), supersedes HTTP+SSE</td>
+<td>Vendor-hosted SaaS endpoints</td>
+</tr>
+<tr>
+<td><strong>HTTP+SSE</strong></td>
+<td>Deprecated by spec 2025-11-25; vendor sunsets in progress</td>
+<td>Legacy fixtures — Atlassian sunsets 2026-06-30</td>
+</tr>
+</tbody>
+</table>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>   ┌──────────────────────────────── MCP Server Universe ─────────────────────────────────┐</span></span>
+<span class="line"><span>   │                                                                                      │</span></span>
+<span class="line"><span>   │   ┌─────────────────────────────┐         ┌────────────────────────────────────┐     │</span></span>
+<span class="line"><span>   │   │  LOCAL  (majority of registry) │      │  REMOTE (vendor SaaS, growing)     │     │</span></span>
+<span class="line"><span>   │   │                             │         │                                    │     │</span></span>
+<span class="line"><span>   │   │  Transport: stdio           │         │  Transport: Streamable HTTP        │     │</span></span>
+<span class="line"><span>   │   │                             │         │                                    │     │</span></span>
+<span class="line"><span>   │   │  filesystem  sqlite         │         │  Atlassian  Figma   Linear         │     │</span></span>
+<span class="line"><span>   │   │  postgres    puppeteer      │         │  Notion     Sentry  Supabase       │     │</span></span>
+<span class="line"><span>   │   │  github      fetch          │         │  HubSpot    Slack   Stripe         │     │</span></span>
+<span class="line"><span>   │   │  time        gitlab         │         │  Cloudflare Vercel  Neon  ...      │     │</span></span>
+<span class="line"><span>   │   │  ...                        │         │                                    │     │</span></span>
+<span class="line"><span>   │   └─────────────────────────────┘         └────────────────────────────────────┘     │</span></span>
+<span class="line"><span>   │                                                                                      │</span></span>
+<span class="line"><span>   │   ┌────────────────────────────────────────────────────────────────────────────┐     │</span></span>
+<span class="line"><span>   │   │  LEGACY (deprecated, vendor sunsets in progress)                           │     │</span></span>
+<span class="line"><span>   │   │  Transport: HTTP+SSE                                                       │     │</span></span>
+<span class="line"><span>   │   │  e.g. Atlassian https://mcp.atlassian.com/v1/sse (off 2026-06-30)          │     │</span></span>
+<span class="line"><span>   │   └────────────────────────────────────────────────────────────────────────────┘     │</span></span>
+<span class="line"><span>   │                                                                                      │</span></span>
+<span class="line"><span>   └──────────────────────────────────────────────────────────────────────────────────────┘</span></span></code></pre>
+<h4 id="local-stdio-servers-representative-sample">Local stdio servers (representative sample)</h4>
+<p>Anthropic reference + community packages. All ship as <code>command + args</code>; no network endpoint.</p>
+<table>
+<thead>
+<tr>
+<th>Server</th>
+<th>Implementation</th>
+<th>Distribution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mcp-server-filesystem</code></td>
+<td>Node</td>
+<td><code>@modelcontextprotocol/server-filesystem</code> (npm)</td>
+</tr>
+<tr>
+<td><code>mcp-server-sqlite</code></td>
+<td>Python</td>
+<td><code>mcp-server-sqlite</code> (pypi)</td>
+</tr>
+<tr>
+<td><code>mcp-server-postgres</code></td>
+<td>Python</td>
+<td><code>mcp-server-postgres</code> (pypi) — local DB</td>
+</tr>
+<tr>
+<td><code>mcp-server-puppeteer</code></td>
+<td>Node</td>
+<td><code>@modelcontextprotocol/server-puppeteer</code> (npm)</td>
+</tr>
+<tr>
+<td><code>mcp-server-github</code></td>
+<td>Go / Node</td>
+<td><code>github-mcp-server</code> (binary) / <code>@modelcontextprotocol/server-github</code> (npm)</td>
+</tr>
+<tr>
+<td><code>mcp-server-fetch</code></td>
+<td>Python</td>
+<td><code>mcp-server-fetch</code> (pypi)</td>
+</tr>
+<tr>
+<td><code>mcp-server-time</code></td>
+<td>Rust</td>
+<td><code>mcp-server-time</code> (cargo)</td>
+</tr>
+<tr>
+<td><code>mcp-server-gitlab</code></td>
+<td>Node</td>
+<td><code>@modelcontextprotocol/server-gitlab</code> (npm)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Container-image caveat for headless deployments</strong>: Node/Python stdio servers require the corresponding interpreter (<code>node</code>, <code>python3</code>, <code>uvx</code>, <code>npx</code>) in the image. The openab base image ships none. Operators running openab-agent in headless environments (Fargate, Kubernetes pods, CI) must either bake the interpreter into a derived image or limit <code>mcpServers</code> to Go/Rust binaries (column above). A misconfigured server fails in isolation per §5.9.</p>
+<h4 id="vendor-hosted-saas-servers--all-streamable-http">Vendor-hosted SaaS servers — all Streamable HTTP</h4>
+<p>Survey of mainstream public endpoints (2026-Q2). Every active vendor endpoint surveyed is Streamable HTTP. The Atlassian SSE URL is the lone holdout and has a published sunset date.</p>
+<table>
+<thead>
+<tr>
+<th>Vendor</th>
+<th>Endpoint</th>
+<th>Transport</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Atlassian (Rovo)</td>
+<td><code>https://mcp.atlassian.com/v1/mcp</code></td>
+<td>Streamable HTTP</td>
+<td>Legacy SSE at <code>/v1/sse</code> sunset <strong>2026-06-30</strong></td>
+</tr>
+<tr>
+<td>Figma</td>
+<td><code>https://mcp.figma.com/mcp</code></td>
+<td>Streamable HTTP</td>
+<td>OAuth via Figma account</td>
+</tr>
+<tr>
+<td>Linear</td>
+<td><code>https://mcp.linear.app/mcp</code></td>
+<td>Streamable HTTP</td>
+<td>OAuth</td>
+</tr>
+<tr>
+<td>Notion</td>
+<td><code>https://mcp.notion.com/mcp</code></td>
+<td>Streamable HTTP</td>
+<td>OAuth</td>
+</tr>
+<tr>
+<td>Sentry</td>
+<td><code>https://mcp.sentry.dev/mcp</code></td>
+<td>Streamable HTTP</td>
+<td>OAuth</td>
+</tr>
+<tr>
+<td>Supabase</td>
+<td><code>https://mcp.supabase.com/mcp</code></td>
+<td>Streamable HTTP</td>
+<td>OAuth</td>
+</tr>
+<tr>
+<td>HubSpot</td>
+<td><code>https://mcp.hubspot.com/anthropic</code></td>
+<td>Streamable HTTP</td>
+<td>OAuth</td>
+</tr>
+<tr>
+<td>Slack</td>
+<td>(vendor-hosted)</td>
+<td>Streamable HTTP</td>
+<td>OAuth</td>
+</tr>
+<tr>
+<td>Stripe</td>
+<td>hosted (see Stripe MCP docs for current path)</td>
+<td>Streamable HTTP</td>
+<td>API key</td>
+</tr>
+<tr>
+<td>Cloudflare</td>
+<td>multiple endpoints under <code>*.mcp.cloudflare.com</code></td>
+<td>Streamable HTTP</td>
+<td>OAuth (workers/dns/r2/...)</td>
+</tr>
+<tr>
+<td>Vercel</td>
+<td><code>https://mcp.vercel.com/</code></td>
+<td>Streamable HTTP</td>
+<td>OAuth</td>
+</tr>
+<tr>
+<td>Neon</td>
+<td><code>https://mcp.neon.tech/</code></td>
+<td>Streamable HTTP</td>
+<td>OAuth</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Cover map</strong>: stdio + Streamable HTTP covers all mainstream public MCP endpoints surveyed as of 2026-Q2. SSE-only deployments are legacy fixtures with vendor sunsets in progress; deferred to a hypothetical v2.</p>
+<hr />
+<h2 id="4-design-decision">4. Design Decision</h2>
+<h3 id="41-architectural-alternatives-compared">4.1 Architectural alternatives compared</h3>
+<p><strong>Alternative A — Naïve flat in-core.</strong> Every MCP tool from every connected server becomes a top-level entry in <code>tool_definitions()</code>. Surface explodes from 4 → 150+ tools; system prompt grows ~500 → ~17,000 tokens (5 servers × ~20 tools each, ~160 tokens per descriptor). Hermes Agent and opencode both pay this cost; StackOne benchmarks (§3.7) show tool-selection accuracy drops sharply under naïve flat surfaces.</p>
+<p><strong>Alternative B — Sidecar / plugin process.</strong> Spawn a separate <code>openab-mcp-bridge</code> binary; agent core has no <code>rmcp</code> dependency; communicate via stdio JSON-RPC. RAM saving is 1-2 MB on a 15-40 MB baseline — noise — but the bridge process itself adds ~15 MB and inherits opencode's documented sidecar failure modes (#11868 113 GB leak / #7261 orphan processes / #13041 per-session duplication). Cost ≫ benefit (see §7).</p>
+<p><strong>Alternative C — CHOSEN: in-core <code>rmcp</code> + progressive-disclosure meta-tool.</strong> <code>rmcp</code> enters <code>Cargo.toml</code>. Tool surface grows by exactly <strong>1 tool</strong>: <code>mcp</code>. All MCP capability (server enumeration, tool discovery, invocation, status) flows through that single tool's <code>action</code> field. System prompt grows ~500 → ~600 tokens (+100 for the meta-tool blurb).</p>
+<h3 id="42-why-c-honors-openab-agent-design-principles">4.2 Why C honors openab-agent design principles</h3>
+<table>
+<thead>
+<tr>
+<th>Principle (<code>docs/adr/openab-agent.md</code> §2)</th>
+<th align="center">A (flat)</th>
+<th align="center">B (sidecar)</th>
+<th align="center"><strong>C (chosen)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Minimal tool surface (4 tools)</td>
+<td align="center">⛔ 150+</td>
+<td align="center">✅ 4</td>
+<td align="center">✅ 5</td>
+</tr>
+<tr>
+<td>Tiny system prompt (~500 tokens)</td>
+<td align="center">⛔ ~17K</td>
+<td align="center">✅ ~500</td>
+<td align="center">⚠️ ~600 (+100 over budget; accepted as smallest viable surface)</td>
+</tr>
+<tr>
+<td>No SDK dependency</td>
+<td align="center">⛔ rmcp</td>
+<td align="center">✅ none</td>
+<td align="center">⚠️ rmcp (+1-2 MB binary, see §7)</td>
+</tr>
+<tr>
+<td>Multi-model</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+</tr>
+</tbody>
+</table>
+<p>C concedes the &quot;no SDK dependency&quot; principle for a 1-2 MB binary cost. §7 shows that cost is dominated by child-process RAM (5-80 MB per server, depending on implementation language) regardless of architecture, so the concession is dwarfed by usage cost.</p>
+<h3 id="43-symmetry-with-skills-pr-955">4.3 Symmetry with Skills (PR #955)</h3>
+<p>Skills is openab's existing &quot;first-tier-but-tiny&quot; extension. The mapping is exact:</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>┌────────────────────────────┬─────────────────────────────────────┐</span></span>
+<span class="line"><span>│  Skills (224 LOC, in-core) │  MCP (proposed, in-core)            │</span></span>
+<span class="line"><span>├────────────────────────────┼─────────────────────────────────────┤</span></span>
+<span class="line"><span>│ Inject metadata only       │ Inject 1 meta-tool only             │</span></span>
+<span class="line"><span>│ (name + description)       │ (name + action sketch)              │</span></span>
+<span class="line"><span>├────────────────────────────┼─────────────────────────────────────┤</span></span>
+<span class="line"><span>│ Body load via `read` tool  │ Server connect via `mcp` tool       │</span></span>
+<span class="line"><span>│ on agent's demand          │ on agent's demand (lazy connect)    │</span></span>
+<span class="line"><span>├────────────────────────────┼─────────────────────────────────────┤</span></span>
+<span class="line"><span>│ ~100 tokens / 10 skills    │ ~100 tokens / N servers             │</span></span>
+<span class="line"><span>├────────────────────────────┼─────────────────────────────────────┤</span></span>
+<span class="line"><span>│ No new crate dep           │ Adds rmcp (1-2 MB binary delta)     │</span></span>
+<span class="line"><span>└────────────────────────────┴─────────────────────────────────────┘</span></span></code></pre>
+<p>Skills' authors weighed &quot;simple in-core mechanism vs plugin abstraction&quot; and chose in-core. The same trade-off applies to MCP: plugin abstraction is ~10× the complexity for negligible RAM saving.</p>
+<hr />
+<h2 id="5-detailed-design">5. Detailed Design</h2>
+<h3 id="51-tool-surface-4--1">5.1 Tool surface (4 + 1)</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>openab-agent/src/tools.rs::tool_definitions() returns 5 entries:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>  [ "read"  ] ─── existing, unchanged</span></span>
+<span class="line"><span>  [ "write" ] ─── existing, unchanged</span></span>
+<span class="line"><span>  [ "edit"  ] ─── existing, unchanged</span></span>
+<span class="line"><span>  [ "bash"  ] ─── existing, unchanged</span></span>
+<span class="line"><span>  [ "mcp"   ] ─── NEW</span></span></code></pre>
+<h3 id="52-the-mcp-meta-tool-schema">5.2 The <code>mcp</code> meta-tool schema</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-jsonc"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">{</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">  "name"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"mcp"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">  "description"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"Interact with configured MCP servers. Use action='help' for usage."</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">  "input_schema"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: {</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">    "type"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"object"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">    "properties"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: {</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "action"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: {</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">        "type"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"string"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">        "enum"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"help"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">, </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"list_servers"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">, </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"list_tools"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">                 "describe_tool"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">, </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"call"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">, </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"status"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">                 "login"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">, </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"complete_login"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">      },</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "server"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">:       { </span><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">"type"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"string"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> },</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "tool"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">:         { </span><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">"type"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"string"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> },</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "arguments"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">:    { </span><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">"type"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"object"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> },</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "redirect_url"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: { </span><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">"type"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"string"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> }</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">    },</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">    "required"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"action"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">}</span></span></code></pre>
+<p>Per-action contract:</p>
+<table>
+<thead>
+<tr>
+<th>action</th>
+<th>required fields</th>
+<th>returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>help</code></td>
+<td>—</td>
+<td>usage doc string</td>
+</tr>
+<tr>
+<td><code>list_servers</code></td>
+<td>—</td>
+<td><code>[{ name, status, transport, tools_count }]</code></td>
+</tr>
+<tr>
+<td><code>list_tools</code></td>
+<td><code>server</code></td>
+<td><code>[{ name, description }]</code></td>
+</tr>
+<tr>
+<td><code>describe_tool</code></td>
+<td><code>server</code>, <code>tool</code></td>
+<td><code>{ name, description, input_schema }</code></td>
+</tr>
+<tr>
+<td><code>call</code></td>
+<td><code>server</code>, <code>tool</code>, <code>arguments</code></td>
+<td>tool's <code>CallToolResult</code></td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>server?</code></td>
+<td>per-server health / last error / OAuth state</td>
+</tr>
+<tr>
+<td><code>login</code></td>
+<td><code>server</code></td>
+<td><code>{ flow: &quot;device&quot;, user_code, verification_url, ... }</code> or <code>{ flow: &quot;paste&quot;, authorize_url, state, ... }</code> — see §6.4</td>
+</tr>
+<tr>
+<td><code>complete_login</code></td>
+<td><code>server</code>, <code>redirect_url</code></td>
+<td><code>{ ok: true }</code> or <code>{ error }</code> — paste flow only; device flow polls internally</td>
+</tr>
+</tbody>
+</table>
+<h3 id="53-agent-loop-interaction">5.3 Agent loop interaction</h3>
+<p>Typical multi-turn usage (lazy connect at first need, idle eviction after TTL):</p>
+<ul>
+<li><strong>Turn 1</strong> — LLM calls <code>mcp(action: &quot;list_servers&quot;)</code>; no IO, served from config cache. Returns <code>[&quot;github (stdio)&quot;, ...]</code>.</li>
+<li><strong>Turn 2</strong> — LLM calls <code>mcp(action: &quot;list_tools&quot;, server: &quot;github&quot;)</code>; <code>lazy_connect(&quot;github&quot;)</code> spawns child proc, <code>peer.list_all_tools()</code> fetches descriptors. Returns <code>[{name, description}, ...]</code>.</li>
+<li><strong>Turn 3</strong> — LLM calls <code>mcp(action: &quot;call&quot;, server, tool, arguments)</code>; <code>peer.call_tool()</code> invokes. Returns <code>CallToolResult</code>.</li>
+<li><strong>Idle (no MCP call for <code>idle_ttl</code>)</strong> — the background eviction loop shuts down the child proc and drops the Peer (only if not mid-call); config + descriptor cache retained for fast re-connect.</li>
+</ul>
+<h3 id="54-module-layout">5.4 Module layout</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>openab-agent/src/</span></span>
+<span class="line"><span>├── agent.rs           (existing — add 1 match arm in execute_tool)</span></span>
+<span class="line"><span>├── auth.rs            (existing — TokenStore reused by mcp/oauth.rs)</span></span>
+<span class="line"><span>├── llm.rs             (existing — UNCHANGED, ToolDef is already generic)</span></span>
+<span class="line"><span>├── tools.rs           (existing — add `mcp` to tool_definitions())</span></span>
+<span class="line"><span>├── skills.rs          (existing — UNCHANGED)</span></span>
+<span class="line"><span>└── mcp/               (NEW module)</span></span>
+<span class="line"><span>    ├── mod.rs         (public: McpRuntimeManager, dispatch())</span></span>
+<span class="line"><span>    ├── config.rs      (mcpServers schema, ${env:VAR} interpolation)</span></span>
+<span class="line"><span>    ├── runtime.rs     (per-server lifecycle, lazy connect, idle TTL)</span></span>
+<span class="line"><span>    ├── meta_tool.rs   (action dispatch: list_servers / list_tools / ...)</span></span>
+<span class="line"><span>    ├── oauth.rs       (uses src/auth.rs TokenStore; built-in providers)</span></span>
+<span class="line"><span>    └── breaker.rs     (circuit breaker per server)</span></span></code></pre>
+<p>Estimated total: <strong>500-750 LOC</strong> (no <code>reload.rs</code>; per-session refresh handled by <code>McpRuntimeManager::new()</code> re-reading config at session start). <code>llm.rs</code> is unchanged because both Anthropic and OpenAI Responses providers consume the generic <code>ToolDef</code> abstraction.</p>
+<h4 id="541-runtime-activation-amp-isolation-choices">5.4.1 Runtime activation &amp; isolation choices</h4>
+<p>Three intentional choices that surfaced in PR #959 review (chaodu F2 / F6 / F7) and are load-bearing enough to belong in the design contract:</p>
+<ol>
+<li><strong>Runtime activation = config presence (F6, always-on, no env switch).</strong> <code>load_runtime_or_warn()</code> returns <code>Some(manager)</code> whenever <code>mcp.json</code> declares ≥1 server, and <code>None</code> otherwise. MCP is a first-class, always-supported capability — there is no separate enable flag; declaring a server <em>is</em> the activation signal. (An earlier draft gated activation behind an <code>OPENAB_AGENT_MCP={1,true,yes,on}</code> env var so an incidentally-present <code>mcp.json</code> couldn't auto-spawn third-party child processes. That gate was dropped: MCP is always on, and the operator owns what ships in <code>mcp.json</code>. The stdio child env-scrubbing in choice 2 remains the standing mitigation against an untrusted server reading inherited secrets.) The CLI subcommands (<code>mcp list / status / connect / doctor</code>) call <code>load_config_or_exit</code> rather than <code>load_runtime_or_warn</code>, so they inspect a config without starting the long-running runtime.</li>
+<li><strong>Stdio child env scrubbing (F2, intentional security).</strong> <code>Dial::Stdio</code> calls <code>env_clear()</code> and passes only the 4-var baseline allowlist (<code>HOME</code>, <code>PATH</code>, <code>TERM</code>, <code>USER</code> on Unix; Windows equivalents) plus the explicit <code>env:</code> map from <code>mcp.json</code>. Reasoning: openab-agent inherits high-value secrets from its launcher (<code>DISCORD_BOT_TOKEN</code>, <code>ANTHROPIC_API_KEY</code>, AWS credentials, GitHub tokens) and stdio MCP servers are third-party binaries with no contractual constraint on what they read from their environment. Leaking those by default is a much larger risk than the convenience of inherited proxy/locale settings. Servers that genuinely need additional env (proxy, certs, locale, provider config) declare them per-server in the config — a future <code>inherit_env</code> opt-in list is tracked as follow-up if user demand surfaces.</li>
+<li><strong>Per-process shared <code>McpRuntimeManager</code> (F7).</strong> A single manager is <code>Arc</code>-cloned across all ACP sessions of the same process. Reasoning: MCP servers are expensive to spawn (stdio child fork, HTTP handshake + OAuth) and most are pure-state read-only tools where cross-session visibility is benign. Trade-off: a <code>mcp connect github</code> in session A makes the <code>github</code> server immediately available in session B. We accept this — per-session isolation would multiply child processes and break the breaker / TTL accounting in §5.7 / §5.9.</li>
+</ol>
+<h4 id="542-discovery-slice--bounded-catalogue--idle-semantics-f1">5.4.2 Discovery slice — bounded catalogue + idle semantics (F1)</h4>
+<p>The §5.1 / §5.2 single <code>mcp</code> meta-tool minimizes the LLM-facing tool surface, but it also <em>hides</em> the configured server names from the LLM. The F1 PoC reproduced the resulting failure mode: when a user said &quot;use mcp fs to list /workspace&quot;, the LLM called <code>mcp(action: &quot;status&quot;)</code>, saw <code>fs: disconnected</code>, read it as &quot;broken&quot;, and refused to retry. Two intentional choices remove that failure mode without re-flattening the tool surface:</p>
+<ol>
+<li>
+<p><strong>Static server catalogue in the system prompt.</strong> <code>mcp::format_system_prompt_appendix(manager)</code> appends a <code>## MCP tool</code> section containing the tool intro plus <code>- **{name}** ({transport})</code> per configured server (with a <code>requires \</code>mcp login <name>`<code>annotation when an</code>oauth<code>block is present). The list is built once at</code>Agent::new_boxed<code>time from a sync</code>manager.catalog()<code>snapshot frozen at</code>from_config<code>, so no async or lock coordination is needed inside </code>build_system_prompt<code>. Token-budget invariance is preserved: section size grows **O(server count)** — not O(server count × tool count) — because per-tool descriptors stay behind </code>mcp(action: &quot;list_tools&quot;, server)`. The PoC measured ≤100 tokens per server-side entry under this pattern; flattening tools per-server (≈ what the multi-tool alternative in §4.1 would expose) blows that budget by ~30× for a typical 30-tool github server.</p>
+<p>Mirror with the Skills catalogue (<code>skills::format_skills_prompt</code>): both advertise <em>names + headline metadata</em> in the always-present system prompt and force <em>body / contract</em> discovery through an explicit tool call (<code>mcp(action: &quot;list_tools&quot; | &quot;describe_tool&quot;)</code> here, <code>read(&quot;skills/&lt;name&gt;&quot;)</code> there). Same intent (the LLM knows the surface exists; details are lazy), same token-budget shape (linear in surface count, not in surface depth).</p>
+</li>
+<li>
+<p><strong>Status label <code>idle</code> for lazy-connect servers.</strong> The meta-tool's <code>status_label</code> returns <code>idle</code> — not <code>disconnected</code> — when a server is in <code>ServerStatus::Disconnected</code> with no failure history. <code>disconnected</code> reads as &quot;broken&quot; to the LLM (PoC observation above); <code>idle</code> correctly signals &quot;ready, will dial on first call&quot;. The genuine failure case still maps to <code>status: &quot;failed&quot;</code> with the dial / handshake error in <code>last_error</code>, so the LLM can distinguish &quot;not tried yet&quot; from &quot;tried and broke&quot;. The system-prompt section also advertises these semantics explicitly so the LLM doesn't have to guess.</p>
+</li>
+</ol>
+<p>These choices are wired into PR #959 (Phase 1) because the failure mode they fix is reachable as soon as <code>list_servers</code> and <code>status</code> ship — deferring to Phase 2/3 would mean shipping a known-broken discovery UX on the foundation slice.</p>
+<h3 id="55-rmcp-dependency-amp-features">5.5 <code>rmcp</code> dependency &amp; features</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-toml"><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#8B949E"># openab-agent/Cargo.toml</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">[</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFA657">dependencies</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">rmcp = { version = </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"1.7"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">, default-features = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79C0FF">false</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">, features = [</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">    "client"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">    "transport-child-process"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">    "transport-streamable-http-client-reqwest"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">    "auth"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">] }</span></span></code></pre>
+<ul>
+<li><code>client</code> only — we host nothing</li>
+<li><code>transport-child-process</code> — stdio servers (majority of registry, see §3.8)</li>
+<li><code>transport-streamable-http-client-reqwest</code> — vendor-hosted SaaS endpoints (reqwest is already a transitive dep)</li>
+<li><code>auth</code> — OAuth helpers</li>
+<li><code>default-features = false</code> — avoid pulling SSE / server features we don't need (SSE intentionally omitted per §3.8 — superseded by Streamable HTTP in MCP spec 2025-11-25, all surveyed vendors migrated or migrating)</li>
+</ul>
+<p>Binary delta estimate: <strong>+1-2 MB</strong> (see §7).</p>
+<h3 id="56-config-schema">5.6 Config schema</h3>
+<p>Single root key <code>mcpServers</code> to match Claude Code / Codex / Cursor / Cline convention. Loaded from <code>.openab/agent/mcp.json</code> (project) and <code>~/.openab/agent/mcp.json</code> (global), project-local takes precedence on name collision.</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code class="language-jsonc"><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">{</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">  "mcpServers"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: {</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">    "github"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: {</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "type"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"stdio"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "command"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"github-mcp-server"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "args"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"--repo-token"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">, </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"${env:GITHUB_TOKEN}"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">],</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "env"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: { </span><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">"GH_HOST"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"github.com"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> }</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">    },</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">    "linear"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: {</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "type"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"http"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "url"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"https://mcp.linear.app/mcp"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "oauth"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: { </span><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">"provider"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"linear"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3"> }</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">    },</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">    "fs"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: {</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "type"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"stdio"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "command"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"mcp-server-filesystem"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "args"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"/workspace"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">],</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">      "tool_filter"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: { </span><span style="--shiki-light:#005CC5;--shiki-dark:#7EE787">"include"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"read_*"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">, </span><span style="--shiki-light:#032F62;--shiki-dark:#A5D6FF">"list_*"</span><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">] }</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">    }</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E6EDF3">}</span></span></code></pre>
+<ul>
+<li><code>${env:VAR}</code> interpolation matches Cursor / Cline; missing var = startup error for that server (others continue)</li>
+<li><code>tool_filter</code> supports <code>include</code> / <code>exclude</code> glob lists (lifted from OpenHands' <code>filter_tools_regex</code>)</li>
+<li>Per-server failure isolated — one bad server does not block agent boot</li>
+</ul>
+<h3 id="57-lifecycle">5.7 Lifecycle</h3>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>                    ┌─────────────────────────────────────┐</span></span>
+<span class="line"><span>                    │ McpRuntimeManager  (1 per agent)    │</span></span>
+<span class="line"><span>                    │                                     │</span></span>
+<span class="line"><span>                    │  config:           Arc&#x3C;McpConfig>   │</span></span>
+<span class="line"><span>                    │  servers:          Map&#x3C;name, Hdl>   │</span></span>
+<span class="line"><span>                    │  idle_ttl:         Duration (10m)   │</span></span>
+<span class="line"><span>                    │  max_concurrent:   usize    (10)    │</span></span>
+<span class="line"><span>                    └─────────────────────────────────────┘</span></span>
+<span class="line"><span>                                    │</span></span>
+<span class="line"><span>                                    │ on first call needing server X:</span></span>
+<span class="line"><span>                                    ▼</span></span>
+<span class="line"><span>                    ┌─────────────────────────────────────┐</span></span>
+<span class="line"><span>                    │ ServerHandle (lazy)                 │</span></span>
+<span class="line"><span>                    │                                     │</span></span>
+<span class="line"><span>                    │  state: Disconnected | Connecting | │</span></span>
+<span class="line"><span>                    │         Connected(Peer) | Failed |  │</span></span>
+<span class="line"><span>                    │         NeedsAuth                   │</span></span>
+<span class="line"><span>                    │  last_used: Instant                 │</span></span>
+<span class="line"><span>                    │  breaker: CircuitBreaker            │</span></span>
+<span class="line"><span>                    │  tools_cache: Vec&#x3C;ToolDef>          │</span></span>
+<span class="line"><span>                    └─────────────────────────────────────┘</span></span>
+<span class="line"><span>                                    │</span></span>
+<span class="line"><span>                  ┌─────────────────┼─────────────────┐</span></span>
+<span class="line"><span>                  │                                   │</span></span>
+<span class="line"><span>            ┌───────────┐                       ┌───────────┐</span></span>
+<span class="line"><span>            │ child proc│                       │ HTTP conn │</span></span>
+<span class="line"><span>            │ (stdio)   │                       │ (reqwest) │</span></span>
+<span class="line"><span>            └───────────┘                       └───────────┘</span></span></code></pre>
+<ul>
+<li><strong>Lazy connect</strong>: server is <code>Disconnected</code> at boot; transitions to <code>Connecting → Connected</code> on first action needing it</li>
+<li><strong>Idle eviction</strong>: a background eviction loop (started at agent run) evicts servers idle &gt; <code>idle_ttl</code> (default 10m, configurable) — but only when the server is not mid-call (<code>in_flight == 0</code>); a busy server is never torn out from under an in-flight call. State drops to <code>Disconnected</code> (surfaced to the LLM as <code>idle</code>); tools cache retained for fast re-connect</li>
+<li><strong>Concurrency cap</strong>: <code>max_concurrent_servers</code> bounds simultaneously-<code>Connected</code> servers (default 10; see §7 for constrained-env tuning). When connecting a new server would exceed the cap, the LRU <strong>idle</strong> (<code>in_flight == 0</code>) connected server is evicted first; if every connected server is busy, the cap is exceeded transiently rather than evicting an in-use server</li>
+<li><strong>Connection reuse</strong>: while connected, all <code>mcp call</code> actions reuse the same <code>Peer</code></li>
+</ul>
+<h3 id="58-config-refresh-model">5.8 Config refresh model</h3>
+<p>Rather than file-watching mid-session, openab-agent re-reads <code>mcp.json</code> at session boundaries:</p>
+<ul>
+<li><strong>New ACP session</strong> → <code>McpRuntimeManager::new()</code> parses <code>mcp.json</code> from scratch; ~5 LOC of glue, zero hot-path code</li>
+<li><strong>Mid-session config edit</strong> → not visible until next session; users re-open the Discord/Slack thread (cheap in openab's per-thread session model)</li>
+<li><strong>Process restart</strong> → applies config changes globally; rarely needed because broker spawns short-lived agent processes per session</li>
+</ul>
+<p>This drops <code>notify</code> crate + lease counter + diff applier (~150 LOC, race-condition hotspot) for an 80% UX coverage. Hermes' <code>/reload-mcp</code> slash command (§3.1) is the precedent for &quot;explicit user-triggered reload &gt;&gt; implicit file watcher&quot; in a coding-agent context.</p>
+<h3 id="59-error-isolation-amp-circuit-breaker">5.9 Error isolation &amp; circuit breaker</h3>
+<p>Adopted from Hermes Agent (the only surveyed project that ships one):</p>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>                  ┌─────────────────────────────────────────┐</span></span>
+<span class="line"><span>                  │ CircuitBreaker (per server)             │</span></span>
+<span class="line"><span>                  │                                         │</span></span>
+<span class="line"><span>                  │  state: Closed | Open | HalfOpen        │</span></span>
+<span class="line"><span>                  │  fail_threshold: 3 (configurable)       │</span></span>
+<span class="line"><span>                  │  cooldown: 60s (configurable)           │</span></span>
+<span class="line"><span>                  └─────────────────────────────────────────┘</span></span>
+<span class="line"><span>                                    │</span></span>
+<span class="line"><span>            ┌───────────────────────┼───────────────────────┐</span></span>
+<span class="line"><span>            │                       │                       │</span></span>
+<span class="line"><span>            ▼                       ▼                       ▼</span></span>
+<span class="line"><span>       3 consecutive fails     60s elapsed             1 success</span></span>
+<span class="line"><span>       ─────────────►         ─────────────►          ─────────────►</span></span>
+<span class="line"><span>       Closed → Open          Open → HalfOpen         HalfOpen → Closed</span></span>
+<span class="line"><span>                              (allow 1 probe)</span></span>
+<span class="line"><span>                                                            │</span></span>
+<span class="line"><span>                                                            │ probe fails</span></span>
+<span class="line"><span>                                                            ▼</span></span>
+<span class="line"><span>                                                       HalfOpen → Open</span></span>
+<span class="line"><span>                                                       (reset cooldown)</span></span></code></pre>
+<p>While <code>Open</code>, <code>mcp call</code> returns <code>{&quot;error&quot;:&quot;server unavailable, cooldown 45s remaining&quot;}</code> immediately — no child-process resurrection attempts, no LLM hang.</p>
+<p><code>rmcp</code> error model maps cleanly:</p>
+<table>
+<thead>
+<tr>
+<th><code>rmcp</code> error</th>
+<th>meta-tool response</th>
+<th>Counts toward breaker?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ServiceError::McpError</code> (protocol)</td>
+<td><code>{ error: msg, code }</code></td>
+<td>No (server-level intent)</td>
+</tr>
+<tr>
+<td><code>ServiceError::TransportSend/Closed</code></td>
+<td><code>{ error: &quot;transport&quot;, server: ... }</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>CallToolResult { isError: true }</code></td>
+<td>passed through as result</td>
+<td>No (tool-level)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-oauth">6. OAuth</h2>
+<h3 id="61-shared-tokenstore">6.1 Shared TokenStore</h3>
+<p><code>openab-agent/src/auth.rs</code> already implements hand-rolled PKCE for Codex (<code>CODEX_AUTHORIZE_URL</code>, port 1455). The TokenStore (<code>~/.openab/agent/auth.json</code>, 0o600) is reused — <code>mcp/oauth.rs</code> calls into the same store with namespaced keys (<code>mcp:&lt;server_name&gt;</code> vs <code>codex</code>).</p>
+<p><strong>Persistence assumption</strong>: TokenStore is treated as persistent state. Deployments must mount <code>~/.openab/</code> on durable storage — hostPath / PVC (k8s work-agents), volume + S3 sync (Fargate Mira), or developer-laptop home directory. Ephemeral container filesystems force a re-bootstrap on every restart and are not a supported configuration.</p>
+<p><strong>Cold-start refresh</strong>: on process start the runtime reads TokenStore lazily (on first <code>mcp call</code> per server). Expired access tokens trigger an in-process refresh via the stored refresh token; success updates the store and proceeds transparently. Refresh failure (revoked / expired refresh token) flips the server's state to <code>NeedsAuth</code> (§5.7); the next <code>mcp call</code> returns an error that prompts the LLM to re-run the §6.4 login flow. No human interaction is required as long as the refresh token remains valid.</p>
+<p><strong>Refresh-token rotation race with async persistence layers</strong>: OAuth 2.1 servers issue a new refresh token on every rotation and immediately revoke the previous one; reuse of a revoked refresh token is treated as a replay attack and cascade-revokes the entire token chain. Deployments where TokenStore persistence is asynchronous (Fargate S3 sidecar sync, eventually-consistent volumes) must flush new tokens to durable storage <em>before</em> the agent can be killed — otherwise a Spot interruption between local write and remote sync restores the revoked token from S3 on the next task and locks the user out. Contract:</p>
+<ul>
+<li><strong>Agent side</strong>: <code>TokenStore</code> calls <code>fsync(2)</code> after every write to <code>auth.json</code></li>
+<li><strong>Deployment side</strong>: the S3 / volume sync layer must trigger on <code>auth.json</code> mtime change (<code>inotify</code> / <code>fsnotify</code> event), not poll on a cron. Cron-driven sync (≥1 min interval) is incompatible with refresh-token rotation under Spot interruption</li>
+<li><strong>Reference deployment</strong>: Mira (openab-ecs Fargate Spot) <code>mira-home/</code> S3 sync configuration</li>
+</ul>
+<h3 id="62-built-in-providers-phase-2">6.2 Built-in providers (Phase 2)</h3>
+<table>
+<thead>
+<tr>
+<th>Provider</th>
+<th>Auth URL</th>
+<th>Token URL</th>
+<th>Callback</th>
+<th>Scopes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>anthropic-mcp</code></td>
+<td><code>https://claude.ai/oauth/authorize</code></td>
+<td><code>https://platform.claude.com/v1/oauth/token</code></td>
+<td><code>localhost:53692/callback</code></td>
+<td><code>org:create_api_key user:profile user:inference user:sessions:claude_code user:mcp_servers user:file_upload</code> (subset varies per use)</td>
+</tr>
+<tr>
+<td><code>github-copilot</code></td>
+<td>(existing pi/anthropic flow)</td>
+<td>existing</td>
+<td>existing</td>
+<td>existing</td>
+</tr>
+<tr>
+<td><code>generic</code></td>
+<td>from <code>mcpServers[name].oauth.authorize_url</code></td>
+<td>from <code>.oauth.token_url</code></td>
+<td>dynamically allocated port</td>
+<td>from <code>.oauth.scopes</code></td>
+</tr>
+</tbody>
+</table>
+<p>Callback values apply when the browser flow is engaged (<code>--browser</code> / <code>$DISPLAY</code> set), and when the agent-guided paste-back branch of §6.4 is selected (user copies the redirect URL from the browser URL bar). The device-code branch of §6.4 ignores the callback entirely.</p>
+<h3 id="63-custom-provider-extension-point">6.3 Custom provider extension point</h3>
+<p>Config can declare <code>oauth: { authorize_url, token_url, client_id, scopes, device_authorization_endpoint?, redirect_uri?, discovery?, discovery_allowlist? }</code> for any server. The generic provider handles PKCE + callback + token persistence. No code change needed for new MCP servers that use standard OAuth 2.1. If <code>device_authorization_endpoint</code> is set, §6.4 device-code flow is preferred over paste-back. RFC 8414 dynamic discovery is opt-in only and requires an allowlist — see §6.4.</p>
+<p><code>oauth.redirect_uri</code> is required by the paste-back branch of §6.4 for custom providers — it must match the URL pre-registered with the provider's OAuth app, since custom paste-back doesn't bind a local listener (built-ins pin their callback in <code>ProviderSpec</code>; the device-code branch ignores it).</p>
+<h3 id="64-agent-guided-oauth-flow-default">6.4 Agent-guided OAuth flow (default)</h3>
+<p>openab-agent's primary deployment surface is containerized (k8s pods, Fargate tasks) where <code>localhost:53692/callback</code> is unreachable and there is no display to open. Two non-browser flows are supported; the runtime picks per server based on capability. Browser-callback remains a laptop-only opt-in (<code>$DISPLAY</code> set, or <code>--browser</code> passed to <code>openab-agent mcp login</code>).</p>
+<p><strong>Selection logic</strong> (on <code>mcp(action: &quot;login&quot;, server: X)</code>):</p>
+<ol>
+<li>If <code>X</code> declares an <code>oauth.device_authorization_endpoint</code> in config (§6.3), runtime uses <strong>device-code flow</strong> (RFC 8628). Matches openab's existing CLI convention (<code>claude auth login</code>, <code>codex --device-auth</code>, <code>grok --device-auth</code>).</li>
+<li>Else runtime uses <strong>paste-back flow</strong> (standard auth-code + PKCE). Universal fallback for OAuth 2.1 servers without a device endpoint (Linear, Notion, Figma, Sentry, ...).</li>
+</ol>
+<p>RFC 8414 dynamic discovery (<code>/.well-known/oauth-authorization-server</code>) is <strong>disabled by default</strong>. Operators opt in per-server via <code>oauth.discovery: true</code> plus an explicit <code>oauth.discovery_allowlist</code> of permitted domains (e.g. <code>[&quot;*.anthropic.com&quot;]</code>); boot rejects <code>discovery: true</code> without an allowlist. Rationale: awsvpc egress restrictions + SSRF surface in multi-tenant deployments.</p>
+<p><strong>Device-code flow</strong> (typically platform OAuth: Anthropic, OpenAI, xAI):</p>
+<ul>
+<li><code>login</code> returns <code>{ flow: &quot;device&quot;, user_code, verification_url, expires_in }</code>. Agent relays to chat: &quot;Open <code>https://example.com/device</code>, enter code: <code>ABCD-EFGH</code>&quot;.</li>
+<li>Runtime polls the token endpoint in background (5s interval, RFC 8628 §3.5). On success, persists tokens under <code>mcp:X</code>, transitions server to <code>Disconnected</code> so the next <code>connect()</code> reads the cached token via the oauth-aware dial path and reaches <code>Connected</code> through the normal lifecycle. Keeping the rmcp handshake out of the polling task avoids spawning child processes from a detached <code>tokio::task</code>.</li>
+<li>LLM checks <code>mcp(action: &quot;status&quot;, server: X)</code> to learn when the polling loop completes (status leaves <code>Connecting</code>); <code>complete_login</code> is not required for this branch — the next <code>mcp call</code> triggers <code>connect()</code>.</li>
+</ul>
+<p><strong>Paste-back flow</strong> (typically MCP SaaS: Linear, Notion, Figma, ...):</p>
+<ul>
+<li><code>login</code> returns <code>{ flow: &quot;paste&quot;, authorize_url, state }</code>. Runtime persists transient <code>{verifier, state}</code> in TokenStore. Agent relays to chat: &quot;Open this link, sign in, paste the URL you land on back here&quot;.</li>
+<li>User pastes the URL as next chat message; LLM calls <code>mcp(action: &quot;complete_login&quot;, server: X, redirect_url: &quot;...&quot;)</code>.</li>
+<li>Runtime parses <code>code</code> + <code>state</code>, validates <code>state</code>, performs PKCE token exchange against <code>token_url</code>, persists tokens under <code>mcp:X</code>, drops transient state.</li>
+</ul>
+<p><strong>Security</strong> (both flows):</p>
+<ul>
+<li>Device-code <code>user_code</code> is short-lived (RFC 8628 §3.2, typically ≤10 min); an attacker who sees the code in chat must also race the polling loop and prove device ownership.</li>
+<li>Paste-back redirect URL carries only the authorization code (OAuth 2.1 PKCE; implicit/hybrid removed); code is single-use + ≤10 min; PKCE verifier held in-process makes intercepted codes unusable.</li>
+<li>Token exchange happens entirely inside the agent process; the chat channel never carries access or refresh tokens. Refresh rotation runs in-process per §6.1.</li>
+</ul>
+<p><code>openab-agent/src/auth.rs</code> already ships all three paths for Codex OAuth (browser L150-244, paste-back L165-201, device L328-440). This ADR generalizes that pattern across MCP servers and centralizes flow selection on per-server capability rather than per-CLI hard-coding. OpenHands notes the same headless-OAuth incompatibility (§3.5) without shipping a fix.</p>
+<hr />
+<h2 id="7-memory-impact-analysis">7. Memory Impact Analysis</h2>
+<p>Included because the sidecar alternative (§4.1 B) was motivated by memory.</p>
+<p><code>openab-agent</code> baseline is 15-40 MB RSS. <code>rmcp</code> with the §5.5 feature set adds +1-2 MB binary delta and +0 MB idle RSS (no servers configured). Once servers connect, child processes dominate: Go ~10-20 MB, Rust ~5-10 MB, Python/Node ~30-80 MB each.</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>A. Naïve flat</th>
+<th>B. Sidecar</th>
+<th><strong>C. In-core + meta-tool</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Idle RAM delta</td>
+<td>+1-2 MB</td>
+<td>+0 MB</td>
+<td>+1-2 MB</td>
+</tr>
+<tr>
+<td>Per-server RAM</td>
+<td>+5-80 MB (child)</td>
+<td>+15 MB bridge + 5-80 MB</td>
+<td>+5-80 MB</td>
+</tr>
+<tr>
+<td>System prompt tokens</td>
+<td>+17,000</td>
+<td>+600 (if sidecar discloses lazily)</td>
+<td>+600</td>
+</tr>
+<tr>
+<td>Lifecycle complexity</td>
+<td>Medium</td>
+<td>High (2 procs, IPC, version skew)</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Crash blast radius</td>
+<td>Bad server kills loop</td>
+<td>Bridge crash = all gone</td>
+<td>Bad server isolated</td>
+</tr>
+</tbody>
+</table>
+<p>The 1-2 MB sidecar saving is dominated by per-server child RAM (identical across architectures) and by token cost (identical <em>as long as progressive disclosure is used</em>). Memory does not justify the sidecar.</p>
+<p><strong>Constrained-environment note (Fargate / small Kubernetes pods).</strong> Fargate Spot tasks at 512 MB / 1 GB have no swap; OOMKill is hard. Worst-case stack — agent baseline 40 MB + 5 Node/Python stdio servers at 80 MB each + LLM context buffers — sums to ~440-540 MB, which trips a 512 MB task before any prompt processing. Two mitigations: (a) lower <code>max_concurrent_servers</code> to 3 in <code>mcp.json</code> (§5.7), bounding worst case to ~280 MB; (b) prefer Go/Rust stdio servers (5-20 MB) or HTTP servers (0 MB local) over Node/Python interpreters. The <code>mcp doctor</code> CLI (§8) flags configurations whose worst-case sum exceeds the cgroup limit.</p>
+<hr />
+<h2 id="8-cli-surface">8. CLI Surface</h2>
+<pre class="shiki shiki-themes github-light github-dark-default" style="--shiki-light:#24292e;--shiki-dark:#e6edf3;--shiki-light-bg:#fff;--shiki-dark-bg:#0d1117" tabindex="0"><code><span class="line"><span>openab-agent mcp list                       — show configured servers + status</span></span>
+<span class="line"><span>openab-agent mcp status [server]            — health, last error, OAuth state</span></span>
+<span class="line"><span>openab-agent mcp add &#x3C;name> &#x3C;command>       — append a stdio server to config</span></span>
+<span class="line"><span>openab-agent mcp add &#x3C;name> --url &#x3C;url>     — append an http server</span></span>
+<span class="line"><span>openab-agent mcp remove &#x3C;name>              — remove a server from config</span></span>
+<span class="line"><span>openab-agent mcp login &#x3C;name> [--browser]   — run OAuth flow (see §6.4; --browser opts into localhost callback)</span></span>
+<span class="line"><span>openab-agent mcp refresh &#x3C;name>             — force-refresh OAuth token</span></span>
+<span class="line"><span>openab-agent mcp test &#x3C;name> &#x3C;tool> [json]  — invoke a tool from CLI (debug)</span></span>
+<span class="line"><span>openab-agent mcp doctor                     — diagnose config, network, auth</span></span></code></pre>
+<p>Subcommand placement under existing <code>openab-agent</code> binary — no new binary. CLI is a thin wrapper over <code>McpRuntimeManager</code> to keep the same code path validated by both LLM-driven and human-driven flows.</p>
+<hr />
+<h2 id="9-rollout-plan">9. Rollout Plan</h2>
+<p>Delivered across three phases (all landed):</p>
+<ol>
+<li><strong>Foundation</strong> — <code>rmcp</code> + stdio + meta-tool + minimal CLI</li>
+<li><strong>Network &amp; auth</strong> — Streamable HTTP transport + OAuth providers + <code>login</code>/<code>refresh</code> CLI</li>
+<li><strong>Resilience</strong> — per-server circuit breaker (§5.9), idle eviction + concurrency cap (§5.7), and <code>doctor</code> CLI</li>
+</ol>
+<p>The runtime's activation contract is described in §5.4.1 (the long-running ACP path calls <code>load_runtime_or_warn()</code>, the CLI subcommands use <code>load_config_or_exit</code>); there is no Cargo <code>--features mcp</code> build flag.</p>
+<hr />
+<h2 id="10-open-questions">10. Open Questions</h2>
+<ol>
+<li><strong>Should <code>mcp.json</code> live in the agent or the broker?</strong> Agent owns its own config today; broker's <code>[agent].inherit_cloud_mcp_servers</code> (issue #753) is a separate concern. Proposal: agent reads <code>mcp.json</code> directly; broker can layer additional servers via env or kubectl ConfigMap. <strong>Owner</strong>: needs broker-team alignment.</li>
+<li><strong>Native-agent feature parity with broker-forward path.</strong> PRs #329/#330/#345/#903 attempted broker-side MCP forwarding to backing CLIs. With native MCP in openab-agent, do we deprecate that path, keep it for non-native CLIs, or unify? Proposal: native agent uses its own MCP runtime; broker continues to forward to backing CLIs that lack native MCP (Cursor, Copilot). <strong>Owner</strong>: broker-team.</li>
+</ol>
+<p>Resolved at design time (tracked in tracking issue, not open): tool-naming prefix (<code>&lt;server&gt;_&lt;tool&gt;</code> single-underscore, matching Hermes §3.1 / opencode §3.2 convention), <code>session/load</code> re-enumeration (process-local state, re-read), per-tool permission gates (post-Phase-3 opt-in flag), <code>resources</code>/<code>prompts</code> capabilities (v2).</p>
+<hr />
+<h2 id="11-references">11. References</h2>
+<h3 id="internal">Internal</h3>
+<ul>
+<li><code>docs/adr/openab-agent.md</code> — agent charter, design principles cited in §4.2</li>
+<li><code>docs/adr/pr-contribution-guidelines.md</code> — prior-art requirements followed in §3</li>
+<li><code>openab-agent/src/skills.rs</code> (PR #955) — extension-pattern precedent cited in §4.3</li>
+<li><code>openab-agent/src/auth.rs</code> — TokenStore reused in §6.1</li>
+<li>PRs #329, #330, #345, #903 — closed broker-forward attempts, §1.3</li>
+<li>Issue #753 — broker-side MCP opt-out (out of scope)</li>
+<li>PR #951 — SessionPool persisted-mapping fix (informs §10 resolved-at-design-time list)</li>
+</ul>
+<h3 id="external--projects">External — projects</h3>
+<ul>
+<li>Hermes Agent: <a href="https://github.com/NousResearch/hermes-agent">https://github.com/NousResearch/hermes-agent</a></li>
+<li>opencode: <a href="https://github.com/anomalyco/opencode">https://github.com/anomalyco/opencode</a> (formerly <a href="https://github.com/sst/opencode">https://github.com/sst/opencode</a>)</li>
+<li>pi-mcp-adapter: <a href="https://github.com/nicobailon/pi-mcp-adapter">https://github.com/nicobailon/pi-mcp-adapter</a></li>
+<li>Goose: <a href="https://github.com/aaif-goose/goose">https://github.com/aaif-goose/goose</a> (formerly <a href="https://github.com/block/goose">https://github.com/block/goose</a>)</li>
+<li>OpenHands: <a href="https://github.com/OpenHands/OpenHands">https://github.com/OpenHands/OpenHands</a></li>
+<li>rmcp: <a href="https://github.com/modelcontextprotocol/rust-sdk">https://github.com/modelcontextprotocol/rust-sdk</a></li>
+<li>OpenClaw (evaluated per <code>pr-contribution-guidelines.md</code>, scope not applicable — see §3; canonical repo URL not publicly resolvable, internal reference via avasdream blog cited in guidelines)</li>
+</ul>
+<h3 id="external--specs-amp-research">External — specs &amp; research</h3>
+<ul>
+<li>MCP spec: <a href="https://modelcontextprotocol.io">https://modelcontextprotocol.io</a></li>
+<li>MCP spec changelog 2025-11-25 (Streamable HTTP supersedes HTTP+SSE): <a href="https://modelcontextprotocol.io/specification/2025-11-25/basic/transports">https://modelcontextprotocol.io/specification/2025-11-25/basic/transports</a></li>
+<li>MCP SEP-1576 — Mitigating Token Bloat in MCP: <a href="https://github.com/modelcontextprotocol/modelcontextprotocol/issues/1576">https://github.com/modelcontextprotocol/modelcontextprotocol/issues/1576</a></li>
+<li>Atlassian Rovo MCP SSE→Streamable HTTP migration notice (sunset 2026-06-30): <a href="https://community.atlassian.com/forums/Rovo-articles/Migrating-from-Atlassian-s-MCP-Server-SSE-to-Streamable-HTTP/ba-p/3092878">https://community.atlassian.com/forums/Rovo-articles/Migrating-from-Atlassian-s-MCP-Server-SSE-to-Streamable-HTTP/ba-p/3092878</a></li>
+<li>Figma MCP server (Streamable HTTP): <a href="https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Dev-Mode-MCP-Server">https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Dev-Mode-MCP-Server</a></li>
+<li>Anthropic — Equipping agents for the real world with Agent Skills: <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills">https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills</a></li>
+<li>Anthropic — Code execution with MCP: <a href="https://www.anthropic.com/engineering/code-execution-with-mcp">https://www.anthropic.com/engineering/code-execution-with-mcp</a></li>
+<li>Simon Willison — Claude Skills (2025-10-16): <a href="https://simonwillison.net/2025/Oct/16/claude-skills/">https://simonwillison.net/2025/Oct/16/claude-skills/</a></li>
+<li>StackOne — MCP Token Optimization: <a href="https://www.stackone.com/blog/mcp-token-optimization/">https://www.stackone.com/blog/mcp-token-optimization/</a></li>
+<li>opencode issues cited in §3.2, §4.1, §7: #11868, #7261, #13041</li>
+</ul>
+</article><nav class="flex justify-between gap-4 mt-12 pt-6 border-t border-border"><span></span><span></span></nav><script>document.querySelectorAll('[data-copy-md]').forEach(function(b){b.addEventListener('click',async function(){try{var r=await fetch(b.getAttribute('data-copy-md'));var t=await r.text();await navigator.clipboard.writeText(t);var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o;},1500);}catch(e){alert('Copy failed: '+e);}});});document.querySelectorAll('.prose pre').forEach(function(pre){if(pre.querySelector('.copy-code'))return;var b=document.createElement('button');b.className='copy-code';b.textContent='Copy';b.addEventListener('click',async function(){var c=pre.querySelector('code');try{await navigator.clipboard.writeText(c?c.innerText:pre.innerText);var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o;},1200);}catch(e){}});pre.appendChild(b);});document.querySelectorAll('.tabs').forEach(function(t){t.querySelectorAll('.tab-btn').forEach(function(b){b.addEventListener('click',function(){var i=b.getAttribute('data-tab');t.querySelectorAll('.tab-btn').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-tab')===i);});t.querySelectorAll('.tab-panel').forEach(function(p){p.hidden=p.getAttribute('data-tab')!==i;});});});});(function(){var blocks=document.querySelectorAll('code.language-mermaid');if(!blocks.length)return;var items=[];blocks.forEach(function(c){var pre=c.closest('pre')||c;var h=document.createElement('div');h.className='mermaid-diagram';pre.replaceWith(h);items.push({src:c.textContent,holder:h});});var lib,id=0;function load(){return lib||(lib=import("https://esm.sh/mermaid@11").then(function(m){return m.default;}));}function theme(){return document.documentElement.getAttribute('data-theme')==='dark'?'dark':'default';}function run(){load().then(function(mermaid){mermaid.initialize({startOnLoad:false,securityLevel:'loose',theme:theme()});items.forEach(function(it){mermaid.render('kura-mmd-'+(id++),it.src).then(function(r){it.holder.innerHTML=r.svg;}).catch(function(e){it.holder.innerHTML='<pre class="mermaid-error">'+String((e&&e.message)||e)+'</pre>';});});}).catch(function(){});}run();var cur=document.documentElement.getAttribute('data-theme');new MutationObserver(function(){var t=document.documentElement.getAttribute('data-theme');if(t!==cur){cur=t;run();}}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});})();</script></main><aside class="sticky top-14 max-h-[calc(100vh-56px)] overflow-y-auto px-4 py-8 max-lg:hidden"><p class="text-[.72rem] font-bold tracking-wider uppercase text-muted mb-2.5">On this page</p><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#1-context-amp-motivation">1. Context &amp;amp; Motivation</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#11-why-mcp-for-openab-agent">1.1 Why MCP for openab-agent</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#12-why-now">1.2 Why now</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#13-prior-internal-attempts">1.3 Prior internal attempts</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#2-goals-amp-non-goals">2. Goals &amp;amp; Non-Goals</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#in-scope">In scope</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#out-of-scope">Out of scope</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#3-prior-art-survey">3. Prior Art Survey</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#31-hermes-agent-mandatory-reference">3.1 Hermes Agent (mandatory reference)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#32-opencode-anomalycoopencode-formerly-sstopencode">3.2 opencode (anomalyco/opencode, formerly sst/opencode)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#33-pi-mcp-adapter">3.3 pi-mcp-adapter</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#34-goose-block--aaif-goose">3.4 Goose (block / aaif-goose)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#35-openhands-all-hands-ai">3.5 OpenHands (All-Hands-AI)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#36-comparison-matrix">3.6 Comparison matrix</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#37-skills-vs-mcp--industry-research">3.7 Skills vs MCP — industry research</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#38-transport-landscape-amp-saas-mcp-server-adoption">3.8 Transport landscape &amp;amp; SaaS MCP server adoption</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-6 text-[.82rem]" href="#local-stdio-servers-representative-sample">Local stdio servers (representative sample)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-6 text-[.82rem]" href="#vendor-hosted-saas-servers--all-streamable-http">Vendor-hosted SaaS servers — all Streamable HTTP</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#4-design-decision">4. Design Decision</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#41-architectural-alternatives-compared">4.1 Architectural alternatives compared</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#42-why-c-honors-openab-agent-design-principles">4.2 Why C honors openab-agent design principles</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#43-symmetry-with-skills-pr-955">4.3 Symmetry with Skills (PR #955)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#5-detailed-design">5. Detailed Design</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#51-tool-surface-4--1">5.1 Tool surface (4 + 1)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#52-the-mcp-meta-tool-schema">5.2 The mcp meta-tool schema</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#53-agent-loop-interaction">5.3 Agent loop interaction</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#54-module-layout">5.4 Module layout</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-6 text-[.82rem]" href="#541-runtime-activation-amp-isolation-choices">5.4.1 Runtime activation &amp;amp; isolation choices</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-6 text-[.82rem]" href="#542-discovery-slice--bounded-catalogue--idle-semantics-f1">5.4.2 Discovery slice — bounded catalogue + idle semantics (F1)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#55-rmcp-dependency-amp-features">5.5 rmcp dependency &amp;amp; features</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#56-config-schema">5.6 Config schema</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#57-lifecycle">5.7 Lifecycle</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#58-config-refresh-model">5.8 Config refresh model</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#59-error-isolation-amp-circuit-breaker">5.9 Error isolation &amp;amp; circuit breaker</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#6-oauth">6. OAuth</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#61-shared-tokenstore">6.1 Shared TokenStore</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#62-built-in-providers-phase-2">6.2 Built-in providers (Phase 2)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#63-custom-provider-extension-point">6.3 Custom provider extension point</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#64-agent-guided-oauth-flow-default">6.4 Agent-guided OAuth flow (default)</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#7-memory-impact-analysis">7. Memory Impact Analysis</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#8-cli-surface">8. CLI Surface</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#9-rollout-plan">9. Rollout Plan</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#10-open-questions">10. Open Questions</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent" href="#11-references">11. References</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#internal">Internal</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#external--projects">External — projects</a><a class="block py-1 text-muted text-[.85rem] hover:text-accent pl-3 text-[.82rem]" href="#external--specs-amp-research">External — specs &amp;amp; research</a></aside></div></div><footer class="border-t border-border mt-8"><div class="flex items-center justify-between flex-wrap gap-4 max-w-[1280px] mx-auto px-6 py-5 max-md:px-4"><nav class="flex items-center gap-[1.1rem] text-[.85rem]"><a class="text-muted hover:text-fg" href="/llms.txt">llms.txt</a><a class="text-muted hover:text-fg" href="/mcp">MCP</a><button type="button" class="inline-flex items-center justify-center w-[30px] h-[30px] p-0 text-[.95rem] leading-none border border-border rounded-lg bg-surface text-fg cursor-pointer hover:bg-hover" data-theme-toggle="true" aria-label="Toggle theme"></button></nav><a class="text-muted text-[.85rem] hover:text-accent" href="https://kura.build/" target="_blank" rel="noreferrer">Powered by Kura</a></div></footer><script>document.addEventListener('keydown',function(e){if(e.key==='/' && !document.documentElement.dataset.ctrlk && !/INPUT|TEXTAREA/.test((document.activeElement||{}).tagName||'')){e.preventDefault();var s=document.querySelector('.search-box');if(s)s.focus();}});(function(){var b=document.querySelector('[data-theme-toggle]');if(!b)return;var d=document.documentElement,order=['system','light','dark'],icon={system:'🖥',light:'☀',dark:'☾'};function pref(){return d.getAttribute('data-theme-pref')||'system';}function res(p){return p==='dark'||(p==='system'&&matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light';}function set(p){d.setAttribute('data-theme-pref',p);d.setAttribute('data-theme',res(p));try{localStorage.setItem('kura-theme',p);}catch(e){}b.textContent=icon[p];b.setAttribute('title','Theme: '+p);}set(pref());b.addEventListener('click',function(){set(order[(order.indexOf(pref())+1)%order.length]);});try{matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(){if(pref()==='system')d.setAttribute('data-theme',res('system'));});}catch(e){}})();document.addEventListener('click',function(e){var t=e.target;document.querySelectorAll('details[data-menu][open]').forEach(function(d){if(!d.contains(t))d.removeAttribute('open');});var it=t.closest&&t.closest('details[data-menu] a, details[data-menu] [data-copy-md]');if(it){var dd=it.closest('details[data-menu]');if(dd)setTimeout(function(){dd.removeAttribute('open');},0);}});document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('details[data-menu][open]').forEach(function(d){d.removeAttribute('open');});});(function(){var root=document.documentElement;function opener(){return document.querySelector('[data-drawer-open]');}function items(){var d=document.getElementById('docs-nav');if(!d)return[];return[].filter.call(d.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])'),function(el){return el.offsetParent!==null;});}function set(o){var was=root.classList.contains('drawer-open');root.classList.toggle('drawer-open',o);var b=opener();if(b)b.setAttribute('aria-expanded',o?'true':'false');if(o){var f=items();if(f[0])f[0].focus();}else if(was&&b)b.focus();}document.addEventListener('click',function(e){if(e.target.closest('[data-drawer-open]')){e.preventDefault();set(!root.classList.contains('drawer-open'));return;}if(e.target.closest('[data-drawer-close]')){set(false);return;}if(e.target.closest('#docs-nav a'))set(false);});document.addEventListener('keydown',function(e){if(e.key==='Escape'){set(false);return;}if(e.key==='Tab'&&root.classList.contains('drawer-open')){var f=items();if(!f.length)return;var first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}else if(f.indexOf(document.activeElement)<0){e.preventDefault();first.focus();}}});})();(function(){
+  function trim(p){return p.length>1&&p.endsWith('/')?p.slice(0,-1):p;}
+  function sync(){
+    var path=trim(location.pathname), tab=null;
+    var links=document.querySelectorAll('.sidebar a[href],[data-tabbar] a[href]');
+    for(var i=0;i<links.length;i++){var a=links[i],on=trim(a.getAttribute('href'))===path;
+      if(on){a.setAttribute('aria-current','page');var g=a.closest('[data-tab]');if(g)tab=g.getAttribute('data-tab');}
+      else a.removeAttribute('aria-current');}
+    if(tab!=null){
+      document.querySelectorAll('[data-tab]').forEach(function(g){g.hidden=g.getAttribute('data-tab')!==tab;});
+      document.querySelectorAll('[data-tabbar] a').forEach(function(a){
+        if(a.getAttribute('data-tab-key')===tab)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+    }
+    // expand the folder(s) holding the active page. Iterate EVERY aria-current sidebar link, not
+    // just the first: a folder-as-page link lives in a <details>, but the mobile tab-bar link (also
+    // in .sidebar, earlier in the DOM) has no folder ancestor — querySelector would pick that one
+    // and expand nothing. forEach opens each link's folder chain; tab links are harmless no-ops.
+    document.querySelectorAll('.sidebar a[aria-current="page"]').forEach(function(cur){
+      var d=cur.closest('details.folder');while(d){d.open=true;d=d.parentElement&&d.parentElement.closest('details.folder');}});
+    // rewrite the locale-switch links to THIS page's equivalent path (swap the locale prefix)
+    var ll=document.querySelectorAll('[data-locale-home]');
+    if(ll.length){var lc=document.querySelector('[data-locale-home][data-locale-active]'),cp=lc?lc.getAttribute('data-locale-home'):'/';cp=cp==='/'?'':cp;
+      var rest=location.pathname;if(cp&&rest.indexOf(cp)===0)rest=rest.slice(cp.length)||'/';
+      ll.forEach(function(a){var h=a.getAttribute('data-locale-home'),p=h==='/'?'':h;a.setAttribute('href',rest==='/'?(p||'/'):(p+rest));});}
+    // mobile nav-context: "Active tab / Page title" (the shell can't know the page server-side)
+    var nc=document.querySelector('[data-nav-context]');
+    if(nc){var at=document.querySelector('[data-tabbar] a[aria-current="page"]'),h1=document.querySelector('main h1');
+      nc.textContent=[at&&at.textContent.trim(),h1&&h1.textContent.trim()].filter(Boolean).join(' / ');}
+  }
+  sync();
+  var outlet=document.querySelector('[data-june-outlet]');
+  if(outlet) new MutationObserver(sync).observe(outlet,{childList:true,subtree:true});
+})();</script><script type="module" src="/openab/_june/client.a5a40235.js"></script><script type="application/json" id="june-webmcp">[{"name":"search_docs","description":"Hybrid keyword + semantic search over the docs. Returns the most relevant passages with their doc slug, title, and relevance score.","inputSchema":{"type":"object","properties":{"query":{"type":"string","description":"A natural-language question or keywords."},"topK":{"type":"integer","description":"Number of results to return (default 5)."}},"required":["query"]}},{"name":"get_page","description":"Fetch one doc page as clean Markdown by its slug (e.g. introduction, search, agents).","inputSchema":{"type":"object","properties":{"slug":{"type":"string","description":"The page slug."}},"required":["slug"]}},{"name":"list_docs","description":"List every doc page with its slug, title, section, and `sources` (the code paths it documents). The map for finding which pages a code change affects.","inputSchema":{"type":"object","properties":{}}}]</script><script>(function(){var mc=navigator.modelContext;if(!mc||!mc.registerTool)return;var el=document.getElementById('june-webmcp');if(!el)return;var tools;try{tools=JSON.parse(el.textContent)}catch(e){return}var ac=new AbortController();tools.forEach(function(t){mc.registerTool({name:t.name,description:t.description,inputSchema:t.inputSchema,execute:function(args){return fetch('/mcp',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'tools/call',params:{name:t.name,arguments:args}})}).then(function(r){return r.json()}).then(function(j){return j.result})}},{signal:ac.signal})})})();</script></body></html>

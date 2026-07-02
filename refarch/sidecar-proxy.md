@@ -1,3 +1,7 @@
+---
+title: "Reference Architecture: OAuth Sidecar Proxy"
+---
+
 # Reference Architecture: OAuth Sidecar Proxy
 
 > **Note:** For xAI/Grok models, OpenCode ≥1.15.0 supports native xAI OAuth.

@@ -1,3 +1,7 @@
+---
+title: "Debugging and Reproducing Issues via Remote SSH"
+---
+
 # Debugging and Reproducing Issues via Remote SSH
 
 This document describes how an OpenAB agent running inside a pod can debug, troubleshoot, and reproduce GitHub issues against a remote host over SSH — and validate proposed fixes before posting results.

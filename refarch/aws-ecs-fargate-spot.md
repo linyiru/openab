@@ -1,3 +1,7 @@
+---
+title: "Reference Architecture: OpenAB on AWS ECS Fargate Spot"
+---
+
 # Reference Architecture: OpenAB on AWS ECS Fargate Spot
 
 > **This doc is meant to be used with Kiro or any coding CLI.** Prompt your AI agent with something like:
