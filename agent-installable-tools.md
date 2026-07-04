@@ -83,7 +83,7 @@ The following tools are commonly installed by agents. This doc does **not** hard
 
 | Tool | Upstream Install Docs |
 |------|----------------------|
-| **OpenSSH** (`ssh`, `scp`, `ssh-keygen`) | [packages.debian.org/bookworm/openssh-client](https://packages.debian.org/bookworm/amd64/openssh-client/download) — use `.deb` extract pattern. Also see [remote-ssh-debugging.md](refarch/remote-ssh-debugging.md) for SSH key setup. |
+| **OpenSSH** (`ssh`, `scp`, `ssh-keygen`) | [packages.debian.org/bookworm/openssh-client](https://packages.debian.org/bookworm/amd64/openssh-client/download) — use `.deb` extract pattern. Also see [remote-ssh-debugging.md](/openab/refarch/remote-ssh-debugging.md) for SSH key setup. |
 | **AWS CLI v2** (`aws`) | [docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html) |
 | **GitLab CLI** (`glab`) | [gitlab.com/gitlab-org/cli/-/releases](https://gitlab.com/gitlab-org/cli/-/releases) |
 | **Cloudflare Wrangler** (`wrangler`) | [developers.cloudflare.com/workers/wrangler/install-and-update](https://developers.cloudflare.com/workers/wrangler/install-and-update/) |
@@ -143,4 +143,4 @@ If you're contributing a doc for a new tool (e.g., `docs/gitlab.md`, `docs/cloud
 
 ## Advanced: Sidecars and Init Containers
 
-For use cases that go beyond installing CLI tools — such as running a network tunnel, a database sidecar, or pre-installing a deterministic toolset via init containers — see [docs/sidecar.md](sidecar.md).
+For use cases that go beyond installing CLI tools — such as running a network tunnel, a database sidecar, or pre-installing a deterministic toolset via init containers — see [docs/sidecar.md](/openab/sidecar.md).

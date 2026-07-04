@@ -2,7 +2,7 @@
 
 > **Note:** For xAI/Grok models, OpenCode ≥1.15.0 supports native xAI OAuth.
 > The sidecar proxy is no longer required for OpenCode deployments.
-> See [docs/xai-proxy.md](../xai-proxy.md) for the recommended approach.
+> See [docs/xai-proxy.md](/openab/xai-proxy.md) for the recommended approach.
 
 This document describes the **sidecar proxy pattern** implemented by
 `openab-auth-proxy` — a generic OAuth proxy that injects Bearer tokens into
@@ -79,5 +79,5 @@ helm install openab openab/openab \
 
 ## See also
 
-- [openab-auth-proxy source](../../openab-auth-proxy/) — Rust implementation
-- [docs/xai-proxy.md](../xai-proxy.md) — xAI-specific quick-start
+- [openab-auth-proxy source](https://github.com/linyiru/openab/tree/6ad4ef419dd131e3f718dfd9b224f3967387da94/openab-auth-proxy) — Rust implementation
+- [docs/xai-proxy.md](/openab/xai-proxy.md) — xAI-specific quick-start

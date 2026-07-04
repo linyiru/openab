@@ -43,14 +43,14 @@ helm install openab openab/openab \
 ```
 
 See individual agent docs for authentication steps:
-- [Kiro CLI](kiro.md)
-- [Claude Code](claude-code.md)
-- [Codex](codex.md)
-- [Gemini](gemini.md)
+- [Kiro CLI](/openab/kiro.md)
+- [Claude Code](/openab/claude-code.md)
+- [Codex](/openab/codex.md)
+- [Gemini](/openab/gemini.md)
 
 ## Bot-to-Bot Communication
 
-> 📖 Full config options: [docs/config-reference.md](config-reference.md)
+> 📖 Full config options: [docs/config-reference.md](/openab/config-reference.md)
 
 By default, each agent ignores messages from other bots. To enable multi-agent collaboration in the same channel (e.g. a code review bot handing off to a deploy bot), configure `allow_bot_messages` in each agent's `config.toml`:
 

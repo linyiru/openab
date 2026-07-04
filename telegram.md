@@ -114,7 +114,7 @@ webhook_path        = "/webhook/telegram"
 > secret_token = "${secrets.tg_secret}"
 > ```
 >
-> See [secrets-management.md](secrets-management.md) for full documentation.
+> See [secrets-management.md](/openab/secrets-management.md) for full documentation.
 
 ### Set the Webhook
 

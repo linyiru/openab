@@ -25,7 +25,7 @@ helm install openab openab/openab \
 ### Image Tag
 
 Use `--set image.tag=<version>` to set the image version globally.
-The chart auto-appends `-<agent>` to produce the final tag (see [image-tags.md](image-tags.md) for full details).
+The chart auto-appends `-<agent>` to produce the final tag (see [image-tags.md](/openab/image-tags.md) for full details).
 
 | Tag | Resolves to | Description |
 |-----|-------------|-------------|
@@ -229,7 +229,7 @@ Sends a `session/cancel` JSON-RPC notification to abort in-flight LLM requests a
 
 **Note:** All slash commands only work in threads where a conversation is already active. If no session exists, they will prompt the user to start one first.
 
-See [docs/slash-commands.md](slash-commands.md) for full details.
+See [docs/slash-commands.md](/openab/slash-commands.md) for full details.
 
 ## Built-in Kiro CLI Commands
 

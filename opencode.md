@@ -50,7 +50,7 @@ helm install openab openab/openab \
 ### Image Tag
 
 Use `--set image.tag=<version>` to set the image version globally.
-The chart auto-appends `-<agent>` to produce the final tag (see [image-tags.md](image-tags.md) for full details).
+The chart auto-appends `-<agent>` to produce the final tag (see [image-tags.md](/openab/image-tags.md) for full details).
 
 | Tag | Resolves to | Description |
 |-----|-------------|-------------|
@@ -104,7 +104,7 @@ kubectl exec deployment/openab-opencode -- opencode models
 
 OpenAB can pass inbound image attachments to OpenCode as ACP image content blocks, but OpenCode must also select a model whose metadata declares image input support. For custom providers, that means `modalities.input: ["text", "image"]` in `opencode.json`.
 
-See [Local OpenAI-Compatible Vision Models](local-vision-models.md#opencode-configuration) for the `llama-server` setup, `opencode.json` example, and local vision pitfalls.
+See [Local OpenAI-Compatible Vision Models](/openab/local-vision-models.md#opencode-configuration) for the `llama-server` setup, `opencode.json` example, and local vision pitfalls.
 
 ## Example: Ollama Cloud with gemini-3-flash-preview
 

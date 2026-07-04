@@ -2,7 +2,7 @@
 
 ## Overview
 
-A single OAB bot instance can serve multiple projects. Workspaces let users switch project context at session start using the `[[ws:...]]` [control directive](control-directives.md).
+A single OAB bot instance can serve multiple projects. Workspaces let users switch project context at session start using the `[[ws:...]]` [control directive](/openab/control-directives.md).
 
 When a workspace is set, the agent:
 - Uses the workspace path as its working directory
@@ -67,5 +67,5 @@ All workspace paths are validated before use:
 
 ## See Also
 
-- [Control Directives](control-directives.md) — full directive syntax and rules
-- [Config Reference](config-reference.md#workspace) — `[workspace.aliases]` configuration
+- [Control Directives](/openab/control-directives.md) — full directive syntax and rules
+- [Config Reference](/openab/config-reference.md#workspace) — `[workspace.aliases]` configuration

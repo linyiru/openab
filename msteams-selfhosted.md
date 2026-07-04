@@ -1,6 +1,6 @@
 # Microsoft Teams Setup (Self-Hosted)
 
-> **Unified Mode (v0.9.0+):** The OAB binary now embeds the Teams adapter directly. Set `TEAMS_APP_ID` as an env var — no separate gateway container or `[gateway]` config needed. See [Telegram docs](telegram.md#unified-mode-recommended) for the pattern.
+> **Unified Mode (v0.9.0+):** The OAB binary now embeds the Teams adapter directly. Set `TEAMS_APP_ID` as an env var — no separate gateway container or `[gateway]` config needed. See [Telegram docs](/openab/telegram.md#unified-mode-recommended) for the pattern.
 
 ### Unified Config (Kiro + Teams)
 

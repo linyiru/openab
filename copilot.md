@@ -141,7 +141,7 @@ helm install openab-copilot openab/openab \
 ### Image Tag
 
 Use `--set image.tag=<version>` to set the image version globally.
-The chart auto-appends `-<agent>` to produce the final tag (see [image-tags.md](image-tags.md) for full details).
+The chart auto-appends `-<agent>` to produce the final tag (see [image-tags.md](/openab/image-tags.md) for full details).
 
 | Tag | Resolves to | Description |
 |-----|-------------|-------------|

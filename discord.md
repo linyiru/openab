@@ -61,7 +61,7 @@ Complete guide to setting up, configuring, and running OpenAB with Discord.
 
 ## Configuration Reference
 
-> 📖 Full config options with defaults: [docs/config-reference.md](config-reference.md#discord)
+> 📖 Full config options with defaults: [docs/config-reference.md](/openab/config-reference.md#discord)
 
 ```toml
 [discord]
@@ -211,7 +211,7 @@ Each thread gets its own agent session. Sessions are cleaned up after `session_t
 
 ## Ambient Mode
 
-Ambient mode allows the bot to passively listen to configured channels and respond only when it has something valuable to add — without requiring @mentions. See [ambient.md](ambient.md) for full details.
+Ambient mode allows the bot to passively listen to configured channels and respond only when it has something valuable to add — without requiring @mentions. See [ambient.md](/openab/ambient.md) for full details.
 
 ```toml
 [ambient]
@@ -322,7 +322,7 @@ Bot A's thread (Bot B not yet involved, Bot A IS in Bot B's trusted_bot_ids):
 
 **Workaround (without trusted_bot_ids):** Pre-involve all needed bots at thread creation by @mentioning them (or using a shared role via `allowed_role_ids`).
 
-> 📖 Full design details: [docs/messaging.md — Involvement Gate](messaging.md#involvement-gate)
+> 📖 Full design details: [docs/messaging.md — Involvement Gate](/openab/messaging.md#involvement-gate)
 
 ### Recommended: `multibot-mentions` mode
 
@@ -378,7 +378,7 @@ Always use <@UID> format to mention someone in your messages.
 
 This lets each bot build the mapping in its own context from the start and correctly mention others using `<@UID>`.
 
-See [multi-agent.md](multi-agent.md) for detailed examples.
+See [multi-agent.md](/openab/multi-agent.md) for detailed examples.
 
 ---
 

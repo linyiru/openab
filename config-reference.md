@@ -24,7 +24,7 @@ openab run -c s3://my-bucket/path/to/config.toml
 
 Remote config is fetched via HTTP GET with a 10-second timeout and a 1 MiB response size limit. Environment variable expansion (`${VAR}`) works identically on both local and remote config content.
 
-> **Security best practice:** Never hardcode secrets in remote config files. Use environment variable references like `bot_token = "${DISCORD_BOT_TOKEN}"` and inject the actual values via local environment variables or Kubernetes Secrets. For centralized secret management with rotation and audit, use `[secrets.refs]` with AWS Secrets Manager or an exec provider — see [secrets-management.md](secrets-management.md). OpenAB expands `${VAR}` identically for both local and remote config.
+> **Security best practice:** Never hardcode secrets in remote config files. Use environment variable references like `bot_token = "${DISCORD_BOT_TOKEN}"` and inject the actual values via local environment variables or Kubernetes Secrets. For centralized secret management with rotation and audit, use `[secrets.refs]` with AWS Secrets Manager or an exec provider — see [secrets-management.md](/openab/secrets-management.md). OpenAB expands `${VAR}` identically for both local and remote config.
 
 ### `s3://` config source
 
@@ -82,7 +82,7 @@ Discord adapter. Requires a Discord bot token.
 | `allow_user_messages` | string | `"multibot-mentions"` | `"multibot-mentions"` — like `"involved"`, but require @mention once another bot has posted in the thread (recommended for multi-bot deployments). `"involved"` — reply in threads bot has participated in without @mention; channel messages require @mention; DMs always process. `"mentions"` — always require @mention. |
 | `allow_dm` | bool | `false` | `true` = respond to Discord DMs; `false` = ignore DMs. `allowed_users` still applies in DMs. Each DM user consumes one session slot. |
 | `max_bot_turns` | u32 | `100` | Max consecutive bot turns per thread before throttling (soft limit). Human message resets the counter. A compiled-in hard cap of 1000 consecutive bot messages is always enforced. |
-| `message_processing_mode` | string | `"per-message"` | Message dispatch mode: `"per-message"` (each message = own turn), `"per-thread"` (all messages in thread share one buffer), or `"per-lane"` (each sender gets own buffer). See [Message Dispatch Modes](message-dispatch-modes.md). |
+| `message_processing_mode` | string | `"per-message"` | Message dispatch mode: `"per-message"` (each message = own turn), `"per-thread"` (all messages in thread share one buffer), or `"per-lane"` (each sender gets own buffer). See [Message Dispatch Modes](/openab/message-dispatch-modes.md). |
 | `max_buffered_messages` | u32 | `10` | Per-thread/lane mpsc channel capacity. Only applies to `per-thread` / `per-lane` modes. |
 | `max_batch_tokens` | u32 | `24000` | Soft token cap per ACP turn. Only applies to `per-thread` / `per-lane` modes. |
 
@@ -104,7 +104,7 @@ Slack adapter using Socket Mode. Requires both a Bot User OAuth Token and an App
 | `trusted_bot_ids` | string[] | `[]` | Slack Bot User IDs (`U...`) or Bot IDs (`B...`). `U...` matching resolves event Bot IDs via Slack `bots.info`, so the bot token needs `users:read`. |
 | `allow_user_messages` | string | `"multibot-mentions"` | Same as Discord. |
 | `max_bot_turns` | u32 | `100` | Same as Discord. |
-| `message_processing_mode` | string | `"per-message"` | Same as Discord. See [Message Dispatch Modes](message-dispatch-modes.md). |
+| `message_processing_mode` | string | `"per-message"` | Same as Discord. See [Message Dispatch Modes](/openab/message-dispatch-modes.md). |
 | `max_buffered_messages` | u32 | `10` | Same as Discord. |
 | `max_batch_tokens` | u32 | `24000` | Same as Discord. |
 | `assistant_mode` | bool | `true` | Use `assistant.threads.setStatus` for status indicators instead of emoji reactions, and native content streaming via `chat.startStream`/`appendStream`/`stopStream` instead of the post+edit loop. Native streaming is suppressed when another bot is present in the thread. Requires an AI-app Slack app with `assistant:write` — set to `false` for non-AI Slack apps to keep emoji-reaction status. When native streaming is active, the `reply_to` output directive is bypassed — the streamed message is itself the in-thread reply. |
@@ -129,7 +129,7 @@ Custom Gateway adapter for platforms like Telegram, LINE, Feishu/Lark, and Googl
 | `trusted_bot_ids` | string[] | `[]` | Bot IDs that bypass the bot filter even when `allow_bot_messages = false`. |
 | `streaming` | bool | `false` | Enable streaming (typewriter) mode — requires the gateway platform to support message editing. |
 | `streaming_placeholder` | bool | `true` | Show "…" placeholder at streaming start. Set `false` for platforms using drafts (e.g. Telegram Rich Messages). |
-| `message_processing_mode` | string | `"per-message"` | Same as Discord. See [Message Dispatch Modes](message-dispatch-modes.md). |
+| `message_processing_mode` | string | `"per-message"` | Same as Discord. See [Message Dispatch Modes](/openab/message-dispatch-modes.md). |
 | `max_buffered_messages` | u32 | `10` | Same as Discord. |
 | `max_batch_tokens` | u32 | `24000` | Same as Discord. |
 
@@ -239,7 +239,7 @@ Session pool settings for managing concurrent agent sessions.
 
 ## `[hooks]`
 
-Lifecycle hooks that run at specific points during the container lifecycle. See [hooks.md](hooks.md) for full documentation and examples.
+Lifecycle hooks that run at specific points during the container lifecycle. See [hooks.md](/openab/hooks.md) for full documentation and examples.
 
 ### `[hooks.pre_seed]`
 
@@ -260,7 +260,7 @@ Downloads and extracts archives from S3 before `pre_boot`. Seeds the agent envir
 **Credential resolution** uses the standard AWS provider chain (same as `config-s3` and `secrets-aws`):
 environment variables, shared credentials, IRSA / EKS Pod Identity, ECS task role.
 
-**Integrity verification:** If S3 objects are uploaded with `--checksum-algorithm SHA256`, OpenAB automatically verifies the checksum on download. No config needed — see [hooks.md](hooks.md) for details.
+**Integrity verification:** If S3 objects are uploaded with `--checksum-algorithm SHA256`, OpenAB automatically verifies the checksum on download. No config needed — see [hooks.md](/openab/hooks.md) for details.
 
 ```toml
 [hooks.pre_seed]
@@ -318,7 +318,7 @@ on_failure = "warn"
 
 ## `[secrets]`
 
-External secrets management. Secrets are resolved at boot time (after `pre_boot` hooks) and held in memory only — never written to disk. See [secrets-management.md](secrets-management.md) for full documentation.
+External secrets management. Secrets are resolved at boot time (after `pre_boot` hooks) and held in memory only — never written to disk. See [secrets-management.md](/openab/secrets-management.md) for full documentation.
 
 ### `[secrets.refs]`
 
@@ -441,7 +441,7 @@ Speech-to-text transcription for voice messages. Uses an OpenAI-compatible `/aud
 
 ## `[workspace]`
 
-Workspace aliases for [Control Directives](adr/control-directives.md). Users specify `[[ws:@alias]]` in their first message to set the session's working directory.
+Workspace aliases for [Control Directives](/openab/adr/control-directives.md). Users specify `[[ws:@alias]]` in their first message to set the session's working directory.
 
 ```toml
 [workspace.aliases]
@@ -465,7 +465,7 @@ web    = "~/projects/frontend"
 
 ## `[ambient]`
 
-Passive channel listening with batch flush. See [ambient.md](ambient.md) for full guide.
+Passive channel listening with batch flush. See [ambient.md](/openab/ambient.md) for full guide.
 
 ```toml
 [ambient]
@@ -536,7 +536,7 @@ timezone = "UTC"
 | `timezone` | string | `"UTC"` | IANA timezone for schedule evaluation (e.g. `"America/New_York"`, `"Europe/Berlin"`). |
 | `thread_id` | string | `""` | Optional thread ID to post into an existing thread. |
 
-The external `cronjob.toml` uses `[[jobs]]` (same fields). See [Usercron docs](cronjob.md#usercron--hot-reload-with-cronjobtoml) for details.
+The external `cronjob.toml` uses `[[jobs]]` (same fields). See [Usercron docs](/openab/cronjob.md#usercron--hot-reload-with-cronjobtoml) for details.
 
 ### Usercron-only `[[jobs]]` fields
 

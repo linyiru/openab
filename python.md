@@ -19,7 +19,7 @@ To ensure `uv` is always available before the agent starts, add the install comm
 pre_boot = ["curl -LsSf https://astral.sh/uv/install.sh | sh"]
 ```
 
-See [Hooks](hooks.md) for details.
+See [Hooks](/openab/hooks.md) for details.
 
 Once installed, `uv run` handles everything else — downloading Python, managing dependencies, and executing your script.
 

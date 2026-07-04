@@ -1,6 +1,6 @@
 # WeCom (企业微信) Setup
 
-> **Unified Mode (v0.9.0+):** The OAB binary now embeds the wecom adapter directly. Set `WECOM_CORP_ID` as an env var — no separate gateway container or `[gateway]` config needed. See [Telegram docs](telegram.md#unified-mode-recommended) for the pattern.
+> **Unified Mode (v0.9.0+):** The OAB binary now embeds the wecom adapter directly. Set `WECOM_CORP_ID` as an env var — no separate gateway container or `[gateway]` config needed. See [Telegram docs](/openab/telegram.md#unified-mode-recommended) for the pattern.
 
 ### Unified Config (Kiro + wecom)
 
@@ -89,7 +89,7 @@ docker run -d --name openab-gateway \
   ghcr.io/openabdev/openab-gateway:latest
 ```
 
-For Kubernetes with Helm, see [`charts/openab/values.yaml`](../charts/openab/values.yaml) — set values under `agents.<name>.gateway.wecom`.
+For Kubernetes with Helm, see [`charts/openab/values.yaml`](https://github.com/linyiru/openab/blob/6ad4ef419dd131e3f718dfd9b224f3967387da94/charts/openab/values.yaml) — set values under `agents.<name>.gateway.wecom`.
 
 ## 4. Verify the Callback URL
 

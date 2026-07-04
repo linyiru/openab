@@ -1,6 +1,6 @@
 # Extending OpenAB with Sidecars and Init Containers
 
-> This is an **advanced** pattern. For most tool installations, start with [agent-installable tools](agent-installable-tools.md) — one prompt, zero YAML.
+> This is an **advanced** pattern. For most tool installations, start with [agent-installable tools](/openab/agent-installable-tools.md) — one prompt, zero YAML.
 
 ## Overview
 
@@ -290,4 +290,4 @@ These accept standard Kubernetes container and volume specs. See the [Kubernetes
   └──────────────────────────────────────────────────────────────┘
 ```
 
-Most users will never need sidecars. Start with the [agent-installable tools](agent-installable-tools.md) pattern — it covers the vast majority of use cases with zero YAML.
+Most users will never need sidecars. Start with the [agent-installable tools](/openab/agent-installable-tools.md) pattern — it covers the vast majority of use cases with zero YAML.

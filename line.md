@@ -1,6 +1,6 @@
 # LINE Setup
 
-> **Unified Mode (v0.9.0+):** The OAB binary now embeds the line adapter directly. Set `LINE_CHANNEL_SECRET` as an env var — no separate gateway container or `[gateway]` config needed. See [Telegram docs](telegram.md#unified-mode-recommended) for the pattern.
+> **Unified Mode (v0.9.0+):** The OAB binary now embeds the line adapter directly. Set `LINE_CHANNEL_SECRET` as an env var — no separate gateway container or `[gateway]` config needed. See [Telegram docs](/openab/telegram.md#unified-mode-recommended) for the pattern.
 
 ### Unified Config (Kiro + line)
 
@@ -109,7 +109,7 @@ In the LINE Developers Console → **Messaging API** tab → scan the QR code wi
 ### Supported
 
 - **1:1 chat** — send a message to the bot, get an AI agent response
-- **Inbound voice messages in 1:1 chat** — LINE-hosted audio messages are downloaded through the LINE Content API and forwarded to OpenAB as `audio` attachments, so the existing STT flow can transcribe them. This requires `[stt] enabled = true` in OpenAB core. See [STT (Speech-to-Text)](stt.md).
+- **Inbound voice messages in 1:1 chat** — LINE-hosted audio messages are downloaded through the LINE Content API and forwarded to OpenAB as `audio` attachments, so the existing STT flow can transcribe them. This requires `[stt] enabled = true` in OpenAB core. See [STT (Speech-to-Text)](/openab/stt.md).
 - **Group chat** — add the bot to a group; it responds only when @-mentioned (see @mention gating below)
 - **Inbound images** — user-sent LINE images are downloaded through the LINE Content API and forwarded to OpenAB as image attachments
 - **Webhook signature validation** — HMAC-SHA256 via `LINE_CHANNEL_SECRET`
@@ -149,7 +149,7 @@ In the LINE Developers Console → **Messaging API** tab → scan the QR code wi
 **Voice message doesn't transcribe:**
 - Confirm you sent the voice message in a **1:1 chat**, not a group or room
 - Confirm `[stt] enabled = true` in your OpenAB config
-- Confirm the STT provider is configured correctly; see [STT (Speech-to-Text)](stt.md)
+- Confirm the STT provider is configured correctly; see [STT (Speech-to-Text)](/openab/stt.md)
 - Check gateway logs for `media stored` and OpenAB logs for downstream dispatch
 
 **"Invalid signature" in gateway logs:**
@@ -164,5 +164,5 @@ In the LINE Developers Console → **Messaging API** tab → scan the QR code wi
 
 - [LINE Messaging API Documentation](https://developers.line.biz/en/docs/messaging-api/)
 - [LINE Developers Console](https://developers.line.biz)
-- [ADR: Custom Gateway](../docs/adr/custom-gateway.md)
-- [ADR: LINE Adapter](../docs/adr/line-adapter.md)
+- [ADR: Custom Gateway](/openab/adr/custom-gateway.md)
+- [ADR: LINE Adapter](/openab/adr/line-adapter.md)

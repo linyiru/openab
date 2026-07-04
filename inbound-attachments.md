@@ -40,7 +40,7 @@ User sends media (photo/voice/file)
 
 ### Downstream Image Requirements
 
-OpenAB can create the ACP image block, but downstream coding agents and selected models must also support image input. For local `llama.cpp` examples, see [Local OpenAI-Compatible Vision Models](local-vision-models.md).
+OpenAB can create the ACP image block, but downstream coding agents and selected models must also support image input. For local `llama.cpp` examples, see [Local OpenAI-Compatible Vision Models](/openab/local-vision-models.md).
 
 ### Audio / Voice Messages
 
@@ -101,9 +101,9 @@ No additional configuration required. The filesystem store is always active when
 
 ## Related
 
-- [Local OpenAI-Compatible Vision Models](local-vision-models.md) — Local vision model setup for Pi and OpenCode
-- [Telegram](telegram.md) — Telegram-specific behavior and limitations
-- [Feishu](feishu.md) — Feishu image/file/audio handling
-- [Google Chat](google-chat.md) — Google Chat attachment support
-- [STT (Speech-to-Text)](stt.md) — Audio transcription configuration
-- [Sending Files (Outbound)](sendfiles.md) — Agent → user file delivery (separate mechanism)
+- [Local OpenAI-Compatible Vision Models](/openab/local-vision-models.md) — Local vision model setup for Pi and OpenCode
+- [Telegram](/openab/telegram.md) — Telegram-specific behavior and limitations
+- [Feishu](/openab/feishu.md) — Feishu image/file/audio handling
+- [Google Chat](/openab/google-chat.md) — Google Chat attachment support
+- [STT (Speech-to-Text)](/openab/stt.md) — Audio transcription configuration
+- [Sending Files (Outbound)](/openab/sendfiles.md) — Agent → user file delivery (separate mechanism)

@@ -4,7 +4,7 @@ openab can automatically transcribe voice message attachments (Discord, Feishu, 
 
 ## Quick Start
 
-> 📖 Full STT config options: [docs/config-reference.md](config-reference.md#stt)
+> 📖 Full STT config options: [docs/config-reference.md](/openab/config-reference.md#stt)
 
 Add an `[stt]` section to your `config.toml`:
 

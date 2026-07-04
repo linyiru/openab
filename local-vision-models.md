@@ -153,6 +153,6 @@ Upload a screenshot and confirm the response references the image content. Then 
 
 ## Related
 
-- [Inbound Attachments](inbound-attachments.md) — how OpenAB converts uploaded images into ACP image content
-- [Pi](pi.md) — Pi coding agent setup
-- [OpenCode](opencode.md) — OpenCode setup
+- [Inbound Attachments](/openab/inbound-attachments.md) — how OpenAB converts uploaded images into ACP image content
+- [Pi](/openab/pi.md) — Pi coding agent setup
+- [OpenCode](/openab/opencode.md) — OpenCode setup

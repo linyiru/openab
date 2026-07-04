@@ -1,6 +1,6 @@
 # Feishu / Lark
 
-> **Unified Mode (v0.9.0+):** The OAB binary now embeds the feishu adapter directly. Set `FEISHU_APP_ID` as an env var — no separate gateway container or `[gateway]` config needed. See [Telegram docs](telegram.md#unified-mode-recommended) for the pattern.
+> **Unified Mode (v0.9.0+):** The OAB binary now embeds the feishu adapter directly. Set `FEISHU_APP_ID` as an env var — no separate gateway container or `[gateway]` config needed. See [Telegram docs](/openab/telegram.md#unified-mode-recommended) for the pattern.
 
 ### Unified Config (Kiro + feishu)
 
@@ -267,7 +267,7 @@ Streaming (typewriter) mode works in threads — edits target the same message r
 
 ## Agent-Controlled Reply-To
 
-Agents can reply to a specific message using the `[[reply_to:message_id]]` output directive (see [docs/output-directives.md](output-directives.md)). The gateway sends the reply via Feishu's native Reply API, showing a quote reference in the UI.
+Agents can reply to a specific message using the `[[reply_to:message_id]]` output directive (see [docs/output-directives.md](/openab/output-directives.md)). The gateway sends the reply via Feishu's native Reply API, showing a quote reference in the UI.
 
 ```
 Agent output:

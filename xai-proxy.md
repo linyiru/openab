@@ -29,7 +29,7 @@ export OPENAI_BASE_URL=http://127.0.0.1:9090/v1
 export OPENAI_API_KEY=dummy
 ```
 
-See [docs/refarch/sidecar-proxy.md](refarch/sidecar-proxy.md) for the full
+See [docs/refarch/sidecar-proxy.md](/openab/refarch/sidecar-proxy.md) for the full
 architecture, Helm deployment, and custom provider configuration.
 
 ## Comparison

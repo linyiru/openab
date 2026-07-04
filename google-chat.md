@@ -1,6 +1,6 @@
 # Google Chat Setup
 
-> **Unified Mode (v0.9.0+):** The OAB binary now embeds the google-chat adapter directly. Set `GOOGLE_CHAT_ENABLED=true` as an env var — no separate gateway container or `[gateway]` config needed. See [Telegram docs](telegram.md#unified-mode-recommended) for the pattern.
+> **Unified Mode (v0.9.0+):** The OAB binary now embeds the google-chat adapter directly. Set `GOOGLE_CHAT_ENABLED=true` as an env var — no separate gateway container or `[gateway]` config needed. See [Telegram docs](/openab/telegram.md#unified-mode-recommended) for the pattern.
 
 ### Unified Config (Kiro + google-chat)
 

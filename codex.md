@@ -31,7 +31,7 @@ helm install openab openab/openab \
 ### Image Tag
 
 Use `--set image.tag=<version>` to set the image version globally.
-The chart auto-appends `-<agent>` to produce the final tag (see [image-tags.md](image-tags.md) for full details).
+The chart auto-appends `-<agent>` to produce the final tag (see [image-tags.md](/openab/image-tags.md) for full details).
 
 | Tag | Resolves to | Description |
 |-----|-------------|-------------|
@@ -134,7 +134,7 @@ kubectl exec -it deployment/openab-codex -- \
 
 OpenAB streams text over ACP only. It does **not** relay image attachments from
 Codex back to Discord. To send a generated image, Codex must call the Discord
-REST API directly. See [sendimages.md](sendimages.md) for the full protocol.
+REST API directly. See [sendimages.md](/openab/sendimages.md) for the full protocol.
 
 The agent should:
 
